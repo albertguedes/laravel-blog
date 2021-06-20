@@ -16,15 +16,12 @@ use App\Http\Controllers\PostsController;
 |
 */
 
-Route::get('/',[PostsController::class,'index'])->name('home');
-Route::get('/{post}',[PostsController::class,'show'])->name('post');
-
 Route::prefix('admin')->group(function(){
 
-    Route::get("/",function(){
+    Route::get('/',function(){
         return redirect()->route('login');
-    }); 
-
+    })->name('admin'); 
+    
     Route::prefix('auth')->group(function(){
         Route::get('/login',[Admin\AuthController::class,'login'])->name('login');
         Route::post('/login',[Admin\AuthController::class,'authenticate'])->name('authenticate');
@@ -48,3 +45,6 @@ Route::prefix('admin')->group(function(){
     });
 
 });
+
+Route::get('/',[PostsController::class,'index'])->name('home');
+Route::get('/{post}',[PostsController::class,'show'])->name('post');

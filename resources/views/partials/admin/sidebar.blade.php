@@ -1,8 +1,8 @@
-<header class="py-5 ms-4" >
+<header class="p-0 pt-4 pb-5 text-center" >
     <strong>Admin {{ env('APP_NAME') }}</strong>
 </header>
 
-<ul class="nav flex-column">
+<ul class="nav flex-column px-4">
     <li class="nav-item">
         <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
     </li>

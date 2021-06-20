@@ -1,8 +1,8 @@
-<div class="container px-0">
+<div class="container-fluid ">
     <div class="d-flex pt-3">
         {{ Breadcrumbs::render() }}
     </div>
-    <div class="d-flex pt-3">
+    <div class="d-flex pt-0">
         <ul class="navbar-nav">
             <li class="nav-item pt-2 pe-4">
                 Welcome <a href="{{ route('profile') }}">{{ auth()->user()->name }}</a>

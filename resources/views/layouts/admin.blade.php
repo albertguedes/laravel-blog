@@ -10,14 +10,14 @@
     <body>
         <div class="container-fluid" >
             <div class="row" >
-                <aside class="col-2 bg-dark fixed-top p-0 m-0 overflow-auto text-light" style="height:100%; min-height:100%;" >
+                <aside class="col-2 bg-dark shadow- fixed-top p-0 m-0 overflow-auto text-light" style="height:100%; min-height:100%;" >
                     @include("partials.admin.sidebar")
                 </aside>
-                <main class="offset-2 col-10 pb-5" >
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <main class="offset-2 col-10 p-0 pb-5" >
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom p-0 m-0 px-2 mb-3">
                         @include("partials.admin.navbar")
                     </nav>
-                    <article class="container-fluid" >
+                    <article class="container-fluid px-4" >
                         @yield('content')
                     </article>
                 </main>

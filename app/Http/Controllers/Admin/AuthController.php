@@ -16,14 +16,16 @@ class AuthController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function index(){
+        return redirect()->route('login');
+    }
+
     public function login(){
         return view('admin.auth.login');
     }
 
     public function authenticate( LoginRequest $request )
     {
-
-
         $validated = $request->validated();
 
         $credentials = $validated['credentials'];

@@ -82,7 +82,7 @@ Breadcrumbs::for('posts.create', function (BreadcrumbTrail $trail) {
 // Home > Posts > [Post]
 Breadcrumbs::for('posts.show', function (BreadcrumbTrail $trail, $post) {
     $trail->parent('posts.index');
-    $trail->push("'".$post->name."'", route('posts.show', $post));
+    $trail->push("'".$post->title."'", route('posts.show', $post));
 });
 
 // Home > Posts > [Post] > Edit
