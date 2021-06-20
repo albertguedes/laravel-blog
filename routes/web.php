@@ -1,0 +1,50 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\PostsController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/',[PostsController::class,'index'])->name('home');
+Route::get('/{post}',[PostsController::class,'show'])->name('post');
+
+Route::prefix('admin')->group(function(){
+
+    Route::get("/",function(){
+        return redirect()->route('login');
+    }); 
+
+    Route::prefix('auth')->group(function(){
+        Route::get('/login',[Admin\AuthController::class,'login'])->name('login');
+        Route::post('/login',[Admin\AuthController::class,'authenticate'])->name('authenticate');
+        Route::middleware('auth:web')->post('/logout',[Admin\AuthController::class,'logout'])->name('logout');
+    });
+
+    Route::middleware('auth')->group(function(){
+
+        Route::get('/dashboard',[Admin\DashboardController::class,'index'])->name('dashboard');
+
+        Route::get('/posts/{post}/delete',[Admin\PostsController::class,'delete'])->name('posts.delete');
+        Route::resource('/posts',Admin\PostsController::class);
+
+        Route::get('/users/{user}/delete',[Admin\UsersController::class,'delete'])->name('users.delete');       
+        Route::resource('/users',Admin\UsersController::class);  
+
+        Route::get('/profile',[Admin\ProfileController::class,'show'])->name('profile');
+        Route::get('/profile/edit',[Admin\ProfileController::class,'edit'])->name('profile.edit');
+        Route::put('/profile/edit',[Admin\ProfileController::class,'update'])->name('profile.update');
+    
+    });
+
+});

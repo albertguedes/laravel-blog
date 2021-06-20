@@ -1,0 +1,6 @@
+a:link, a:hover, a:visited { text-decoration: none; }
+
+#sidebar {
+  height: 100%;
+  min-height: 100%;
+}
