@@ -5,6 +5,9 @@
     <div class="col-12 pb-5">
         <h2 class="text-uppercase" >Contact</h2>
     </div>
+    <div class="col-12">
+        @include('partials.flash-message')
+    </div>
     <div class="col-4">
         <address>
             <h5><i class="fas fa-map-marked-alt"></i> Address</h5>
