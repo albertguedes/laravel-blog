@@ -4,9 +4,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup" >
         <div class="navbar-nav" >
-            <a class="nav-link" href="{{ route('home') }}" ><i class="bi bi-house-door"></i> Home</a>
-            <a class="nav-link" href="{{ route('about') }}" >About</a>
-            <a class="nav-link" href="{{ route('contact') }}" >Contact</a>
+            <a class="nav-link" href="{{ route('home') }}" ><i class="fas fa-home"></i> Home</a>
+            <a class="nav-link" href="{{ route('about') }}" ><i class="fas fa-info-circle"></i> About</a>
+            <a class="nav-link" href="{{ route('contact') }}" ><i class="fas fa-envelope"></i> Contact</a>
         </div>
     </div>
 </div>

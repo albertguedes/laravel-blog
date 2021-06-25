@@ -16,12 +16,12 @@
                             @include('partials.navbar')
                         </nav>
                         <header class="row pt-3" >
-                            <div class="col-12" >
+                            <div class="col-12 py-4" >
                                 @if( Request::url() == route('home') )
                                 <h1 id="sitename" >
                                     <a href="{{ route('home') }}" >
                                         {{ env('APP_NAME') }}
-                                    </a>
+                                    </a> <i data-eva="github"></i>
                                 </h1>
                                 @else
                                 <div id="sitename" >
@@ -44,6 +44,7 @@
         <footer class="container-fluid sticky-bottom py-5" >
             <p class="text-center p-0 m-0" ><strong>Laravel Blog</strong> {{ date('Y') }} - <em>Free & Open Source.</em></p>
         </footer>
+        <script src="https://kit.fontawesome.com/f761473b22.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     </body>
 </html>
