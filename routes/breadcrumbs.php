@@ -27,7 +27,7 @@ Breadcrumbs::for('profile', function (BreadcrumbTrail $trail) {
 // Dashboard > Profile > Edit
 Breadcrumbs::for('profile.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('profile');
-    $trail->push('Edit Profile', route('profile.edit'));
+    $trail->push('Edit', route('profile.edit'));
 });
 
  /**

@@ -4,7 +4,7 @@
 <div class="row" >
     @if(count($posts)>0)
         @foreach( $posts as $post )
-        <div class="col-12 pt-5" >
+        <div class="col-12 pb-5" >
             <h2><a href="{{ route('post',['post'=>$post]) }}" >{{ $post->title }}</a></h2>
             <h6 class="text-black-50" >{{ $post->created_at->format("Y M d") }}</h6>
             <div class="py-3" >

@@ -12,17 +12,28 @@
             <div class="container" >
                 <div class="row justify-content-center" >
                     <div class="col-6" >
-                        <header class="row" >
-                            <div class="col-6" >
-                                <h1 class="fw-bolder pt-5 pb-1" >
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            @include('partials.navbar')
+                        </nav>
+                        <header class="row pt-3" >
+                            <div class="col-12" >
+                                @if( Request::url() == route('home') )
+                                <h1 id="sitename" >
                                     <a href="{{ route('home') }}" >
                                         {{ env('APP_NAME') }}
                                     </a>
                                 </h1>
+                                @else
+                                <div id="sitename" >
+                                    <a href="{{ route('home') }}" >
+                                        {{ env('APP_NAME') }}
+                                    </a>
+                                </div>
+                                @endif
                             </div>
                         </header>
                         <article class="row" >
-                            <div class="col-12" >
+                            <div class="col-12 pt-5" >
                                 @yield('content')
                             </div>
                         </article>

@@ -36,6 +36,15 @@
                     </td>
                 </tr>
                 @endforeach
+                <tfooter>
+                    <tr>
+                        <td colspan="6" >
+                            <div class="d-flex justify-content-center pt-5" >
+                            {!! $posts->links() !!}
+                            </div>
+                        </td>
+                    </tr>
+                </tfooter>
             </tbody>
         </table>
         @else

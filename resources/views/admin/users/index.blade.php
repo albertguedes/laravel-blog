@@ -35,6 +35,15 @@
                 </tr>
                 @endforeach
             </tbody>
+            <tfooter>
+                    <tr>
+                        <td colspan="5" >
+                            <div class="d-flex justify-content-center pt-5" >
+                            {!! $users->links() !!}
+                            </div>
+                        </td>
+                    </tr>
+            </tfooter>
         </table>
         @else
         <p>No Users Created.</p>

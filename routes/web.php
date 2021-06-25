@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +49,7 @@ Route::prefix('admin')->group(function(){
 });
 
 Route::get('/',[PostsController::class,'index'])->name('home');
+Route::get('/about',[PagesController::class,'about'])->name('about');
+Route::get('/contact',[ContactController::class,'index'])->name('contact');
+Route::post('/contact',[ContactController::class,'sendmessage'])->name('sendmessage');
 Route::get('/{post}',[PostsController::class,'show'])->name('post');
