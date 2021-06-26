@@ -10,8 +10,8 @@
     </div>
     <div class="col-12" >
         @include('partials.admin.profile.profileform',[ 
-            'route' => route('profile.update'),
-            'user'  => Auth::user(),
+            'route'  => route('profile.update'),
+            'user'   => Auth::user(),
             'method' => 'PUT'
         ])
     </div>
