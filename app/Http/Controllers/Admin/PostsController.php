@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Posts\StoreRequest;
+use App\Http\Requests\Admin\Posts\UpdateRequest;
 use App\Models\Post;
 
 class PostsController extends Controller
@@ -56,7 +58,7 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store( Request $request )
+    public function store( StoreRequest $request )
     {
         $post = Post::create($request->post);
         $routes = $this->getRoutes($post);
@@ -94,7 +96,7 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update( Request $request, Post $post )
+    public function update( UpdateRequest $request, Post $post )
     {
         $post->update($request->post);
         return redirect()->route('posts.show',compact('post'));

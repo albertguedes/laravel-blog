@@ -16,7 +16,7 @@ class PostsController extends Controller
     public function index()
     {
 
-        $posts = Post::orderBy('created_at','asc')->paginate(5);
+        $posts = Post::where('published',true)->orderBy('created_at','ASC')->paginate(5);
 
         return view('index',compact('posts'));
 
@@ -30,7 +30,12 @@ class PostsController extends Controller
      */
     public function show( Post $post )
     {
-        return view('post',compact('post'));
+        if($post->published){
+            return view('post',compact('post'));
+        }
+
+        return redirect()->route('404');
+        
     }
 
 }

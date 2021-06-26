@@ -107,6 +107,7 @@ class UsersController extends Controller
     {
 
         $validated = $request->validated();
+        
         $data = $validated['user'];
 
         if( isset($data['password']) || !empty($data['password']) ){

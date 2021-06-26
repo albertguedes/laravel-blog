@@ -28,12 +28,14 @@ class UserFactory extends Factory
         $created_at        = now();
         $updated_at        = now();        
         $name              = $this->faker->name();
+        $username          = $this->faker->username();
         $email             = $this->faker->unique()->safeEmail();
         $email_verified_at = now();
         $password          = Hash::make($email);
         $remember_token    = Str::random(10);
+        $is_active         = $this->faker->boolean();
 
-        return compact('created_at','updated_at','name','email','email_verified_at','password','remember_token');
+        return compact('created_at','updated_at','name','username','email','email_verified_at','password','remember_token','is_active');
 
     }
 

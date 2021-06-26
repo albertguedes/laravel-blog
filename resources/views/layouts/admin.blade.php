@@ -10,7 +10,7 @@
     <body>
         <div class="container-fluid" >
             <div class="row" >
-                <aside class="col-2 bg-dark shadow- fixed-top p-0 m-0 overflow-auto text-light" style="height:100%; min-height:100%;" >
+                <aside class="col-2 bg-dark fixed-top p-0 m-0 overflow-auto text-light" style="height:100%; min-height:100%;" >
                     @include("partials.admin.sidebar")
                 </aside>
                 <main class="offset-2 col-10 p-0 pb-5" >
@@ -26,6 +26,7 @@
                 </footer>
             </div>
         </div>
+        <script src="https://kit.fontawesome.com/f761473b22.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     </body>
 </html>

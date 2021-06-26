@@ -6,33 +6,32 @@
         <h1 class="text-capitalize" >Posts</h1>
     </div>
     <div class="col-12 py-5" >
-        <a class="btn btn-primary" href="{{ route('posts.create') }}" >Create Post</a>
+        <a class="btn btn-primary" href="{{ route('posts.create') }}" ><i class="fas fa-plus"></i> Create Post</a>
     </div>
     <div class="col-12" >
         @if( count($posts) > 0)
-        <table class="table" >
+        <table class="table table-hover" >
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>CREATED</th>
-                    <th>UPDATED</th>
-                    <th>TITLE</th>
-                    <th></th>
-                    <th></th>
+                    <th class="text-center"  scope="col" >ID</th>
+                    <th scope="col" >CREATED</th>
+                    <th scope="col">UPDATED</th>
+                    <th scope="col">TITLE</th>
+                    <th class="text-center" scope="col"  >PUBLISHED</th>
+                    <th scope="col" ></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach( $posts as $post )
-                <tr>
-                    <td>{{ $post->id }}</td>
+                <tr class="align-middle @if(!$post->published) bg-secondary @endif"  >
+                    <td class="text-center" >{{ $post->id }}</td>
                     <td>{{ $post->created_at->format('Y F d h:i') }}</td>
                     <td>{{ $post->updated_at->format('Y F d h:i') }}</td>
                     <td><a href="{{ route('posts.show',compact('post')) }}">{{ $post->title }}</a></td>
+                    <td class="text-center" >@if($post->published)<span class="badge bg-success" >Published</span>@else<span class="badge bg-danger" >Not Published</span>@endif</td>
                     <td>
-                        <a class="btn btn-warning" href="{{ route('posts.edit',compact('post')) }}" >Edit</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-danger" href="{{ route('posts.delete',compact('post')) }}" >Delete</a>
+                        <a class="btn btn-warning" href="{{ route('posts.edit',compact('post')) }}" title="Edit Post" ><i class="far fa-edit"></i></a>
+                        <a class="btn btn-danger" href="{{ route('posts.delete',compact('post')) }}" title="Delete Post" ><i class="fas fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 @endforeach

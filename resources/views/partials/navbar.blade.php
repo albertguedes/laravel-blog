@@ -7,6 +7,7 @@
             <a class="nav-link" href="{{ route('home') }}" ><i class="fas fa-home"></i> Home</a>
             <a class="nav-link" href="{{ route('about') }}" ><i class="fas fa-info-circle"></i> About</a>
             <a class="nav-link" href="{{ route('contact') }}" ><i class="fas fa-envelope"></i> Contact</a>
+            <a class="nav-link" href="{{ route('rss') }}" ><i class="fas fa-rss"></i> Follow-us</a>
         </div>
     </div>
 </div>

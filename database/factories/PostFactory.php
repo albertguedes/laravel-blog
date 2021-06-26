@@ -26,11 +26,13 @@ class PostFactory extends Factory
 
         $sentence = $this->faker->unique()->sentence(4); 
 
-        $title   = trim($sentence,'.');
-        $content = $this->faker->text(2048);
-        $slug    = Str::slug($title,'-');
+        $title       = trim($sentence,'.');
+        $description = $this->faker->text(140);
+        $content     = $this->faker->text(2048);
+        $slug        = Str::slug($title,'-');
+        $published   = $this->faker->boolean();
 
-        return compact('title','content','slug');
+        return compact('title','description','content','slug','published');
 
     }
 }

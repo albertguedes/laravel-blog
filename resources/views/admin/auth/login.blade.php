@@ -1,42 +1,29 @@
 @extends('layouts.auth')
 @section('title', 'Login')
 @section('content')
-<div class="row pt-5" >
-    <div class="col-12" >
-        @if( $errors->any() )
-        <div class="alert alert-danger">
-            <ul>
-                @foreach( $errors->all() as $error )
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
-        @if(Session::has('error'))
-        <div class="alert alert-danger">
-        {{ Session::get('error')}}
-        </div>
-        @endif
-        <form action="{{ route('authenticate') }}" method="POST" >
-            @csrf
-            <div class="mb-3 row">
-                <label for="credential-email" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-6">
-                    <input type="email" name="credentials[email]" class="form-control" id="credential-email" value="">
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="credential-password" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-6">
-                    <input type="password" name="credentials[password]" class="form-control" id="credential-password">
-                </div>
-            </div>
-            <div class="mb-3 row pt-3">
-                <div class="offset-sm-2 col-sm-2">
-                    <input type="submit" class="form-control btn btn-primary" id="inputPassword" value="Login" >
-                </div>
-            </div>
-        </form>
-    </div>
+<div class="col-12">
+    @include('partials.flash-message')
 </div>
+<form class="col-12 d-flex justify-content-center" action="{{ route('authenticate') }}" method="POST" >
+    @csrf
+    <div class="row">
+        <div class="col-12 mb-3 input-group">
+            <span class="input-group-text" id="user-addon"><i class="far fa-user"></i></span>
+            <input type="text" name="credentials[username]" class="form-control @error('credentials.username') is-invalid @enderror" id="credential-username" aria-label="Username" aria-describedby="user-addon" placeholder="Type your username" value="">
+            @error('credentials.username')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="col-12 mb-3 input-group">
+            <span class="input-group-text" id="key-addon"><i class="fas fa-key"></i></span>
+            <input type="password" name="credentials[password]" class="form-control @error('credentials.password') is-invalid @enderror" id="credential-password" aria-label="Username" aria-describedby="key-addon" placeholder="Type your password" value="" >
+            @error('credentials.password')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="col-12 d-flex justify-content-center">
+            <button class="btn btn-primary" ><i class="fas fa-sign-in-alt"></i> Login</button>
+        </div>
+    </div>
+</form>
 @endsection

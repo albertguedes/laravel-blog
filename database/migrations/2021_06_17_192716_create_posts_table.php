@@ -17,8 +17,10 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title')->unique();
+            $table->text('description');
             $table->text('content');
             $table->text('slug')->unique();
+            $table->boolean('published')->default(true);
         });
     }
 

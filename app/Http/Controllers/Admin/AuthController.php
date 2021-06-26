@@ -26,9 +26,11 @@ class AuthController extends Controller
 
     public function authenticate( LoginRequest $request )
     {
+
         $validated = $request->validated();
 
         $credentials = $validated['credentials'];
+        $credentials['is_active'] = true;
 
         /**
          * This works. If code editor acuse that some method dont exists, dont believe!
@@ -40,14 +42,13 @@ class AuthController extends Controller
             return redirect()->route('dashboard');
         }
 
-      //  dd($result);
-        return redirect()->route('login');
-//        $2y$10$OpNdiJZNGt1b.VLIGiNYQucIAGm5rrex6WRDduCw3IUlym7rzVQwS
+        return redirect()->route('login')->with('danger','Wrong user or password.');
+
     }
 
     public function logout(){
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success','You are logged out.');
     }
 
 }

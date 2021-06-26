@@ -48,7 +48,7 @@ Breadcrumbs::for('users.create', function (BreadcrumbTrail $trail) {
 // Home > Users > [User]
 Breadcrumbs::for('users.show', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('users.index');
-    $trail->push("'".$user->name."'", route('users.show', $user));
+    $trail->push("'".$user->username."'", route('users.show', $user));
 });
 
 // Home > Users > [User] > Edit

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Admin\Users;
+namespace App\Http\Requests\Admin\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,21 +25,23 @@ class StoreRequest extends FormRequest
     public function rules()
     {
 
+        $profile = $this->request->get('profile');
+
         $rules = [ 
-            "user.name"     => "required|string|min:4|max:255", 
-            "user.username" => "required|string|min:5|max:255|unique:\App\Models\User,username",
-            "user.email"    => "required|string|min:5|max:255|email:rfc|unique:\App\Models\User,email",
-            "user.password" => [ 
-                'required',
+            "profile.name"  => "required|string|min:4|max:255", 
+            "profile.email" => "required|string|min:5|max:255|email:rfc|unique:App\Models\User,email,".$profile['id'],
+        ];
+
+        if( !empty( $profile['password'] ) ){
+            $rules['profile.password'] = [ 
+                'sometimes',
                 'string',
                 'confirmed',
                 Password::min(8)->letters()->numbers()->mixedCase()->uncompromised()
-            ],
-            "user.is_active" => "required|boolean"
-        ];
+            ];
+        }
 
         return $rules;
-    
-    }
 
+    }
 }

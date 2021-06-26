@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Users\UpdateRequest;
+use App\Http\Requests\Admin\Profile\UpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -48,7 +48,7 @@ class ProfileController extends Controller
     {
 
         $validated = $request->validated();
-        $data = $validated['user'];
+        $data = $validated['profile'];
 
         if( isset($data['password']) || !empty($data['password']) ){
             $data['password'] = Hash::make($data['password']);

@@ -28,8 +28,10 @@ class UpdateRequest extends FormRequest
         $user = $this->request->get('user');
 
         $rules = [ 
-            "user.name"     => "required|string|min:4|max:255", 
-            "user.email"    => "required|string|min:5|max:255|email:rfc|unique:App\Models\User,email,".$user['id'],
+            "user.name"      => "required|string|min:4|max:255", 
+            "user.username"  => "required|string|min:5|max:255|unique:App\Models\User,username,".$user['id'],
+            "user.email"     => "required|string|min:5|max:255|email:rfc|unique:App\Models\User,email,".$user['id'],
+            "user.is_active" => "required|boolean"
         ];
 
         if( !empty( $user['password'] ) ) {

@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FeedController;
+use App\Http\Controllers\SitemapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,4 +54,6 @@ Route::get('/',[PostsController::class,'index'])->name('home');
 Route::get('/about',[PagesController::class,'about'])->name('about');
 Route::get('/contact',[ContactController::class,'index'])->name('contact');
 Route::post('/contact',[ContactController::class,'sendmessage'])->name('sendmessage');
+Route::get('/rss.xml',FeedController::class)->name('rss');
+Route::get('/sitemap.xml',SitemapController::class)->name('sitemap');
 Route::get('/{post}',[PostsController::class,'show'])->name('post');
