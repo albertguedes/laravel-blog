@@ -7,9 +7,11 @@
     </div>
     <div class="col-12 pt-5" >
         <h1 class="text-capitalize" >{{ $post->title }}</h1>
-        <h6 class="text-secondary" ><small>
-            <i class="fas fa-calendar-plus"></i> {{ $post->created_at->format("Y-m-d h:i \h") }}
-            <i class="fas fa-edit ps-3"></i> {{ $post->updated_at->format("Y-m-d h:i \h") }}
+        <h6 class="text-secondary" >
+            <small>
+                <i class="fas fa-calendar-plus"></i> {{ $post->created_at->format("Y-m-d h:i \h") }}
+                <i class="fas fa-edit ps-3"></i> {{ $post->updated_at->format("Y-m-d h:i \h") }}
+                <i class="fas fa-user ps-3"></i> {{ ucwords($post->author->name) }}
             </small>
         </h6>
     </div>

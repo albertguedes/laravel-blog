@@ -60,9 +60,16 @@ class PostsController extends Controller
      */
     public function store( StoreRequest $request )
     {
-        $post = Post::create($request->post);
+
+        $validated = $request->validated();      
+        $data      = $validated['post'];
+
+        $post = Post::create($data);
+
         $routes = $this->getRoutes($post);
+
         return redirect()->route('posts.show',compact('post','routes'));
+
     }
 
     /**
@@ -98,8 +105,15 @@ class PostsController extends Controller
      */
     public function update( UpdateRequest $request, Post $post )
     {
-        $post->update($request->post);
-        return redirect()->route('posts.show',compact('post'));
+
+        $validated = $request->validated();      
+        $data      = $validated['post'];
+        $post->update($data);
+
+        $routes = $this->getRoutes($post);
+
+        return redirect()->route('posts.show',compact('post','routes'));
+
     }
 
     /**

@@ -5,10 +5,12 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+use App\Models\User;
 use App\Models\Post;
 
 class PostFactory extends Factory
 {
+
     /**
      * The name of the factory's corresponding model.
      *
@@ -26,13 +28,15 @@ class PostFactory extends Factory
 
         $sentence = $this->faker->unique()->sentence(4); 
 
+        $author_id   = User::all()->random()->id;
+        $published   = $this->faker->boolean();
         $title       = trim($sentence,'.');
+        $slug        = Str::slug($title,'-');
         $description = $this->faker->text(140);
         $content     = $this->faker->text(2048);
-        $slug        = Str::slug($title,'-');
-        $published   = $this->faker->boolean();
 
-        return compact('title','description','content','slug','published');
+        return compact('author_id','published','title','slug','description','content');
 
     }
+
 }

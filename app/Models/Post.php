@@ -10,16 +10,21 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
+        'author_id',
+        'published',
         'title',
+        'slug',
         'description',
         'content',
-        'slug',
-        'published'
     ];
 
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function author(){
+        return $this->belongsTo(User::class);
     }
 
 }
