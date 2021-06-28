@@ -26,8 +26,8 @@
                 @foreach( $posts as $post )
                 <tr class="align-middle @if(!$post->published) bg-secondary @endif"  >
                     <td class="text-center" >{{ $post->id }}</td>
-                    <td>{{ $post->created_at->format('Y F d h:i') }}</td>
-                    <td>{{ $post->updated_at->format('Y F d h:i') }}</td>
+                    <td>{{ $post->created_at->format('Y/m/d h:i') }}</td>
+                    <td>{{ $post->updated_at->format('Y/m/d h:i') }}</td>
                     <td><a href="{{ route('users.show',['user'=>$post->author]) }}">{{ $post->author->username }}</a></td>
                     <td><a href="{{ route('posts.show',compact('post')) }}">{{ $post->title }}</a></td>
                     <td class="text-center" >@if($post->published)<span class="badge bg-success" >Published</span>@else<span class="badge bg-danger" >Not Published</span>@endif</td>
@@ -39,7 +39,7 @@
                 @endforeach
                 <tfooter>
                     <tr>
-                        <td colspan="6" >
+                        <td colspan="7" >
                             <div class="d-flex justify-content-center pt-5" >
                             {!! $posts->links() !!}
                             </div>

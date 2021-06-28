@@ -13,10 +13,12 @@
         <table class="table table-hover" >
             <thead>
                 <tr>
-                    <th class="text-center" scope="col" >ID</th>
+                    <th scope="col" class="text-center" >ID</th>
+                    <th scope="col" >CREATED</th>
+                    <th scope="col" >UPDATED</th>
                     <th scope="col" >USERNAME</th>
                     <th scope="col" >NAME</th>
-                    <th class="text-center" scope="col" >IS ACTIVE</th>
+                    <th scope="col" class="text-center" >IS ACTIVE</th>
                     <th scope="col" ></th>
                 </tr>
             </thead>
@@ -24,6 +26,8 @@
                 @foreach( $users as $user )
                 <tr class="align-middle @if(!$user->is_active) bg-secondary @endif" >
                     <td class="text-center">{{ $user->id }}</td>
+                    <td>{{ $user->created_at->format('Y/m/d h:i') }}</td>
+                    <td>{{ $user->updated_at->format('Y/m/d h:i') }}</td>                    
                     <td><a href="{{ route('users.show',compact('user')) }}">{{ $user->username }}</a></td>
                     <td>{{ $user->name }}</td>
                     <td class="text-center" >@if($user->is_active)<span class="badge bg-success" >Active</span>@else<span class="badge bg-danger" >Not Active</span>@endif</td>
@@ -36,7 +40,7 @@
             </tbody>
             <tfooter>
                     <tr>
-                        <td colspan="5" >
+                        <td colspan="7" >
                             <div class="d-flex justify-content-center pt-5" >
                             {!! $users->links() !!}
                             </div>

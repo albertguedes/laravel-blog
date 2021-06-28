@@ -51,6 +51,7 @@ Route::prefix('admin')->group(function(){
 });
 
 Route::get('/',[PostsController::class,'index'])->name('home');
+Route::get('/archive',[PostsController::class,'archive'])->name('archive');
 Route::get('/about',[PagesController::class,'about'])->name('about');
 Route::get('/contact',[ContactController::class,'index'])->name('contact');
 Route::post('/contact',[ContactController::class,'sendmessage'])->name('sendmessage');

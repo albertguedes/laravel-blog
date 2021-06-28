@@ -25,12 +25,12 @@ class UserFactory extends Factory
     public function definition()
     {
 
-        $created_at        = now();
-        $updated_at        = now();        
+        $created_at        = $this->faker->dateTime();
+        $updated_at        = $this->faker->dateTimeBetween($created_at,'now');        
         $name              = $this->faker->name();
         $username          = $this->faker->username();
         $email             = $this->faker->unique()->safeEmail();
-        $email_verified_at = now();
+        $email_verified_at = $created_at;
         $password          = Hash::make($email);
         $remember_token    = Str::random(10);
         $is_active         = $this->faker->boolean();

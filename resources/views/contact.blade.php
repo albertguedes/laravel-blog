@@ -1,15 +1,16 @@
 @extends('layouts.main')
 @section('title', 'Contact')
+@section('description','Contact Us')
 @section('content')
 <div class="row">
     <div class="col-12 pb-5">
-        <h2 class="text-uppercase" >Contact</h2>
+        <h2 class="text-center text-md-start text-uppercase" >Contact</h2>
     </div>
     <div class="col-12">
         @include('partials.flash-message')
     </div>
-    <div class="col-4">
-        <address>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4 pb-5">
+        <address class="text-center text-sm-center text-md-start text-lg-start text-xl-start text-xxl-start" >
             <h5><i class="fas fa-map-marked-alt"></i> Address</h5>
             <p>Sample Street, 123</p>
             <p>Sample City, AB</p>
@@ -21,7 +22,7 @@
             <p>+1 11 123-456-789</p>
         </address>
     </div>
-    <div class="col-8" >
+    <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8" >
         <form class="row" method="POST" action="{{ route('sendmessage') }}">
             @csrf
             <div class="input-group mb-3">

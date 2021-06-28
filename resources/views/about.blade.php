@@ -1,9 +1,9 @@
 @extends('layouts.main')
-@section('title', 'About')
+@section('title', 'About Us')
 @section('content')
 <div class="row" >
-    <div class="col-12" >
-        <h2 class="text-uppercase">About</h2>
+    <div class="col-12 pb-5">
+        <h2 class="text-uppercase" >About</h2>
     </div>
     <div class="col-12 pt-3" >
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non consectetur a erat nam at lectus. Amet dictum sit amet justo donec enim diam vulputate. Vel facilisis volutpat est velit egestas dui id. Ultrices dui sapien eget mi proin. Massa tempor nec feugiat nisl. Dignissim convallis aenean et tortor at risus viverra adipiscing at. Sapien et ligula ullamcorper malesuada proin libero. Mauris commodo quis imperdiet massa. Sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Sodales ut etiam sit amet nisl purus in. Senectus et netus et malesuada fames ac. Lobortis scelerisque fermentum dui faucibus in ornare quam viverra. Pharetra massa massa ultricies mi quis hendrerit dolor.

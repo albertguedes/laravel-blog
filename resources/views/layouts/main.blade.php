@@ -2,7 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1" >
+        <meta name="description" content="@yield('description')" >
         <title>@yield('title') | {{ env('APP_NAME') }}</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" >
@@ -11,12 +12,13 @@
         <main class="flex-shrink-0" >
             <div class="container" >
                 <div class="row justify-content-center" >
-                    <div class="col-6" >
+                    <div class="col-11 col-sm-10 col-md-10 col-lg-8 col-xl-6 col-xxl-6
+                    px-0" >
                         <nav class="navbar navbar-expand-lg navbar-light bg-light">
                             @include('partials.navbar')
                         </nav>
                         <header class="row pt-3" >
-                            <div class="col-12 py-4" >
+                            <div class="col-12 py-4 text-center text-md-start" >
                                 @if( Request::url() == route('home') )
                                 <h1 id="sitename" >
                                     <a href="{{ route('home') }}" >

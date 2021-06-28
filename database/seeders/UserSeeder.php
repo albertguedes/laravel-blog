@@ -20,19 +20,22 @@ class UserSeeder extends Seeder
     public function run()
     {
 
+        $created_at = date('now');
+
+        // Create first admin user. 
         DB::table('users')->insert([
-            'created_at'        => now(),
-            'updated_at'        => now(),
+            'created_at'        => $created_at,
+            'updated_at'        => $created_at,
             'name'              => 'Administrator',
             'username'          => 'admin',
             'email'             => 'admin@fakemail.com',
-            'email_verified_at' => now(),
+            'email_verified_at' => $created_at,
             'password'          => Hash::make('admin'),
             'remember_token'    => Str::random(10),
             'is_active'         => true,
         ]);
 
-        User::factory()->count(39)->create();
+        User::factory()->count(15)->create();
 
     }
 

@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('title', strtoupper($post->title))
+@section('description',$post->description)
 @section('content')
 <div class="row" >
     <div class="col-12 pb-3" >

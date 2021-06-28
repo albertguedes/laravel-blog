@@ -28,6 +28,8 @@ class PostFactory extends Factory
 
         $sentence = $this->faker->unique()->sentence(4); 
 
+        $created_at  = $this->faker->dateTime();
+        $updated_at  = $this->faker->dateTimeBetween($created_at,'now');
         $author_id   = User::all()->random()->id;
         $published   = $this->faker->boolean();
         $title       = trim($sentence,'.');
@@ -35,7 +37,7 @@ class PostFactory extends Factory
         $description = $this->faker->text(140);
         $content     = $this->faker->text(2048);
 
-        return compact('author_id','published','title','slug','description','content');
+        return compact('created_at','updated_at','author_id','published','title','slug','description','content');
 
     }
 

@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('title', 'Home')
+@section('description','A simple blog made in laravel')
 @section('content')
 <div class="row" >
     @if(count($posts)>0)
@@ -9,7 +10,7 @@
             <h6 class="text-black-50" ><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format("Y M d") }} by 
             <em>{{ ucwords($post->author->name) }}</em></h6>
             <div class="py-3" >
-                {{ substr($post->content,0,140) }} ...
+                {{ $post->description }}
                 <p><a href="{{ route('post',['post'=>$post]) }}" >Read More</a></p>
             </div>
         </div>
