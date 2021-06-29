@@ -17,12 +17,14 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('author_id');
+            $table->unsignedBigInteger('category_id')->nullable()->default(null);
             $table->string('title')->unique();
             $table->text('description');
             $table->text('content');
             $table->text('slug')->unique();
             $table->boolean('published')->default(true);
             $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

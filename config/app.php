@@ -175,6 +175,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Custom service providers.
+         */
+        App\Providers\CustomServiceProvider::class,
     ],
 
     /*
@@ -227,7 +231,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        /* Custom aliases */
+        'TreeCategory' => App\Custom\TreeCategoryFacade::class,
     ],
 
 ];

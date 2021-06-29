@@ -8,7 +8,7 @@
     </div>
     <div class="col-12" >
         @if(count($archive)>0)
-        <ul class="list-unstyled" >
+        <ul>
         
             @foreach( $archive as $year => $months )
             <li>
@@ -48,7 +48,7 @@
 
                                 <ul id="archive-{{ $year }}-{{ $month }}-{{ $day }}" class="list collapse ps-5" >
                                     @foreach( $posts as $post )
-                                    <li>
+                                    <li class="pb-5" >
                                         <h5><a href="{{ route('post',['post'=>$post]) }}" >{{ $post->title }}</a></h5>
                                         <h6 class="text-black-50" >by <em>{{ ucwords($post->author->name) }}</em></h6>
                                     </li>

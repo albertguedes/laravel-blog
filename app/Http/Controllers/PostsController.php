@@ -16,7 +16,9 @@ class PostsController extends Controller
     public function index()
     {
 
-        $posts = Post::where('published',true)->select('slug','title','created_at','author_id','description')->orderBy('created_at','DESC')->paginate(5);
+        $posts = Post::Published()->select('slug','title','created_at','author_id','description')
+                                  ->orderBy('created_at','DESC')
+                                  ->paginate(5);
 
         return view('index',compact('posts'));
 
@@ -30,6 +32,7 @@ class PostsController extends Controller
      */
     public function show( Post $post )
     {
+
         if($post->published){
             return view('post',compact('post'));
         }
@@ -40,7 +43,9 @@ class PostsController extends Controller
 
     public function archive(){
 
-        $posts = Post::where('published',true)->select('author_id','slug','title','created_at')->orderBy('created_at','DESC')->get();
+        $posts = Post::Published()->select('author_id','slug','title','created_at')
+                                  ->orderBy('created_at','DESC')
+                                  ->get();
 
         $archive = [];
         foreach( $posts as $post ){

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeedController;
@@ -57,4 +58,10 @@ Route::get('/contact',[ContactController::class,'index'])->name('contact');
 Route::post('/contact',[ContactController::class,'sendmessage'])->name('sendmessage');
 Route::get('/rss.xml',FeedController::class)->name('rss');
 Route::get('/sitemap.xml',SitemapController::class)->name('sitemap');
+Route::get('/categories',[CategoriesController::class,'index'])->name('categories');
+Route::get('/categories/{category}',[CategoriesController::class,'show'])->name('category');
 Route::get('/{post}',[PostsController::class,'show'])->name('post');
+
+Route::get('/404',function(){
+    return view('errors.404');
+})->name('404');
