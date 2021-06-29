@@ -2,14 +2,15 @@
 
 namespace App\Custom;
 
-use App\Models\Category;
-
+/**
+ * Custom class to create a tree for categies.
+ */
 class TreeCategory {
 
     /**
      * Generate a category tree.
      */
-    public static function generate( Category $category = null )
+    public static function generate( \App\Models\Category $category = null )
     {
 
         $html="<h2>\n";
