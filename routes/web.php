@@ -37,6 +37,9 @@ Route::prefix('admin')->group(function(){
 
         Route::get('/dashboard',[Admin\DashboardController::class,'index'])->name('dashboard');
 
+        Route::get('/categories/{category}/delete',[Admin\CategoriesController::class,'delete'])->name('categories.delete');
+        Route::resource('/categories',Admin\CategoriesController::class);
+
         Route::get('/posts/{post}/delete',[Admin\PostsController::class,'delete'])->name('posts.delete');
         Route::resource('/posts',Admin\PostsController::class);
 
@@ -52,10 +55,15 @@ Route::prefix('admin')->group(function(){
 });
 
 Route::get('/',[PostsController::class,'index'])->name('home');
+
 Route::get('/archive',[PostsController::class,'archive'])->name('archive');
+
 Route::get('/about',[PagesController::class,'about'])->name('about');
+
 Route::get('/contact',[ContactController::class,'index'])->name('contact');
+
 Route::post('/contact',[ContactController::class,'sendmessage'])->name('sendmessage');
+
 Route::get('/rss.xml',FeedController::class)->name('rss');
 Route::get('/sitemap.xml',SitemapController::class)->name('sitemap');
 Route::get('/categories',[CategoriesController::class,'index'])->name('categories');

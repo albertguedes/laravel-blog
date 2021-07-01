@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
 
-        $post = $this->request->get('post');
+       $post = $this->request->get('post');
 
        $rules = [ 
             "post.author_id"   => "required|integer",

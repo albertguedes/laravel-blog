@@ -29,7 +29,7 @@ class TreeCategory {
                 $html.="</li>\n";
             }
             $html.="</ul>\n";
-        }
+        }  
         else {
             if( count($category->posts) > 0 ){
                 $html.="<ul id='category-".$category->id."' class='list collapse ps-5' >\n";

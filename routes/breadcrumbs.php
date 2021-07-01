@@ -96,3 +96,36 @@ Breadcrumbs::for('posts.delete', function (BreadcrumbTrail $trail, $post){
     $trail->parent('posts.show',$post);
     $trail->push("Delete", route('posts.delete', $post));
 });
+
+/**
+ * Categories
+ */
+// Dashboard > Categories
+Breadcrumbs::for('categories.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Categories', route('categories.index'));
+});
+
+// Dashboard > Categories > Create
+Breadcrumbs::for('categories.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('categories.index');
+    $trail->push('Create', route('categories.create'));
+});
+
+// Home > Categories > [Category]
+Breadcrumbs::for('categories.show', function (BreadcrumbTrail $trail, $category) {
+    $trail->parent('categories.index');
+    $trail->push("'".$category->title."'", route('categories.show', $category));
+});
+
+// Home > Categories > [Category] > Edit
+Breadcrumbs::for('categories.edit', function (BreadcrumbTrail $trail, $categories){
+    $trail->parent('categories.show',$categories);
+    $trail->push("Edit", route('categories.edit', $categories));
+});
+
+// Home > Category > [Category] > Delete
+Breadcrumbs::for('categories.delete', function (BreadcrumbTrail $trail, $categories){
+    $trail->parent('categories.show',$categories);
+    $trail->push("Delete", route('categories.delete', $categories));
+});

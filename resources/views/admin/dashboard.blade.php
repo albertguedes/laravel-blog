@@ -33,5 +33,17 @@
             </div>
         </div>
     </div>
+    <div class="col-3 pt-5" >
+        <div class="card text-white bg-danger w-10">
+            <div class="card-header">
+                Categories
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Number of categories</h5>
+                <p class="card-text">{{ $num_categories }}</p>
+                <a href="{{ route('categories.index') }}" class="btn btn-light"><i class="fas fa-list-ol"></i> List</a>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
