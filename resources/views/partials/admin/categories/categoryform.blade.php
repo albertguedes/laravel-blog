@@ -19,9 +19,9 @@
         <div class="col-3" >
             <label class="form-label" for="parent_id" >Parent Category</label>
             @if( isset($category) )
-            {!! category_select( 'category[parent_id]',$category->parent) !!}
+            {!! category_select( 'category[parent_id]',$category->parent,false) !!}
             @else
-            {!! category_select( 'category[parent_id]') !!}
+            {!! category_select( 'category[parent_id]',false) !!}
             @endif
         </div>
     </div>

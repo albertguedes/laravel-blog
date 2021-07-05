@@ -12,12 +12,12 @@ if(!function_exists('category_select')){
      * 
      * @return string $html;
      */
-    function category_select( string $name = '', Category $current = null ){
+    function category_select( string $name = '', Category $current = null, bool $flag = true ){
 
         $root = Category::where('parent_id',null)->with('parent','children')->first();
 
         $html="<select class='form-select' aria-label='Category Selector' name='".$name."' >";
-        $html.=category_select_option($root,0,$current);
+        $html.=category_select_option($root,0,$current,$flag);
         $html.="</select>";
 
         return $html;
@@ -32,7 +32,7 @@ if(!function_exists('category_select')){
      * 
      * @return string $html;
      */
-    function category_select_option( Category $category = null, int $level = 0, Category $current = null ){
+    function category_select_option( Category $category = null, int $level = 0, Category $current = null, bool $flag = true ){
 
         $html='';
 
@@ -43,11 +43,20 @@ if(!function_exists('category_select')){
 
             $html.="<option value='".$category->id."' ".$selected." >".str_repeat('-',$level)." ".$category->title."</option>";
 
-            // Prevent that children categories of current category be showed to not set a child category as parent,
-            // creating a circular category.
-            if( ($category != $current) && (count($category->children) > 0) ){
-                foreach($category->children as $child ){
-                    $html.=category_select_option($child,$level+1,$current);
+            if($flag){
+                if( count($category->children) > 0 ){
+                    foreach($category->children as $child ){
+                        $html.=category_select_option($child,$level+1,$current,$flag);
+                    }
+                }
+            }
+            else{
+                // Prevent that children categories of current category be showed to not set a child category as parent,
+                // creating a circular category.
+                if( ($category->id != $current->id) && (count($category->children) > 0) ){
+                    foreach($category->children as $child ){
+                        $html.=category_select_option($child,$level+1,$current);
+                    }
                 }
             }
 
