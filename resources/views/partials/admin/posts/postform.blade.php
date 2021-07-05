@@ -47,6 +47,16 @@
         </div>
     </div>
     <div class="row pt-4" >
+        <div class="col-3" >
+            <label class="form-label" for="post-category" >Category</label>
+            @if( isset($post->category) )
+            {!! category_select( 'post[category_id]',$post->category) !!}
+            @else
+            {!! category_select( 'post[category_id]') !!}
+            @endif
+        </div>
+    </div>    
+    <div class="row pt-4" >
         <div class="col-6" >
             <label class="form-label" >Description</label>
             <textarea name="post[description]" rows=4 class="form-control @error('post.description') is-invalid @enderror" >@if(isset($post)){{ $post->description }}@endif</textarea>

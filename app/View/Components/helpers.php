@@ -12,11 +12,11 @@ if(!function_exists('category_select')){
      * 
      * @return string $html;
      */
-    function category_select( Category $current = null ){
+    function category_select( string $name = '', Category $current = null ){
 
         $root = Category::where('parent_id',null)->with('parent','children')->first();
 
-        $html="<select class='form-select' aria-label='Category Selector' name='category[parent_id]' >";
+        $html="<select class='form-select' aria-label='Category Selector' name='".$name."' >";
         $html.=category_select_option($root,0,$current);
         $html.="</select>";
 
@@ -39,7 +39,7 @@ if(!function_exists('category_select')){
         if( !is_null($category) ){
 
             $selected="";
-            if( $current->parent && ( $category->id == $current->parent->id ) ) $selected="selected='selected'";
+            if( $current && ( $category->id == $current->id ) ) $selected="selected='selected'";
 
             $html.="<option value='".$category->id."' ".$selected." >".str_repeat('-',$level)." ".$category->title."</option>";
 
