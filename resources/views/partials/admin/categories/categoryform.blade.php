@@ -17,7 +17,7 @@
     <div class="row pt-4" >
         <div class="col-3" >
             <label class="form-label" for="category[parent_id]" >Parent Category</label>
-            {!! category_select( 'category[parent_id]', $category ) !!}
+            {!! category_select( $category ) !!}
         </div>
     </div>
     @else

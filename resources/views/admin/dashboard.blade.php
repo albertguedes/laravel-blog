@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="col-3 pt-5" >
-        <div class="card text-white bg-primary w-10">
+        <div class="card text-white bg-danger w-10">
             <div class="card-header">
                 Users
             </div>
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="col-3 pt-5" >
-        <div class="card text-white bg-success w-10">
+        <div class="card text-white bg-warning w-10">
             <div class="card-header">
                 Posts
             </div>
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="col-3 pt-5" >
-        <div class="card text-white bg-danger w-10">
+        <div class="card text-white bg-primary w-10">
             <div class="card-header">
                 Categories
             </div>

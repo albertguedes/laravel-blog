@@ -14,7 +14,7 @@
         {{ $post->content }}
     </div>
     <div class="col-12 py-3" >
-        <a href="{{ route('category',['category'=>$post->category]) }}" >{{ $post->category->title }}</a>
+        <a href="{{ route('category',['category'=>$post->category]) }}" ><i class="fas fa-sitemap"></i> {{ $post->category->title }}</a>
     </div>
 </div>
 @endsection

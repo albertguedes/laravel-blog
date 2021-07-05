@@ -12,11 +12,11 @@ if(!function_exists('category_select')){
      * 
      * @return string $html;
      */
-    function category_select( string $name = 'category', Category $current = null ){
+    function category_select( Category $current = null ){
 
-        $root = Category::where('parent_id',null)->first();
+        $root = Category::where('parent_id',null)->with('parent','children')->first();
 
-        $html="<select class='form-select' aria-label='Category Selector' name='".$name."' >";
+        $html="<select class='form-select' aria-label='Category Selector' name='category[parent_id]' >";
         $html.=category_select_option($root,0,$current);
         $html.="</select>";
 
@@ -38,11 +38,14 @@ if(!function_exists('category_select')){
 
         if( !is_null($category) ){
 
-            ( !is_null($current) && ($category->id == $current->parent->id) ) ? $selected="selected":$selected="";
+            $selected="";
+            if( $current->parent && ( $category->id == $current->parent->id ) ) $selected="selected='selected'";
 
             $html.="<option value='".$category->id."' ".$selected." >".str_repeat('-',$level)." ".$category->title."</option>";
 
-            if( count($category->children) > 0 ){
+            // Prevent that children categories of current category be showed to not set a child category as parent,
+            // creating a circular category.
+            if( ($category != $current) && (count($category->children) > 0) ){
                 foreach($category->children as $child ){
                     $html.=category_select_option($child,$level+1,$current);
                 }

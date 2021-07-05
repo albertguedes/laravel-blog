@@ -9,6 +9,11 @@
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link text-light" href="{{ route('categories.index') }}">
+            <i class="fas fa-sitemap"></i> Categories
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link text-light" href="{{ route('posts.index') }}">
             <i class="fas fa-newspaper"></i> Posts
         </a>
