@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 use PhpParser\ErrorHandler\Collecting;
 
-use TreeCategory;
+use App\Custom\TreeCategory;
 use App\Models\Category;
 
 class CategoriesController extends Controller
@@ -44,6 +44,5 @@ class CategoriesController extends Controller
         return redirect()->route('404');
         
     }
-
    
 }
