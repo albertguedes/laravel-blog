@@ -7,7 +7,9 @@ The blog contains:
 - a home page that show hte latest posts, and use paginating to see old posts.
 - post page.
 - about page.
+- added categories for posts.
 - contact page with contact form.
+- added rss.
 
 The admin dashboard contains:
 
