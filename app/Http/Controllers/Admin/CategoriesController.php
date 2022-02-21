@@ -12,6 +12,9 @@ use App\Models\Category;
 class CategoriesController extends Controller
 {
 
+    /**
+     * Get routes for the tabs.
+     */
     protected function getRoutes( Category $category = null ){
         return [
             [

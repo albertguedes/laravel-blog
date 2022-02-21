@@ -12,12 +12,12 @@
         <main class="flex-shrink-0" >
             <div class="container" >
                 <div class="row justify-content-center" >
-                    <div class="col-11 col-sm-10 col-md-10 col-lg-8 col-xl-6 col-xxl-6
+                    <div class="col-11 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-8
                     px-0" >
                         <nav class="navbar navbar-expand-lg navbar-light bg-light">
                             @include('partials.navbar')
                         </nav>
-                        <header class="row pt-3" >
+                        <header class="row pt-5" >
                             <div class="col-12 py-4 text-center text-md-start" >
                                 @if( Request::url() == route('home') )
                                 <h1 id="sitename" >

@@ -35,7 +35,7 @@ class Category extends Model
     }
 
     /**
-    * Scope a query to only include popular posts.
+    * Scope a query to only include active posts.
     * https://www.scratchcode.io
     * @param  \Illuminate\Database\Eloquent\Builder  $query
     * @return \Illuminate\Database\Eloquent\Builder

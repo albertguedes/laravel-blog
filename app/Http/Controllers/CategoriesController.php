@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Collection;
-use PhpParser\ErrorHandler\Collecting;
-
 use App\Custom\TreeCategory;
 use App\Models\Category;
 
