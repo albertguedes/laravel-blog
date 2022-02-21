@@ -6,8 +6,8 @@
         <h1 class="text-capitalize" >Create Post</h1>
     </div>
     <div class="col-12" >
-        @include('partials.admin.categories.categoryform',[ 
-            'route' => route('categories.store') 
+        @include('partials.admin.tags.tagform',[ 
+            'route' => route('tags.store') 
         ])
     </div>
 </div>

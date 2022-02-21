@@ -14,6 +14,11 @@
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link text-light" href="{{ route('tags.index') }}">
+            <i class="fas fa-tag"></i> Tags
+        </a>
+    </li>    
+    <li class="nav-item">
         <a class="nav-link text-light" href="{{ route('posts.index') }}">
             <i class="fas fa-newspaper"></i> Posts
         </a>

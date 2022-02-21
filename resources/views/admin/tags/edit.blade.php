@@ -1,16 +1,16 @@
 @extends('layouts.admin')
-@section('title', "Edit '".ucwords($category->title)."'")
+@section('title', "Edit '".ucwords($tag->title)."'")
 @section('content')
 <div class="row" >
     <div class="col-12" >
         @include('partials.admin.tabs',compact('routes'))
     </div>
     <div class="col-12 pt-5" >
-        <h1 class="text-capitalize" >Edit '{{ $category->title }}'</h1>
+        <h1 class="text-capitalize" >Edit '{{ $tag->title }}'</h1>
     </div>
-        @include('partials.admin.categories.categoryform',[ 
-            'route'    => route('categories.update',compact('category')),
-            'category' => $category,
+        @include('partials.admin.tags.tagform',[ 
+            'route'    => route('tags.update',compact('tag')),
+            'tag' => $tag,
             'method'   => 'PUT'
         ])
     </div>

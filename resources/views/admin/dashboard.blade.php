@@ -45,5 +45,17 @@
             </div>
         </div>
     </div>
+    <div class="col-3 pt-5" >
+        <div class="card text-white bg-success w-10">
+            <div class="card-header">
+                Tags
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Number of tags</h5>
+                <p class="card-text">{{ $num_tags }}</p>
+                <a href="{{ route('tags.index') }}" class="btn btn-light"><i class="fas fa-list-ol"></i> List</a>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
