@@ -109,7 +109,7 @@ class TagsController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function update( UpdateRequest $request, Tag $tag = null )
+    public function update( UpdateRequest $request = null, Tag $tag = null )
     {
 
         $validated = $request->validated();      
@@ -134,7 +134,7 @@ class TagsController extends Controller
 
         $routes = $this->getRoutes($tag);
 
-        return view('admin.tag.delete',compact('tag','routes'));
+        return view('admin.tags.delete',compact('tag','routes'));
 
     }
 

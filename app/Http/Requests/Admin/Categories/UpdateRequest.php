@@ -30,8 +30,8 @@ class UpdateRequest extends FormRequest
         $rules = [ 
              "category.parent_id"   => "required|integer",
              "category.is_active"   => "required|boolean",
-             "category.title"       => "required|string|min:4|max:255|unique:\App\Models\Post,title,".$category['id'],
-             "category.slug"        => "required|string|min:4|max:255|unique:\App\Models\Post,slug,".$category['id'],
+             "category.title"       => "required|string|min:4|max:255|unique:\App\Models\Category,title,".$category['id'],
+             "category.slug"        => "required|string|min:4|max:255|unique:\App\Models\Category,slug,".$category['id'],
              "category.description" => "required|string|min:5|max:255",
         ];
  

@@ -1,6 +1,7 @@
 <?php 
 
 use App\Models\Category;
+use App\Models\Tag;
 
 if(!function_exists('category_select')){
 
@@ -50,6 +51,45 @@ if(!function_exists('category_select')){
             }
 
         }
+        return $html;
+
+    }
+
+}
+
+if(!function_exists('tags_checkbox')){
+
+    /**
+     * Generate a set of checkbox to select the tags.
+     * 
+     * @param array $tags_selected - an array with ids of previously checked tags.
+     * 
+     * @return $html - the html code with the checkbox to select.
+     * 
+     */
+    function tags_checkbox( array $tags_selected = [] ){
+
+        $tags = Tag::IsActive()->select('id','title')
+                               ->orderBy('title','ASC');
+
+        $html="";
+        foreach($tags as $tag){
+
+            // Verify if exists tags previouly selected.
+            // If yes, checked the checkbox of that tag.
+            $checked='';
+            if( count($tags_selected) > 0 ){
+                foreach( $tags_selected as $tag_id ){
+                    if($tag->id == $tag_id) $checked="checked='checked'";
+                }
+            }
+            
+            $html.="<input type='checkbox' value='".$tag->id."' ".$checked." >&nbsp;";
+            $html.=ucwords($tag->title);
+            $html.="&nbsp;";
+
+        }
+
         return $html;
 
     }

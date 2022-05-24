@@ -28,10 +28,9 @@ class UpdateRequest extends FormRequest
         $tag = $this->request->get('tag');
 
         $rules = [ 
-             "tag.parent_id"   => "required|integer",
              "tag.is_active"   => "required|boolean",
-             "tag.title"       => "required|string|min:4|max:255|unique:\App\Models\Post,title,".$tag['id'],
-             "tag.slug"        => "required|string|min:4|max:255|unique:\App\Models\Post,slug,".$tag['id'],
+             "tag.title"       => "required|string|min:4|max:255|unique:\App\Models\Tag,title,".$tag['id'],
+             "tag.slug"        => "required|string|min:4|max:255|unique:\App\Models\Tag,slug,".$tag['id'],
              "tag.description" => "required|string|min:5|max:255",
         ];
  

@@ -55,6 +55,12 @@
             {!! category_select( 'post[category_id]') !!}
             @endif
         </div>
+    </div>
+    <div class="row pt-4" >
+        <div class="col-3" >
+            <label class="form-label" for="post-tags" >Tags</label>
+            {!! tags_checkbox() !!}
+        </div>
     </div>    
     <div class="row pt-4" >
         <div class="col-6" >
