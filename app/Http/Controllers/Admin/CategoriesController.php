@@ -64,7 +64,7 @@ class CategoriesController extends Controller
     public function store( StoreRequest $request )
     {
 
-        $validated = $request->validated();      
+        $validated = $request->validated();
         $data      = $validated['category'];
 
         $category = Category::create($data);
@@ -89,9 +89,9 @@ class CategoriesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * 
+     *
      * @param  \App\Models\Category $category
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit( Category $category = null )
@@ -105,13 +105,13 @@ class CategoriesController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Category $category
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function update( UpdateRequest $request, Category $category = null )
     {
 
-        $validated = $request->validated();      
+        $validated = $request->validated();
         $data      = $validated['category'];
         $category->update($data);
 
@@ -125,7 +125,7 @@ class CategoriesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Category $category
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function delete( Category $category = null )
@@ -139,18 +139,19 @@ class CategoriesController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Category $category
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy( Request $request = null, Category $category = null )
+    public function destroy( Request $request, Category $category )
     {
 
-        if( ( $request->query('answer') !== null ) && ( $request->query('answer') == 1 ) ){
+        if( !is_null( $request->query('answer') ) && ( $request->query('answer') == 1 ) ){
             $category->delete();
             return redirect()->route('categories.index');
         }
 
         $routes = $this->getRoutes($category);
+
         return redirect()->route('categories.show',compact('category','route'));
 
     }
