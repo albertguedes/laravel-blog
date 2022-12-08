@@ -21,3 +21,7 @@ The admin dashboard contains:
 - a profile manager section
 - a user manager section with basic crud: list, create, show, edit and delete users. 
 - a post manager section with basic crud too.
+
+# References
+
+- Laravel Framework: [https://laravel.com/docs/9.x](https://laravel.com/docs/9.x)
