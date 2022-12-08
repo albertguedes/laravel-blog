@@ -1,3 +1,5 @@
+![GitHub](https://img.shields.io/github/license/albertguedes/portfolio-laravel-blog) ![GitHub language count](https://img.shields.io/github/languages/count/albertguedes/portfolio-laravel-blog) ![GitHub last commit](https://img.shields.io/github/last-commit/albertguedes/portfolio-laravel-blog) 
+
 ## Laravel Simple Blog
 
 This is a simple blog made with Laravel Framework.  
