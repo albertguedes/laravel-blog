@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title','Tags')
 @section('content')
-<div class="row" >
+<div class="row card shadow" >
     <div class="col-12 pt-5" >
         <h1 class="text-capitalize" >Tags</h1>
     </div>

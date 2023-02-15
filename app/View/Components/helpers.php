@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use App\Models\Category;
 use App\Models\Tag;
@@ -7,10 +7,10 @@ if(!function_exists('category_select')){
 
     /**
      * Create selector for categories.
-     * 
+     *
      * @param string $name - The name of select form.
      * @param \App\Models\Category $current - case is on update form, current is the current category for update.
-     * 
+     *
      * @return string $html;
      */
     function category_select( string $name = '', Category $current = null ){
@@ -28,9 +28,9 @@ if(!function_exists('category_select')){
 
     /**
      * Create option of selector and options of subcategory if exists.
-     * 
+     *
      * @param \App\Models\Category $category
-     * 
+     *
      * @return string $html;
      */
     function category_select_option( Category $category = null, int $level = 0, Category $current = null ){
@@ -61,19 +61,22 @@ if(!function_exists('tags_checkbox')){
 
     /**
      * Generate a set of checkbox to select the tags.
-     * 
+     *
      * @param array $tags_selected - an array with ids of previously checked tags.
-     * 
+     *
      * @return $html - the html code with the checkbox to select.
-     * 
+     *
      */
     function tags_checkbox( array $tags_selected = [] ){
 
-        $tags = Tag::IsActive()->select('id','title')
-                               ->orderBy('title','ASC');
+        $tags = Tag::IsActive()
+                    ->select(['id','title'])
+                    ->orderBy('title','asc')
+                    ->get();
 
         $html="";
         foreach($tags as $tag){
+
 
             // Verify if exists tags previouly selected.
             // If yes, checked the checkbox of that tag.
@@ -83,7 +86,7 @@ if(!function_exists('tags_checkbox')){
                     if($tag->id == $tag_id) $checked="checked='checked'";
                 }
             }
-            
+
             $html.="<input type='checkbox' value='".$tag->id."' ".$checked." >&nbsp;";
             $html.=ucwords($tag->title);
             $html.="&nbsp;";

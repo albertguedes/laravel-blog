@@ -20,18 +20,12 @@ class UserSeeder extends Seeder
     public function run()
     {
 
-        $created_at = date('now');
-
-        // Create first admin user. 
-        DB::table('users')->insert([
-            'created_at'        => $created_at,
-            'updated_at'        => $created_at,
+        // Create first admin user.
+        User::factory()->create([
             'name'              => 'Administrator',
             'username'          => 'admin',
             'email'             => 'admin@fakemail.com',
-            'email_verified_at' => $created_at,
-            'password'          => Hash::make('admin'),
-            'remember_token'    => Str::random(10),
+            'password'          => Hash::make('admin@fakemail.com'),
             'is_active'         => true,
         ]);
 

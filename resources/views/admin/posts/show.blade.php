@@ -21,7 +21,23 @@
                 <div class="col-3 pb-3 fw-bolder" >ID</div><div class="col-9 pb-3" >{{ $post->id }}</div>
                 <div class="col-3 pb-3 fw-bolder" >Published</div><div class="col-9 pb-3 " >@if($post->published)<span class="badge bg-success" >Yes</span>@else<span class="badge bg-danger" >No</span>@endif</div>
                 <div class="col-3 pb-3 fw-bolder" >Slug</div><div class="col-9 pb-3 " >{{ $post->slug }}</div>
-                <div class="col-3 pb-3 fw-bolder" >Category</div><div class="col-9 pb-3 " ><a href="{{ route('categories.show',['category'=>$post->category])}}" >{{ $post->category->title }}</a></div>
+                <div class="col-3 pb-3 fw-bolder" >Category</div>
+                <div class="col-9 pb-3 " >
+                    @if($post->category)
+                    <a href="{{ route('categories.show',[ 'category' => $post->category ]) }}" >{{ $post->category->title }}</a>
+                    @else
+                    no categorized
+                    @endif
+                </div>
+                <div class="col-9 pb-3 " >
+                    @if($post->tags)
+                        @foreach($post->tags as $tag)
+                        <a href="{{ route('tags.show',[ 'tag' => $tag ]) }}" >{{ $tag->title }}</a>
+                        @endforeach
+                    @else
+                        no tagged
+                    @endif
+                </div>
                 <div class="col-3 pb-3 fw-bolder" >Title</div><div class="col-9 pb-3 " >{{ $post->title }}</div>
                 <div class="col-3 pb-3 fw-bolder" >Description</div><div class="col-9 pb-3 " >{{ $post->description }}</div>
                 <div class="col-3 pb-3 fw-bolder" >Content</div><div class="col-9 pb-3 " >{{ $post->content }}</div>

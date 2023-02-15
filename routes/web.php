@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CategoriesController;
@@ -10,6 +8,8 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\SitemapController;
+
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +26,8 @@ Route::prefix('admin')->group(function(){
 
     Route::get('/',function(){
         return redirect()->route('login');
-    })->name('admin'); 
-    
+    })->name('admin');
+
     Route::prefix('auth')->group(function(){
         Route::get('/login',[Admin\AuthController::class,'login'])->name('login');
         Route::post('/login',[Admin\AuthController::class,'authenticate'])->name('authenticate');
@@ -47,13 +47,13 @@ Route::prefix('admin')->group(function(){
         Route::get('/posts/{post}/delete',[Admin\PostsController::class,'delete'])->name('posts.delete');
         Route::resource('/posts',Admin\PostsController::class);
 
-        Route::get('/users/{user}/delete',[Admin\UsersController::class,'delete'])->name('users.delete');       
-        Route::resource('/users',Admin\UsersController::class);  
+        Route::get('/users/{user}/delete',[Admin\UsersController::class,'delete'])->name('users.delete');
+        Route::resource('/users',Admin\UsersController::class);
 
         Route::get('/profile',[Admin\ProfileController::class,'show'])->name('profile');
         Route::get('/profile/edit',[Admin\ProfileController::class,'edit'])->name('profile.edit');
         Route::put('/profile/edit',[Admin\ProfileController::class,'update'])->name('profile.update');
-    
+
     });
 
 });

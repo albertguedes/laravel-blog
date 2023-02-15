@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', ucwords($tag->title) )
 @section('content')
-<div class="row" >
+<div class="row card shadow" >
     <div class="col-12" >
         @include('partials.admin.tabs',compact('routes'))
     </div>

@@ -16,14 +16,14 @@ class Tag extends Model
         'slug',
         'description'
     ];
-   
+
     public function getRouteKeyName()
     {
         return 'slug';
     }
-    
+
     public function posts(){
-        return $this->belongsToMany(Post::class);
+        return $this->hasMany(Post::class);
     }
 
     /**

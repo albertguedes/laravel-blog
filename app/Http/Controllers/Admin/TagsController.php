@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Tags\StoreRequest;
 use App\Http\Requests\Admin\Tags\UpdateRequest;
 use App\Models\Tag;
+
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class TagsController extends Controller
 {
 
     /**
      * Get routes for the tabs.
+     *
+     * @param \App\Models\Tag $tag
+     * @return array
      */
     protected function getRoutes( Tag $tag = null ){
         return [
@@ -35,23 +40,20 @@ class TagsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
-
         $tags = Tag::orderBy('id','ASC')->paginate(10);
-
-        return view('admin.tags.index',compact('tags'));
-
+        return view('admin.tags.index',compact( 'tags' ));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin.tags.create');
     }
@@ -59,20 +61,19 @@ class TagsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\Admin\Tags\StoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store( StoreRequest $request )
+    public function store( StoreRequest $request ): RedirectResponse
     {
 
-        $validated = $request->validated();      
+        $validated = $request->validated();
         $data      = $validated['tag'];
 
         $tag = Tag::create($data);
-
         $routes = $this->getRoutes($tag);
 
-        return redirect()->route('tags.show',compact('tag','routes'));
+        return redirect()->route("tags.show",compact('tag','routes'));
 
     }
 
@@ -80,9 +81,9 @@ class TagsController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Tag $tag
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function show( Tag $tag = null )
+    public function show( Tag $tag ): View
     {
         $routes = $this->getRoutes($tag);
         return view('admin.tags.show',compact('tag','routes'));
@@ -90,12 +91,11 @@ class TagsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * 
+     *
      * @param  \App\Models\Tag $category
-     * 
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function edit( Tag $tag = null )
+    public function edit( Tag $tag ): View
     {
         $routes = $this->getRoutes($tag);
         return view('admin.tags.edit',compact('tag','routes'));
@@ -104,38 +104,30 @@ class TagsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\Admin\Tags\UpdateRequest $request
      * @param \App\Models\Tag $tag
-     * 
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update( UpdateRequest $request = null, Tag $tag = null )
+    public function update( UpdateRequest $request, Tag $tag ): RedirectResponse
     {
-
-        $validated = $request->validated();      
-        $data      = $validated['tag'];
+        $validated = $request->validated();
+        $data = $validated['tag'];
         $tag->update($data);
-
-        $routes = $this->getRoutes($tag);
-
-        return redirect()->route('tags.show',compact('tag','routes'));
-
+        return redirect()->route('tags.show',compact('tag'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Tag $tag
-     * 
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\View\View
      */
-    public function delete( Tag $tag = null )
+    public function delete( Tag $tag ): View
     {
-
         $routes = $this->getRoutes($tag);
-
-        return view('admin.tags.delete',compact('tag','routes'));
-
+        return view('admin.tags.delete', compact('tag','routes'));
     }
 
     /**
@@ -143,21 +135,13 @@ class TagsController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Tag $tag
-     * 
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy( Request $request = null, Tag $tag = null )
+    public function destroy( Tag $tag ): RedirectResponse
     {
-
-        if( ( $request->query('answer') !== null ) && ( $request->query('answer') == 1 ) ){
-            $tag->delete();
-            return redirect()->route('tags.index');
-        }
-
-        $routes = $this->getRoutes($tag);
-
-        return redirect()->route('tags.show',compact('tag','route'));
-
+        $tag->delete();
+        return redirect()->route('tags.index');
     }
 
 }

@@ -58,10 +58,10 @@
     </div>
     <div class="row pt-4" >
         <div class="col-3" >
-            <label class="form-label" for="post-tags" >Tags</label>
+            <p><label class="form-label" for="post-tags" >Tags</label></p>
             {!! tags_checkbox() !!}
         </div>
-    </div>    
+    </div>
     <div class="row pt-4" >
         <div class="col-6" >
             <label class="form-label" >Description</label>

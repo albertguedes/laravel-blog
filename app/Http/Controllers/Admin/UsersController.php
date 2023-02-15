@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\StoreRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
 use App\Models\User;
+
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -31,123 +33,173 @@ class UsersController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the users.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(): View
     {
+
         $users = User::orderBy('id','ASC')->paginate(10);
-        return view('admin.users.index',compact('users'));
+
+        $view = 'admin.users.index';
+        $data = compact('users');
+
+        return view($view,$data);
+
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the user data.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\User $user
+     * @return \Illuminate\Contracts\View\View
      */
-    public function create()
+    public function show( User $user ): View
+    {
+
+        $routes = $this->getRoutes($user);
+
+        $view = 'admin.users.show';
+        $data = compact('user','routes');
+
+        return view($view,$data);
+
+    }
+
+    /**
+     * Show the form for creating a new user.
+     *
+    * @return \Illuminate\Contracts\View\View
+     */
+    public function create(): View
     {
         return view('admin.users.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store( StoreRequest $request )
+    public function store( StoreRequest $request ): RedirectResponse
     {
 
-        $validated = $request->validated();
+        if( $request->fails() ){
 
-        $data = $validated['user'];
+            $errors = $request->errors();
 
-        $data['password'] = Hash::make($data['password']);
+            $route = 'admin.users.create';
+            $parameters = compact('errors');
 
-        $user = User::create($data);
+        }
+        else{
 
-        return redirect()->route('users.show',compact('user'));
+            $validated = $request->validated();
+            $data = $validated['user'];
+            $data['password'] = Hash::make($data['password']);
 
-    }
+            $user = User::create($data);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show( User $user )
-    {
-        $routes = $this->getRoutes($user);
-        return view('admin.users.show',compact('user','routes'));
+            $route = 'admin.users.show';
+            $parameters = compact('user');
+
+        }
+
+        return redirect()->route($route,$parameters);
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\User $user
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit( User $user )
+    public function edit( User $user ): View
     {
+
         $routes = $this->getRoutes($user);
-        return view('admin.users.edit',compact('user','routes'));
+
+        $view = 'admin.users.edit';
+        $data = compact('user','routes');
+
+        return view($view, $data);
+
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\Admin\Users\UpdateRequest $request
+     * @param  \App\Models\User $user
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update( UpdateRequest $request, User $user )
+    public function update( UpdateRequest $request, User $user ): RedirectResponse
     {
 
         $validated = $request->validated();
-        
+
         $data = $validated['user'];
 
         if( isset($data['password']) || !empty($data['password']) ){
             $data['password'] = Hash::make($data['password']);
         }
-    
+
         $user->update($data);
 
-        return redirect()->route('users.show',compact('user'));
+        $route = 'users.show';
+        $parameters = compact('user');
+
+        return redirect()->route($route,$parameters);
 
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\User $user
+     * @return \Illuminate\Contracts\View\View
      */
-    public function delete( User $user )
+    public function delete( User $user ): View
     {
+
         $routes = $this->getRoutes($user);
-        return view('admin.users.delete',compact('user','routes'));
+
+        $view = 'admin.users.delete';
+        $data = compact( 'user', 'routes' );
+
+        return view($view,$data);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy( Request $request, User $user )
+    public function destroy( Request $request, User $user ): RedirectResponse
     {
 
-        if( ( $request->query('answer') !== null ) && ( $request->query('answer') == 1 ) ){
+        // Default route and parameter.
+        $route = 'users.show';
+        $parameters = compact('user');
+
+        if( ( $request->query('answer') !== null ) &&
+            ( $request->query('answer') == 1 )
+        ){
+
             $user->delete();
-            return redirect()->route('users.index');
+
+            $route = 'users.index';
+            $parameters = [];
+
         }
 
-        $routes = $this->getRoutes($user);
-        return redirect()->route('users.show',compact('user'));
+        return redirect()->route($route,$parameters);
 
     }
 
