@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Collection;
 
 if(!function_exists('category_select')){
 
@@ -13,13 +15,21 @@ if(!function_exists('category_select')){
      *
      * @return string $html;
      */
-    function category_select( string $name = '', Category $current = null ){
+    function category_select( Post $post = null ): string {
 
-        // Get root category.
-        $root = Category::where('parent_id',null)->with('parent','children')->first();
+        // Get all roots categories.
+        $roots = Category::where('parent_id',null)
+                        ->with('children')
+                        ->orderBy('title')
+                        ->get();
 
-        $html="<select class='form-select' aria-label='Category Selector' name='".$name."' >";
-        $html.=category_select_option($root,0,$current);
+        $current = $roots->first();
+        if ($post) {
+            $current = $post->category;
+        }
+
+        $html="<select class='form-select' aria-label='Category Selector' name='post[category_id]' >";
+        $html.=category_select_option($roots,0,$current);
         $html.="</select>";
 
         return $html;
@@ -29,28 +39,26 @@ if(!function_exists('category_select')){
     /**
      * Create option of selector and options of subcategory if exists.
      *
-     * @param \App\Models\Category $category
+     * @param Collection $categories
      *
      * @return string $html;
      */
-    function category_select_option( Category $category = null, int $level = 0, Category $current = null ){
+    function category_select_option( Collection $categories, int $level, Category $current ): string {
 
         $html='';
-        if( !is_null($category) ){
+        if( count($categories) > 0 ){
+            foreach ($categories as $category) {
 
-            // Verify if category is the same of current category.
-            $is_current = ( !is_null($current) && ( $category->id == $current->id) );
-            ( $is_current ) ? $selected="selected='selected'" : $selected="";
+                ($category->id == $current->id ) ? $selected="selected='selected'": $selected="";
 
-            $html.="<option value='".$category->id."' ".$selected." >".str_repeat('-',$level)." ".$category->title."</option>";
-            // If $category has children, print then.
-            if( count($category->children) > 0 ){
-                foreach( $category->children as $child ){
-                    $html.=category_select_option($child,$level+1,$current);
+                $html.="<option value='{$category->id}' {$selected} >".str_repeat('-',$level).$category->title;
+                if($category->children){
+                    $html.=category_select_option($category->children,$level+1,$current);
                 }
-            }
 
+            }
         }
+
         return $html;
 
     }
@@ -62,12 +70,10 @@ if(!function_exists('tags_checkbox')){
     /**
      * Generate a set of checkbox to select the tags.
      *
-     * @param array $tags_selected - an array with ids of previously checked tags.
-     *
-     * @return $html - the html code with the checkbox to select.
-     *
+     * @param Post $post
+     * @return $html
      */
-    function tags_checkbox( array $tags_selected = [] ){
+    function tags_checkbox( Post $post = null ): string {
 
         $tags = Tag::IsActive()
                     ->select(['id','title'])
@@ -77,19 +83,18 @@ if(!function_exists('tags_checkbox')){
         $html="";
         foreach($tags as $tag){
 
-
             // Verify if exists tags previouly selected.
             // If yes, checked the checkbox of that tag.
             $checked='';
-            if( count($tags_selected) > 0 ){
-                foreach( $tags_selected as $tag_id ){
-                    if($tag->id == $tag_id) $checked="checked='checked'";
+            if( $post && $post->tags->count() > 0 ){
+                foreach( $post->tags as $curr_tag ){
+                    if($tag->id == $curr_tag->id) $checked="checked='checked'";
                 }
             }
 
-            $html.="<input type='checkbox' value='".$tag->id."' ".$checked." >&nbsp;";
+            $html.="<input type='checkbox' name='post[tags][]' value='".$tag->id."' ".$checked." >&nbsp;&nbsp;&nbsp;";
             $html.=ucwords($tag->title);
-            $html.="&nbsp;";
+            $html.="<br><br>";
 
         }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Posts\StoreRequest;
 use App\Http\Requests\Admin\Posts\UpdateRequest;
+use App\Models\Category;
 use App\Models\Post;
 
 use Illuminate\Http\RedirectResponse;
@@ -14,7 +15,7 @@ class PostsController extends Controller
 {
 
     /**
-     * Undocumented function
+     * Get the routes for tabs.
      *
      * @param Post $post
      * @return array
@@ -39,7 +40,7 @@ class PostsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function index(): View
     {
@@ -69,12 +70,21 @@ class PostsController extends Controller
     {
 
         $validated = $request->validated();
-        $data      = $validated['post'];
+        $data = $validated['post'];
 
-        $post = Post::create($data);
+        $post = new Post($data);
+        $post->save();
+
+        $post->category()->associate( Category::findOrFail($data['category_id']) );
+        $post->tags()->sync($data['tags']);
+
+
         $routes = $this->getRoutes($post);
 
-        return redirect()->route('posts.show',compact('post','routes'));
+        $route = 'posts.show';
+        $parameters = compact('post','routes');
+
+        return redirect()->route($route,$parameters);
 
     }
 
@@ -113,8 +123,14 @@ class PostsController extends Controller
     {
 
         $validated = $request->validated();
-        $data      = $validated['post'];
+        $data = $validated['post'];
+
+        $category = Category::findOrFail($data['category_id']);
+
         $post->update($data);
+        $post->category_id = $category->id;
+        $post->tags()->sync($data['tags']);
+        $post->save();
 
         $routes = $this->getRoutes($post);
 

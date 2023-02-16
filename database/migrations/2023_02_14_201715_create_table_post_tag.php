@@ -14,23 +14,11 @@ class CreateTablePostTag extends Migration
     public function up()
     {
 
-        Schema::create('table_post_tag', function (Blueprint $table) {
+        Schema::create('post_tag', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('created_at');
-            $table->unsignedBigInteger('post_id')
-                  ->nullable()
-                  ->default(null);
-            $table->foreign('post_id')
-                  ->references('id')
-                  ->on('posts')
-                  ->onDelete('set null');
-            $table->unsignedBigInteger('tag_id')
-                  ->nullable()
-                  ->default(null);
-            $table->foreign('tag_id')
-                  ->references('id')
-                  ->on('tags')
-                  ->onDelete('set null');
+            $table->timestamp('created_at')->nullable();
+            $table->foreignId('post_id')->constrained()->onDelete('cascade');
+            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
         });
 
     }

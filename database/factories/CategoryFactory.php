@@ -24,7 +24,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
 
-        $sentence = $this->faker->unique()->sentence(4); 
+        $sentence = $this->faker->unique()->sentence(4);
 
         $created_at  = $this->faker->dateTime();
         $updated_at  = $this->faker->dateTimeBetween($created_at,'now');
@@ -37,4 +37,5 @@ class CategoryFactory extends Factory
         return compact('created_at','updated_at','parent_id','is_active','title','slug','description');
 
     }
+
 }

@@ -7,20 +7,19 @@
     </ul>
 </div>
 @endif
+
 <form method="POST" action="{{ $route }}" >
+
     @csrf
+
     @if( isset($method) )
     <input type="hidden" name="_method" value="{{ $method }}">
     @endif
+
     @if( isset($category) && !is_null($category) )
     <input type="hidden" name="category[id]" value="{{ $category->id }}" >
     @endif
-    <div class="row pt-4" >
-        <div class="col-3" >
-            <label class="form-label" for="parent_id" >Parent Category</label>
-            {!! category_select( 'category[parent_id]',$category->parent) !!}
-        </div>
-    </div>
+
     <div class="row pt-4" >
         <div class="col-3" >
             <div class="form-check form-switch" >
@@ -30,6 +29,14 @@
             </div>
         </div>
     </div>
+
+    <div class="row pt-4" >
+        <div class="col-3" >
+            <label class="form-label" for="parent_id" >Parent Category</label>
+            {!! category_select( 'category[parent_id]',$category->parent) !!}
+        </div>
+    </div>
+
     <div class="row pt-4" >
         <div class="col-3" >
             <label class="form-label" >Title</label>
@@ -39,6 +46,7 @@
             @enderror
         </div>
     </div>
+
     <div class="row pt-4" >
         <div class="col-3" >
             <label class="form-label" >Slug</label>
@@ -48,6 +56,7 @@
             @enderror
         </div>
     </div>
+
     <div class="row pt-4" >
         <div class="col-6" >
             <label class="form-label" >Description</label>
@@ -57,9 +66,11 @@
             @enderror
         </div>
     </div>
+
     <div class="row pt-4" >
         <div class="col-3" >
             <input type="submit" class="btn btn-primary" value="Submit" />
         </div>
     </div>
+
 </form>
