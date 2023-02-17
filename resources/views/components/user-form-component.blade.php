@@ -15,7 +15,7 @@
             <div class="col-3" >
                 <div class="form-check form-switch">
                     <input type="hidden" name="user[is_active]" value=0 >
-                    <input class="form-check-input" type="checkbox" name="user[is_active]" id="check_is_active" @if( isset($user->is_active) && $user->is_active ) checked="checked" @endif value='{{ ($user->is_active) ? 0 : 1 }}' >
+                    <input class="form-check-input" type="checkbox" name="user[is_active]" id="check_is_active" @if( isset($user->is_active) && $user->is_active ) checked="checked" @endif value='{{ $user->is_active }}' >
                     <label class="form-check-label" for="check_is_active">Is Active</label>
                 </div>
             </div>

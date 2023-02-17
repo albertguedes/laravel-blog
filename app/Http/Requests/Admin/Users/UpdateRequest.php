@@ -7,6 +7,7 @@ use Illuminate\Validation\Rules\Password;
 
 class UpdateRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,11 +28,13 @@ class UpdateRequest extends FormRequest
 
         $user = $this->request->get('user');
 
+        //dd($this->request);
+
         $rules = [
             "user.name"      => "required|string|min:4|max:255",
             "user.username"  => "required|string|min:5|max:255|unique:App\Models\User,username,".$user['id'],
             "user.email"     => "required|string|min:5|max:255|email:rfc|unique:App\Models\User,email,".$user['id'],
-            "user.is_active" => "required|in:0,1"
+            "user.is_active" => "required|in:0,1",
         ];
 
         if( !empty( $user['password'] ) ) {
@@ -46,4 +49,5 @@ class UpdateRequest extends FormRequest
         return $rules;
 
     }
+
 }

@@ -125,11 +125,13 @@ class UsersController extends Controller
     {
 
         $validated = $request->validated();
+
         $data = $validated['user'];
 
         if( isset($data['password']) || !empty($data['password']) ){
             $data['password'] = Hash::make($data['password']);
         }
+
 
         $user->update($data);
         $user->save();
