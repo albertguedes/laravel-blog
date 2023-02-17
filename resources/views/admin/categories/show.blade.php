@@ -3,7 +3,7 @@
 @section('content')
 <div class="row card shadow" >
     <div class="card-body" >
-        <div class="col-12 py-2" >
+        <div class="col-12" >
             @include('partials.admin.tabs',compact('routes'))
         </div>
         <div class="col-12 py-3" >

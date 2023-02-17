@@ -24,9 +24,9 @@ class StoreRequest extends FormRequest
     public function rules()
     {
 
-        $rules = [
-            "category.parent_id"   => "required|integer",
-            "category.is_active"   => "required|boolean",           
+$rules = [
+            "category.parent_id"   => "integer|exists:categories,id",
+            "category.is_active"   => "required|boolean",
             "category.title"       => "required|string|min:4|max:255|unique:\App\Models\Category,title",
             "category.slug"        => "required|string|min:4|max:255|unique:\App\Models\Category,slug",
             "category.description" => "required|string|min:5|max:255",

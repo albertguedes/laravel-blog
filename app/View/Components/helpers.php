@@ -15,7 +15,7 @@ if(!function_exists('category_select')){
      *
      * @return string $html;
      */
-    function category_select( Post $post = null ): string {
+    function category_select( Category $current = null, string $name ): string {
 
         // Get all roots categories.
         $roots = Category::where('parent_id',null)
@@ -23,12 +23,12 @@ if(!function_exists('category_select')){
                         ->orderBy('title')
                         ->get();
 
-        $current = $roots->first();
-        if ($post) {
-            $current = $post->category;
+        if (!$current) {
+            $current = $roots->first();
         }
 
-        $html="<select class='form-select' aria-label='Category Selector' name='post[category_id]' >";
+        $html="<select class='form-select' aria-label='Category Selector' name='{$name}' >";
+        $html.="<option value='0' >None</option>";
         $html.=category_select_option($roots,0,$current);
         $html.="</select>";
 
@@ -51,7 +51,7 @@ if(!function_exists('category_select')){
 
                 ($category->id == $current->id ) ? $selected="selected='selected'": $selected="";
 
-                $html.="<option value='{$category->id}' {$selected} >".str_repeat('-',$level).$category->title;
+                $html.="<option value='{$category->id}' {$selected} >".str_repeat('-',$level).$category->title."</option>";
                 if($category->children){
                     $html.=category_select_option($category->children,$level+1,$current);
                 }

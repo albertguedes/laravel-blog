@@ -70,21 +70,19 @@ class PostsController extends Controller
     {
 
         $validated = $request->validated();
-        $data = $validated['post'];
 
-        $post = new Post($data);
+        $post = Post::create($validated['post']);
+
+        // Add ( or not ) new tags.
+        if (isset($validated['tags'])) {
+            $post->tags()->sync($validated['tags']);
+        }
+
         $post->save();
-
-        $post->category()->associate( Category::findOrFail($data['category_id']) );
-        $post->tags()->sync($data['tags']);
-
 
         $routes = $this->getRoutes($post);
 
-        $route = 'posts.show';
-        $parameters = compact('post','routes');
-
-        return redirect()->route($route,$parameters);
+        return redirect()->route('posts.show',compact('post','routes'));
 
     }
 
@@ -123,13 +121,11 @@ class PostsController extends Controller
     {
 
         $validated = $request->validated();
-        $data = $validated['post'];
 
-        $category = Category::findOrFail($data['category_id']);
+        $post->update($validated['post']);
 
-        $post->update($data);
-        $post->category_id = $category->id;
-        $post->tags()->sync($data['tags']);
+        // Add ( or not ) new tags.
+        $post->tags()->sync($validated['tags']);
         $post->save();
 
         $routes = $this->getRoutes($post);

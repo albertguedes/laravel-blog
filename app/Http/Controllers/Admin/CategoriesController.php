@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\StoreRequest;
 use App\Http\Requests\Admin\Categories\UpdateRequest;
 use App\Models\Category;
+use Illuminate\View\View;
 
 class CategoriesController extends Controller
 {
 
     /**
      * Get routes for the tabs.
+     *
+     * @param \App\Models\Category $category
+     * @return array
      */
-    protected function getRoutes( Category $category = null ){
+    protected function getRoutes( Category $category ): array {
         return [
             [
                 'url' => route('categories.show',compact('category')),
@@ -35,12 +40,13 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
 
         $categories = Category::orderBy('id','ASC')->paginate(10);
+
         return view('admin.categories.index',compact('categories'));
 
     }
@@ -48,9 +54,9 @@ class CategoriesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin.categories.create');
     }
@@ -58,20 +64,19 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\Admin\Categories\StoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store( StoreRequest $request )
+    public function store( StoreRequest $request ): RedirectResponse
     {
 
         $validated = $request->validated();
         $data      = $validated['category'];
 
         $category = Category::create($data);
+        $category->save();
 
-        $routes = $this->getRoutes($category);
-
-        return redirect()->route('categories.show',compact('category','routes'));
+        return redirect()->route('categories.show',compact('category'));
 
     }
 
@@ -79,9 +84,10 @@ class CategoriesController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Category $category
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
+     *
      */
-    public function show( Category $category = null )
+    public function show( Category $category ): View
     {
         $routes = $this->getRoutes($category);
         return view('admin.categories.show',compact('category','routes'));
@@ -91,10 +97,9 @@ class CategoriesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Category $category
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function edit( Category $category = null )
+    public function edit( Category $category = null ): View
     {
         $routes = $this->getRoutes($category);
         return view('admin.categories.edit',compact('category','routes'));
@@ -103,21 +108,25 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\Admin\Categories\UpdateRequest $request
      * @param \App\Models\Category $category
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update( UpdateRequest $request, Category $category = null )
+    public function update( UpdateRequest $request, Category $category = null ): RedirectResponse
     {
 
         $validated = $request->validated();
+
         $data      = $validated['category'];
+        if (isset($validated['category_id'])) {
+            $data['parent_id'] = $validated['category_id'];
+        }
+
         $category->update($data);
+        $category->save();
 
-        $routes = $this->getRoutes($category);
-
-        return redirect()->route('categories.show',compact('category','routes'));
+        return redirect()->route('categories.show',compact('category'));
 
     }
 
@@ -126,9 +135,9 @@ class CategoriesController extends Controller
      *
      * @param \App\Models\Category $category
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function delete( Category $category = null )
+    public function delete( Category $category = null ): View
     {
         $routes = $this->getRoutes($category);
         return view('admin.categories.delete',compact('category','routes'));
@@ -140,19 +149,14 @@ class CategoriesController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Category $category
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy( Request $request, Category $category )
+    public function destroy( Category $category ): RedirectResponse
     {
 
-        if( !is_null( $request->query('answer') ) && ( $request->query('answer') == 1 ) ){
-            $category->delete();
-            return redirect()->route('categories.index');
-        }
+        $category->delete();
 
-        $routes = $this->getRoutes($category);
-
-        return redirect()->route('categories.show',compact('category','route'));
+        return redirect()->route('categories.index');
 
     }
 

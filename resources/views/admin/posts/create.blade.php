@@ -8,7 +8,9 @@
         </div>
         <div class="col-12 py-2" >
             @include('partials.admin.posts.postform',[
-                'route' => route('posts.store')
+                'route'  => route('posts.store'),
+                'post'   => null,
+                'method' => 'POST'
             ])
         </div>
     </div>

@@ -57,11 +57,8 @@
     <div class="row pt-4" >
         <div class="col-3" >
             <label class="form-label" for="post-category" >Category</label>
-            @if(isset($post))
-            {!! category_select($post) !!}
-            @else
-            {!! category_select() !!}
-            @endif
+            {{ isset($post) ? $current = $post->category : $current = null }}
+            {!! category_select($current,'post[category_id]') !!}
         </div>
     </div>
 

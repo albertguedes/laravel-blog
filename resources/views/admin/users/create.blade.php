@@ -6,7 +6,7 @@
         <h1 class="text-capitalize" >Create User</h1>
     </div>
     <div class="col-12" >
-        @include('partials.admin.users.userform',[ 'route' => route('users.store') ])
+        <x-user-form-component action="{{ route('users.store') }}" method="POST" :user=null />
     </div>
 </div>
 @endsection

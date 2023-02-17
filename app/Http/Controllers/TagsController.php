@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 
+use Illuminate\View\View;
+
 class TagsController extends Controller
 {
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
 
         $tags = Tag::IsActive()->select('slug','title')
@@ -25,18 +27,12 @@ class TagsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Tag $tag
+     * @return \Illuminate\View\View
      */
     public function show(Tag $tag)
     {
-
-        if($tag->is_active){
-            return view('tag',compact('tag'));
-        }
-
-        return redirect()->route('404');
-
+        return view('tag',compact('tag'));
     }
 
 }

@@ -33,7 +33,7 @@
     <div class="row pt-4" >
         <div class="col-3" >
             <label class="form-label" for="parent_id" >Parent Category</label>
-            {!! category_select( 'category[parent_id]',$category->parent) !!}
+            {!! category_select($category->parent,'category[parent_id]') !!}
         </div>
     </div>
 

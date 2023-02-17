@@ -86,26 +86,14 @@ class UsersController extends Controller
     public function store( StoreRequest $request ): RedirectResponse
     {
 
-        if( $request->fails() ){
+        $validated = $request->validated();
+        $data = $validated['user'];
+        $data['password'] = Hash::make($data['password']);
 
-            $errors = $request->errors();
+        $user = User::create($data);
 
-            $route = 'admin.users.create';
-            $parameters = compact('errors');
-
-        }
-        else{
-
-            $validated = $request->validated();
-            $data = $validated['user'];
-            $data['password'] = Hash::make($data['password']);
-
-            $user = User::create($data);
-
-            $route = 'admin.users.show';
-            $parameters = compact('user');
-
-        }
+        $route = 'users.show';
+        $parameters = compact('user');
 
         return redirect()->route($route,$parameters);
 
@@ -122,10 +110,7 @@ class UsersController extends Controller
 
         $routes = $this->getRoutes($user);
 
-        $view = 'admin.users.edit';
-        $data = compact('user','routes');
-
-        return view($view, $data);
+        return view('admin.users.edit', compact('user','routes'));
 
     }
 
@@ -140,7 +125,6 @@ class UsersController extends Controller
     {
 
         $validated = $request->validated();
-
         $data = $validated['user'];
 
         if( isset($data['password']) || !empty($data['password']) ){
@@ -148,11 +132,9 @@ class UsersController extends Controller
         }
 
         $user->update($data);
+        $user->save();
 
-        $route = 'users.show';
-        $parameters = compact('user');
-
-        return redirect()->route($route,$parameters);
+        return redirect()->route('users.show',compact('user'));
 
     }
 

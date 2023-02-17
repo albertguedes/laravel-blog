@@ -27,14 +27,14 @@ class UpdateRequest extends FormRequest
 
         $category = $this->request->get('category');
 
-        $rules = [ 
-             "category.parent_id"   => "required|integer",
+        $rules = [
+             "category.parent_id"   => "integer|exists:categories,id",
              "category.is_active"   => "required|boolean",
              "category.title"       => "required|string|min:4|max:255|unique:\App\Models\Category,title,".$category['id'],
              "category.slug"        => "required|string|min:4|max:255|unique:\App\Models\Category,slug,".$category['id'],
-             "category.description" => "required|string|min:5|max:255",
+             "category.description" => "required|string|min:5|max:255"
         ];
- 
+
         return $rules;
 
     }

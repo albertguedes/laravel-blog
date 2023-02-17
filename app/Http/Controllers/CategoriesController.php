@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Custom\TreeCategory;
 use App\Models\Category;
 
+use Illuminate\View\View;
+
 class CategoriesController extends Controller
 {
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
 
         $root = Category::where('parent_id',null)->first();
@@ -27,18 +29,12 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Category $category
+     * @return \Illuminate\View\View
      */
-    public function show( Category $category )
+    public function show( Category $category ): View
     {
-
-        if($category->is_active){
-            return view('category',compact('category'));
-        }
-
-        return redirect()->route('404');
-        
+        return view('category',compact('category'));
     }
-   
+
 }
