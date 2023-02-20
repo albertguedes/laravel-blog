@@ -7,45 +7,25 @@ use App\Http\Requests\Admin\Users\StoreRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
 use App\Models\User;
 
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\View\View;
 
 class UsersController extends Controller
 {
 
-    protected function getRoutes( User $user ){
-        return [
-            [
-                'url' => route('users.show',compact('user')),
-                'name' => 'Show'
-            ],
-            [
-                'url' => route('users.edit',compact('user')),
-                'name' => 'Edit'
-            ],
-            [
-                'url' => route('users.delete',compact('user')),
-                'name' => 'Delete'
-            ],
-        ];
-    }
-
     /**
      * Display a listing of the users.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\View\View
      */
     public function index(): View
     {
 
         $users = User::orderBy('id','ASC')->paginate(10);
 
-        $view = 'admin.users.index';
-        $data = compact('users');
-
-        return view($view,$data);
+        return view('admin.users.index',compact('users'));
 
     }
 
@@ -53,24 +33,17 @@ class UsersController extends Controller
      * Display the user data.
      *
      * @param  \App\Models\User $user
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\View\View
      */
     public function show( User $user ): View
     {
-
-        $routes = $this->getRoutes($user);
-
-        $view = 'admin.users.show';
-        $data = compact('user','routes');
-
-        return view($view,$data);
-
+        return view('admin.users.show', compact('user') );
     }
 
     /**
      * Show the form for creating a new user.
      *
-    * @return \Illuminate\Contracts\View\View
+    * @return \Illuminate\View\View
      */
     public function create(): View
     {
@@ -78,44 +51,37 @@ class UsersController extends Controller
     }
 
     /**
-     * Store a newly created user in storage.
+     * Store a newly created user.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\Admin\Users\StoreRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store( StoreRequest $request ): RedirectResponse
     {
 
         $validated = $request->validated();
-        $data = $validated['user'];
-        $data['password'] = Hash::make($data['password']);
 
-        $user = User::create($data);
+        $validated['user']['password'] = Hash::make($validated['user']['password']);
 
-        $route = 'users.show';
-        $parameters = compact('user');
+        $user = User::create($validated['user']);
 
-        return redirect()->route($route,$parameters);
+        return redirect()->route('users.show',compact('user'));
 
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the user.
      *
      * @param  \App\Models\User $user
      * @return \Illuminate\Contracts\View\View
      */
     public function edit( User $user ): View
     {
-
-        $routes = $this->getRoutes($user);
-
-        return view('admin.users.edit', compact('user','routes'));
-
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the user.
      *
      * @param  \App\Http\Requests\Admin\Users\UpdateRequest $request
      * @param  \App\Models\User $user
@@ -126,14 +92,16 @@ class UsersController extends Controller
 
         $validated = $request->validated();
 
-        $data = $validated['user'];
-
-        if( isset($data['password']) || !empty($data['password']) ){
-            $data['password'] = Hash::make($data['password']);
+        // If password was given, its crypted , else, the variable is droped to
+        // not try save empty password on database ( this causes error ).
+        if( isset($validated['user']['password']) && !empty($validated['user']['password']) ){
+            $validated['user']['password'] = Hash::make($validated['user']['password']);
+        }
+        else{
+             unset($validated['user']['password']);
         }
 
-
-        $user->update($data);
+        $user->update($validated['user']);
         $user->save();
 
         return redirect()->route('users.show',compact('user'));
@@ -141,25 +109,18 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for delete the user.
      *
      * @param  \App\Models\User $user
      * @return \Illuminate\Contracts\View\View
      */
     public function delete( User $user ): View
     {
-
-        $routes = $this->getRoutes($user);
-
-        $view = 'admin.users.delete';
-        $data = compact( 'user', 'routes' );
-
-        return view($view,$data);
-
+        return view('admin.users.delete', compact( 'user') );
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete the the user.
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User $user
@@ -168,22 +129,9 @@ class UsersController extends Controller
     public function destroy( Request $request, User $user ): RedirectResponse
     {
 
-        // Default route and parameter.
-        $route = 'users.show';
-        $parameters = compact('user');
+        $user->delete();
 
-        if( ( $request->query('answer') !== null ) &&
-            ( $request->query('answer') == 1 )
-        ){
-
-            $user->delete();
-
-            $route = 'users.index';
-            $parameters = [];
-
-        }
-
-        return redirect()->route($route,$parameters);
+        return redirect()->route('users.index');
 
     }
 

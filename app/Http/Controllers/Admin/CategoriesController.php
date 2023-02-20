@@ -9,33 +9,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\StoreRequest;
 use App\Http\Requests\Admin\Categories\UpdateRequest;
 use App\Models\Category;
+
 use Illuminate\View\View;
 
 class CategoriesController extends Controller
 {
 
-    /**
-     * Get routes for the tabs.
-     *
-     * @param \App\Models\Category $category
-     * @return array
-     */
-    protected function getRoutes( Category $category ): array {
-        return [
-            [
-                'url' => route('categories.show',compact('category')),
-                'name' => 'Show'
-            ],
-            [
-                'url' => route('categories.edit',compact('category')),
-                'name' => 'Edit'
-            ],
-            [
-                'url' => route('categories.delete',compact('category')),
-                'name' => 'Delete'
-            ],
-        ];
-    }
 
     /**
      * Display a listing of the resource.
@@ -71,12 +50,10 @@ class CategoriesController extends Controller
     {
 
         $validated = $request->validated();
-        $data      = $validated['category'];
 
-        $category = Category::create($data);
-        $category->save();
+        $category = Category::create($validated['category']);
 
-        return redirect()->route('categories.show',compact('category'));
+        return redirect()->route('categories.show', compact('category') );
 
     }
 
@@ -89,8 +66,7 @@ class CategoriesController extends Controller
      */
     public function show( Category $category ): View
     {
-        $routes = $this->getRoutes($category);
-        return view('admin.categories.show',compact('category','routes'));
+        return view('admin.categories.show', compact('category') );
     }
 
     /**
@@ -99,10 +75,9 @@ class CategoriesController extends Controller
      * @param  \App\Models\Category $category
      * @return \Illuminate\View\View
      */
-    public function edit( Category $category = null ): View
+    public function edit( Category $category ): View
     {
-        $routes = $this->getRoutes($category);
-        return view('admin.categories.edit',compact('category','routes'));
+        return view('admin.categories.edit',compact('category') );
     }
 
     /**
@@ -113,17 +88,16 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update( UpdateRequest $request, Category $category = null ): RedirectResponse
+    public function update( UpdateRequest $request, Category $category ): RedirectResponse
     {
 
         $validated = $request->validated();
 
-        $data      = $validated['category'];
         if (isset($validated['category_id'])) {
-            $data['parent_id'] = $validated['category_id'];
+            $validated['category']['parent_id'] = $validated['category_id'];
         }
 
-        $category->update($data);
+        $category->update($validated['category']);
         $category->save();
 
         return redirect()->route('categories.show',compact('category'));
@@ -134,13 +108,11 @@ class CategoriesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Category $category
-     *
      * @return \Illuminate\View\View
      */
-    public function delete( Category $category = null ): View
+    public function delete( Category $category ): View
     {
-        $routes = $this->getRoutes($category);
-        return view('admin.categories.delete',compact('category','routes'));
+        return view('admin.categories.delete', compact('category') );
     }
 
     /**

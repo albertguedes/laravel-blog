@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Auth\LoginRequest;
+
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class AuthController extends Controller
 {
@@ -16,15 +17,34 @@ class AuthController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function index(){
+    /**
+     * Redirect to login page.
+     *
+     * @return RedirectResponse
+     */
+    public function index(): RedirectResponse
+    {
         return redirect()->route('login');
     }
 
-    public function login(){
+    /**
+     * Login page.
+     *
+     * @return View
+     */
+    public function login(): View
+    {
         return view('admin.auth.login');
     }
 
-    public function authenticate( LoginRequest $request )
+    /**
+     * Authenticate the user and redirect to dashboard if ok, and to logout
+     * if not.
+     *
+     * @param \App\Http\Requests\Admin\Auth\LoginRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function authenticate( LoginRequest $request ): RedirectResponse
     {
 
         $validated = $request->validated();
@@ -33,22 +53,33 @@ class AuthController extends Controller
         $credentials['is_active'] = true;
 
         /**
-         * This works. If code editor acuse that some method dont exists, dont believe!
+         * This works. If code editor accuse that some method dont exists, dont believe!
          */
         $result = Auth::guard('web')->attempt($credentials);
 
         if( $result ){
+
             $user = Auth::guard('web')->user();
-            return redirect()->route('dashboard');
+
+            $redirect = redirect()->route('dashboard')->with('success','You are logged.');
+
+        }
+        else{
+
+            $redirect = redirect()->route('login')->with('danger','Wrong user or password.');
+
         }
 
-        return redirect()->route('login')->with('danger','Wrong user or password.');
+        return $redirect;
 
     }
 
     public function logout(){
+
         Auth::logout();
+
         return redirect()->route('login')->with('success','You are logged out.');
+
     }
 
 }

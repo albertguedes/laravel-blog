@@ -6,14 +6,21 @@ use Illuminate\View\Component;
 
 class CategoryFormComponent extends Component
 {
+
+    public $action;
+    public $method;
+    public $category;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($action,$method,$category)
     {
-        //
+        $this->action   = $action;
+        $this->method   = $method;
+        $this->category = $category;
     }
 
     /**

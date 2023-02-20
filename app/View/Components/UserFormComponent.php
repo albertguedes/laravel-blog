@@ -25,7 +25,6 @@ class UserFormComponent extends Component
         $this->user    = $user;
         $this->action  = $action;
         $this->method  = $method;
-
     }
 
     /**

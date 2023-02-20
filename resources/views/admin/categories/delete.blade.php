@@ -3,13 +3,16 @@
 @section('content')
 <div class="row card shadow" >
     <div class="card-body" >
+
         <div class="col-12" >
-            @include('partials.admin.tabs',compact('routes'))
+            <x-tabs-component prefix='categories' :model=$category />
         </div>
+
         <div class="col-12" >
             <h1 class="text-capitalize card-title" >Delete '<em>{{ $category->title }}</em>' ?</h1>
         </div>
-        <div class="col-12 pt-5" >
+
+        <div class="col-12" >
             <p class="text-center" >You are shure that want delete post '<em>{{ $category->title }}</em>' ?</p>
             <div class="row justify-content-center" >
                 <div class="col-1" >
@@ -24,6 +27,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 @endsection

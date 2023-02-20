@@ -1,4 +1,15 @@
 <div>
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <form action="{{ $action }}" method="POST" >
 
         @csrf
@@ -14,12 +25,13 @@
         <div class="row pt-4" >
             <div class="col-3" >
                 <div class="form-check form-switch">
-                    <input type="hidden" name="user[is_active]" value=0 >
-                    <input class="form-check-input" type="checkbox" name="user[is_active]" id="check_is_active" @if( isset($user->is_active) && $user->is_active ) checked="checked" @endif value='{{ $user->is_active }}' >
+                    <input type="hidden" name="user[is_active]" value="0" >
+                    <input class="form-check-input" type="checkbox" name="user[is_active]" id="check_is_active" {{ ( $user && $user->is_active ) ? 'checked="checked"' : '' }} value="1" >
                     <label class="form-check-label" for="check_is_active">Is Active</label>
                 </div>
             </div>
         </div>
+
         <div class="row pt-4" >
             <div class="col-3" >
                 <label class="form-label" >Name</label>
@@ -29,6 +41,7 @@
                 @enderror
             </div>
         </div>
+
         <div class="row pt-4" >
             <div class="col-3" >
                 <label class="form-label" >Username</label>
@@ -38,6 +51,7 @@
                 @enderror
             </div>
         </div>
+
         <div class="row pt-4" >
             <div class="col-3" >
                 <label class="form-label" >Email</label>
@@ -47,6 +61,7 @@
                 @enderror
             </div>
         </div>
+
         <div class="row pt-4" >
             <div class="col-3" >
                 <label class="form-label" >Password</label>
@@ -57,6 +72,7 @@
                 @enderror
             </div>
         </div>
+
         <div class="row pt-4" >
             <div class="col-3" >
                 <label class="form-label" >Confirm Password</label>
@@ -66,10 +82,12 @@
                 @enderror
             </div>
         </div>
+
         <div class="row pt-4" >
             <div class="col-3" >
                 <input type="submit" class="btn btn-primary" value="Submit" />
             </div>
         </div>
+
     </form>
 </div>

@@ -3,10 +3,12 @@
 @section('content')
 <div class="row card shadow" >
     <div class="card-body" >
+
         <div class="col-12" >
-            @include('partials.admin.tabs',compact('routes'))
+            <x-tabs-component prefix='categories' :model=$category />
         </div>
-        <div class="col-12 py-3" >
+
+        <div class="col-12" >
             <h1 class="text-capitalize card-title" >{{ $category->title }}</h1>
             <h6 class="text-secondary" >
                 <small>
@@ -15,7 +17,8 @@
                 </small>
             </h6>
         </div>
-        <div class="col-12 py-2" >
+
+        <div class="col-12" >
             <div class="w-50" >
                 <div class="row" >
                     <div class="col-3 pb-3 fw-bolder" >ID</div><div class="col-9 pb-3" >{{ $category->id }}</div>
@@ -27,6 +30,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 @endsection

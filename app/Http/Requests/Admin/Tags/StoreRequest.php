@@ -26,10 +26,10 @@ class StoreRequest extends FormRequest
     {
 
         $rules = [
-            "tag.is_active"   => "required|boolean",
             "tag.title"       => "required|string|min:4|max:255|unique:\App\Models\Tag,title",
             "tag.slug"        => "required|string|min:4|max:255|unique:\App\Models\Tag,slug",
             "tag.description" => "required|string|min:5|max:255",
+            "tag.is_active"   => "in:0,1"
         ];
 
         return $rules;
