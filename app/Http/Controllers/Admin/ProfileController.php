@@ -12,33 +12,18 @@ use App\Http\Requests\Admin\Profile\UpdateRequest;
 class ProfileController extends Controller
 {
 
-    protected function getRoutes(){
-        return [
-            [
-                'url' => route('profile'),
-                'name' => 'Show'
-            ],
-            [
-                'url' => route('profile.edit'),
-                'name' => 'Edit'
-            ]
-        ];
-    }
-
     /**
      * Show profile view.
      */
-    public function show(){ 
-        $routes = $this->getRoutes();
-        return view('admin.profile.show',compact('routes'));
+    public function show(){
+        return view('admin.profile.show');
     }
 
     /**
      * Show edit view.
      */
     public function edit( Request $request ){
-        $routes = $this->getRoutes();
-        return view('admin.profile.edit',compact('routes'));
+        return view('admin.profile.edit');
     }
 
     /**
@@ -48,13 +33,15 @@ class ProfileController extends Controller
     {
 
         $validated = $request->validated();
-        $data = $validated['profile'];
 
-        if( isset($data['password']) || !empty($data['password']) ){
-            $data['password'] = Hash::make($data['password']);
+        if( isset($validated['profile']['password']) && !empty($validated['profile']['password']) ){
+            $data['password'] = Hash::make($validated['profile']['password']);
         }
-    
-        Auth::user()->update($data);
+        else{
+            unset($validated['profile']['password']);
+        }
+
+        Auth::user()->update($validated['profile']);
 
         return redirect()->route('profile');
 

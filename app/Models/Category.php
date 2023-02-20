@@ -16,7 +16,7 @@ class Category extends Model
         'slug',
         'description'
     ];
-   
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -27,15 +27,23 @@ class Category extends Model
     }
 
     public function children(){
-        return $this->hasMany(Category::class,'parent_id')->with('children');
+        return $this->hasMany(Category::class,'parent_id')->with('children')->orderBy('title');
     }
-    
-    public function posts(){
-        return $this->hasMany(Post::class);
+
+    public function posts( $published = false ){
+
+        $query = $this->hasMany(Post::class);
+        $query->orderBy('title');
+        if ($published) {
+            $query->where('published', true);
+        }
+
+        return $query->get();
+
     }
 
     /**
-    * Scope a query to only include popular posts.
+    * Scope a query to only include active posts.
     * https://www.scratchcode.io
     * @param  \Illuminate\Database\Eloquent\Builder  $query
     * @return \Illuminate\Database\Eloquent\Builder

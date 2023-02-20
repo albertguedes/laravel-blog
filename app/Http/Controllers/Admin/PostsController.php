@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Posts\StoreRequest;
 use App\Http\Requests\Admin\Posts\UpdateRequest;
+use App\Models\Category;
 use App\Models\Post;
+
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class PostsController extends Controller
 {
 
-    protected function getRoutes( Post $post ){
+    /**
+     * Get the routes for tabs.
+     *
+     * @param Post $post
+     * @return array
+     */
+    protected function getRoutes( Post $post ): array {
         return [
             [
                 'url' => route('posts.show',compact('post')),
@@ -32,12 +40,12 @@ class PostsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
-
         $posts = Post::orderBy('id','ASC')->paginate(10);
+
         return view('admin.posts.index',compact('posts'));
 
     }
@@ -45,9 +53,9 @@ class PostsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin.posts.create');
     }
@@ -55,16 +63,22 @@ class PostsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\Admin\Posts\StoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store( StoreRequest $request )
+    public function store( StoreRequest $request ): RedirectResponse
     {
 
-        $validated = $request->validated();      
-        $data      = $validated['post'];
+        $validated = $request->validated();
 
-        $post = Post::create($data);
+        $post = Post::create($validated['post']);
+
+        // Add ( or not ) new tags.
+        if (isset($validated['tags'])) {
+            $post->tags()->sync($validated['tags']);
+        }
+
+        $post->save();
 
         $routes = $this->getRoutes($post);
 
@@ -75,10 +89,10 @@ class PostsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Post $post
+     * @return \Illuminate\View\View
      */
-    public function show( Post $post )
+    public function show( Post $post ): View
     {
         $routes = $this->getRoutes($post);
         return view('admin.posts.show',compact('post','routes'));
@@ -87,10 +101,10 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Post $post
+     * @return \Illuminate\View\View
      */
-    public function edit( Post $post )
+    public function edit( Post $post ): View
     {
         $routes = $this->getRoutes($post);
         return view('admin.posts.edit',compact('post','routes'));
@@ -99,16 +113,23 @@ class PostsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\Admin\Posts\UpdateRequest $request
+     * @param  Post $post
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update( UpdateRequest $request, Post $post )
+    public function update( UpdateRequest $request, Post $post ): RedirectResponse
     {
 
-        $validated = $request->validated();      
-        $data      = $validated['post'];
-        $post->update($data);
+        $validated = $request->validated();
+
+        if( !isset($validated['post']['tags'])) {
+            $validated['post']['tags'] = [];
+        }
+
+        $post->update($validated['post']);
+        // Add ( or not ) new tags.
+        $post->tags()->sync($validated['post']['tags']);
+        $post->save();
 
         $routes = $this->getRoutes($post);
 
@@ -119,10 +140,10 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Post $post
+     * @return \Illuminate\View\View
      */
-    public function delete( Post $post )
+    public function delete( Post $post ): View
     {
         $routes = $this->getRoutes($post);
         return view('admin.posts.delete',compact('post','routes'));
@@ -131,20 +152,13 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy( Request $request, Post $post )
+    public function destroy( Post $post ): RedirectResponse
     {
-
-        if( ( $request->query('answer') !== null ) && ( $request->query('answer') == 1 ) ){
-            $post->delete();
-            return redirect()->route('posts.index');
-        }
-
-        $routes = $this->getRoutes($post);
-        return redirect()->route('posts.show',compact('post','route'));
-
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 
 }

@@ -129,3 +129,37 @@ Breadcrumbs::for('categories.delete', function (BreadcrumbTrail $trail, $categor
     $trail->parent('categories.show',$categories);
     $trail->push("Delete", route('categories.delete', $categories));
 });
+
+
+/**
+ * Tags
+ */
+// Dashboard > Tags
+Breadcrumbs::for('tags.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Tags', route('tags.index'));
+});
+
+// Dashboard > Tags > Create
+Breadcrumbs::for('tags.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('tags.index');
+    $trail->push('Create', route('tags.create'));
+});
+
+// Home > Tags > [Tag]
+Breadcrumbs::for('tags.show', function (BreadcrumbTrail $trail, $tag) {
+    $trail->parent('tags.index');
+    $trail->push("'".$tag->title."'", route('tags.show', $tag));
+});
+
+// Home > Tags > [Tag] > Edit
+Breadcrumbs::for('tags.edit', function (BreadcrumbTrail $trail, $tags){
+    $trail->parent('tags.show',$tags);
+    $trail->push("Edit", route('tags.edit', $tags));
+});
+
+// Home > Tag > [Tag] > Delete
+Breadcrumbs::for('tags.delete', function (BreadcrumbTrail $trail, $tags){
+    $trail->parent('tags.show',$tags);
+    $trail->push("Delete", route('tags.delete', $tags));
+});

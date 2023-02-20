@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+
     use HasFactory;
 
     protected $fillable = [
@@ -16,6 +18,7 @@ class Post extends Model
         'slug',
         'description',
         'content',
+        'category_id'
     ];
 
     public function getRouteKeyName()
@@ -31,8 +34,12 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
+    }
+
     /**
-     * Scope a query to only include popular posts.
+     * Scope a query to only include published posts.
      * https://www.scratchcode.io
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder

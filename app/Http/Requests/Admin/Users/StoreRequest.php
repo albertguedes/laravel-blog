@@ -25,21 +25,21 @@ class StoreRequest extends FormRequest
     public function rules()
     {
 
-        $rules = [ 
-            "user.name"     => "required|string|min:4|max:255", 
+        $rules = [
+            "user.name"     => "required|string|min:4|max:255",
             "user.username" => "required|string|min:5|max:255|unique:\App\Models\User,username",
             "user.email"    => "required|string|min:5|max:255|email:rfc|unique:\App\Models\User,email",
-            "user.password" => [ 
+            "user.password" => [
                 'required',
                 'string',
                 'confirmed',
                 Password::min(8)->letters()->numbers()->mixedCase()->uncompromised()
             ],
-            "user.is_active" => "required|boolean"
+            "user.is_active" => "in:0,1"
         ];
 
         return $rules;
-    
+
     }
 
 }

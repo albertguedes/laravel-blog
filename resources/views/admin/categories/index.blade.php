@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 @section('title','Categories')
 @section('content')
-<div class="row" >
-    <div class="col-12 pt-5" >
-        <h1 class="text-capitalize" >Categories</h1>
+<div class="row card shadow" >
+    <div class="col-12 pt-5 card-body" >
+        <h1 class="text-capitalize card-title" >Categories</h1>
     </div>
-    <div class="col-12 py-5" >
+    <div class="col-12 py-5 card-body" >
         <a class="btn btn-primary" href="{{ route('categories.create') }}" ><i class="fas fa-plus"></i> Create Category</a>
     </div>
-    <div class="col-12" >
+    <div class="col-12 card-body" >
         @if( count($categories) > 0)
         <table class="table table-hover" >
             <thead>

@@ -10,6 +10,7 @@ use App\Models\User;
 
 class UserFactory extends Factory
 {
+
     /**
      * The name of the factory's corresponding model.
      *
@@ -26,7 +27,7 @@ class UserFactory extends Factory
     {
 
         $created_at        = $this->faker->dateTime();
-        $updated_at        = $this->faker->dateTimeBetween($created_at,'now');        
+        $updated_at        = $this->faker->dateTimeBetween($created_at,'now');
         $name              = $this->faker->name();
         $username          = $this->faker->username();
         $email             = $this->faker->unique()->safeEmail();
@@ -35,7 +36,17 @@ class UserFactory extends Factory
         $remember_token    = Str::random(10);
         $is_active         = $this->faker->boolean();
 
-        return compact('created_at','updated_at','name','username','email','email_verified_at','password','remember_token','is_active');
+        return compact(
+            'created_at',
+            'updated_at',
+            'name',
+            'username',
+            'email',
+            'email_verified_at',
+            'password',
+            'remember_token',
+            'is_active'
+        );
 
     }
 

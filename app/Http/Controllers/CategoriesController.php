@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Collection;
-use PhpParser\ErrorHandler\Collecting;
-
 use App\Custom\TreeCategory;
 use App\Models\Category;
+
+use Illuminate\View\View;
 
 class CategoriesController extends Controller
 {
@@ -15,34 +13,22 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
-
-        $root = Category::where('parent_id',null)->first();
-
-        $tree = TreeCategory::generate($root);
-
-        return view('categories',compact('tree'));
-
+        return view('categories');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Category $category
+     * @return \Illuminate\View\View
      */
-    public function show( Category $category )
+    public function show( Category $category ): View
     {
-
-        if($category->is_active){
-            return view('category',compact('category'));
-        }
-
-        return redirect()->route('404');
-        
+        return view('category',compact('category'));
     }
-   
+
 }

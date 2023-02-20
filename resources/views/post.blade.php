@@ -13,8 +13,12 @@
     <div class="col-12 py-3" >
         {{ $post->content }}
     </div>
+
+    @if( $post->category )
     <div class="col-12 py-3" >
         <a href="{{ route('category',['category'=>$post->category]) }}" ><i class="fas fa-sitemap"></i> {{ $post->category->title }}</a>
     </div>
+    @endif
+
 </div>
 @endsection

@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>@yield('title') | Admin {{ env('APP_NAME') }}</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" >
         <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" >
     </head>
-    <body>
+    <body class="admin-body-bg" >
         <div class="container-fluid" >
             <div class="row" >
                 <aside class="col-2 bg-dark fixed-top p-0 m-0 overflow-auto text-light" style="height:100%; min-height:100%;" >
@@ -26,7 +26,7 @@
                 </footer>
             </div>
         </div>
-        <script src="https://kit.fontawesome.com/f761473b22.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <script src="{{ asset('assets/js/f761473b22.js') }}" ></script>
+        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" ></script>
     </body>
 </html>
