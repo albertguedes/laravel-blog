@@ -5,7 +5,7 @@
     <div class="card-body" >
 
         <div class="col-12" >
-            @include('partials.admin.tabs',compact('routes'))
+            <x-tabs-component prefix='posts' :model=$post />
         </div>
         <div class="col-12 pt-5" >
             <h1 class="text-capitalize card-body" >Delete '<em>{{ $post->title }}</em>'</h1>

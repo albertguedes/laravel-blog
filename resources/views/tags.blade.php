@@ -7,11 +7,7 @@
         <h1 class="text-uppercase pb-3" >Tags</h1>
     </div>
     <div class="col-12" >
-        @forelse( $tags as $tag )
-        <a href="{{ route('tag',['tag'=>$tag]) }}" >{{ $tag->title }}</a>
-        @empty
-        <p>No tags created</p>
-        @endforelse
+        <x-tag-cloud-component />
     </div>
 </div>
 @endsection

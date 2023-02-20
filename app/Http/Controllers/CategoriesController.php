@@ -17,13 +17,7 @@ class CategoriesController extends Controller
      */
     public function index(): View
     {
-
-        $root = Category::where('parent_id',null)->first();
-
-        $tree = TreeCategory::generate($root);
-
-        return view('categories',compact('tree'));
-
+        return view('categories');
     }
 
     /**

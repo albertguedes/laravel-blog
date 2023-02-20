@@ -2,25 +2,22 @@
 
 namespace App\View\Components;
 
+use App\Models\Tag;
 use Illuminate\View\Component;
 
-class PostFormComponent extends Component
+class TagCloudComponent extends Component
 {
 
-    public $action;
-    public $method;
-    public $post;
+    public $tags;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($action,$method,$post)
+    public function __construct()
     {
-        $this->action = $action;
-        $this->method = $method;
-        $this->post   = $post;
+        $this->tags = Tag::IsActive()->orderBy('title')->get();
     }
 
     /**
@@ -30,7 +27,6 @@ class PostFormComponent extends Component
      */
     public function render()
     {
-        return view('components.post-form-component');
+        return view('components.tag-cloud-component');
     }
-
 }

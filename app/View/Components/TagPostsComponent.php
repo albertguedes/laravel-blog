@@ -2,25 +2,22 @@
 
 namespace App\View\Components;
 
+use App\Models\Tag;
 use Illuminate\View\Component;
 
-class PostFormComponent extends Component
+class TagPostsComponent extends Component
 {
 
-    public $action;
-    public $method;
-    public $post;
+    public $tag;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($action,$method,$post)
+    public function __construct($tag)
     {
-        $this->action = $action;
-        $this->method = $method;
-        $this->post   = $post;
+        $this->tag = $tag;
     }
 
     /**
@@ -30,7 +27,7 @@ class PostFormComponent extends Component
      */
     public function render()
     {
-        return view('components.post-form-component');
+        return view('components.tag-posts-component');
     }
 
 }

@@ -4,7 +4,7 @@
 <div class="row card shadow" >
     <div class="card-body" >
         <div class="col-12" >
-            @include('partials.admin.tabs',compact('routes'))
+            <x-tabs-component prefix='posts' :model=$post />
         </div>
         <div class="col-12 pt-5" >
             <h1 class="text-capitalize card-title" >{{ $post->title }}</h1>
@@ -39,7 +39,7 @@
 
                 <div class="col-1 pb-3 fw-bolder" >Tags</div>
                 <div class="col-11 pb-3 " >
-                    @if($post->tags)
+                    @if($post->tags->count() > 0)
                         @foreach($post->tags as $tag)
                         <a href="{{ route('tags.show',[ 'tag' => $tag ]) }}" >{{ $tag->title }}</a>,&nbsp;
                         @endforeach

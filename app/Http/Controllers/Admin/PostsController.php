@@ -122,10 +122,13 @@ class PostsController extends Controller
 
         $validated = $request->validated();
 
-        $post->update($validated['post']);
+        if( !isset($validated['post']['tags'])) {
+            $validated['post']['tags'] = [];
+        }
 
+        $post->update($validated['post']);
         // Add ( or not ) new tags.
-        $post->tags()->sync($validated['tags']);
+        $post->tags()->sync($validated['post']['tags']);
         $post->save();
 
         $routes = $this->getRoutes($post);

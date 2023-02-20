@@ -22,12 +22,12 @@ class CategoryMenuComponent extends Component
      */
     public function __construct($name,$current)
     {
-        $this->name = $name;
+        $this->name    = $name;
         $this->current = $current;
-        $this->roots = Category::where('parent_id',null)
-                               ->with('children')
-                               ->orderBy('title')
-                               ->get();
+        $this->roots   = Category::where('parent_id',null)
+                                 ->with('children')
+                                 ->orderBy('title')
+                                 ->get();
     }
 
     /**
@@ -53,7 +53,7 @@ class CategoryMenuComponent extends Component
         if( count($categories) > 0 ){
             foreach ($categories as $category) {
 
-                $selected = ( $current && $category->id == $current->parent_id) ? "selected='selected'" : "";
+                $selected = ( $current && ( $category->id == $current->id ) ) ? "selected='selected'" : "";
 
                 $html.="<option value='{$category->id}' {$selected} >".str_repeat('-',$level).$category->title."</option>";
                 if($category->children){

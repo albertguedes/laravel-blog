@@ -7,7 +7,7 @@
         <h1 class="text-uppercase pb-3" >Categories</h1>
     </div>
     <div class="col-12" >
-        {!! $tree !!}
+        <x-tree-category-component />
     </div>
 </div>
 @endsection

@@ -35,7 +35,8 @@
         <div class="row pt-4" >
             <div class="col-3" >
                 <label class="form-label" for="parent_id" >Parent Category</label>
-                <x-category-menu-component name="category[parent_id]" :current=$category />
+                @php $current = ($category) ? $category->parent : null @endphp
+                <x-category-menu-component name="category[parent_id]" :current="$current" />
             </div>
         </div>
 
