@@ -120,7 +120,7 @@ class PostTest extends TestCase
 
         $retrievedPost->delete();
 
-        $this->assertDeleted($retrievedPost);
+        $this->assertModelMissing($retrievedPost);
 
     }
 
