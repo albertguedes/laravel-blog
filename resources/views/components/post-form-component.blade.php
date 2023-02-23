@@ -66,11 +66,7 @@
         <div class="row pt-4" >
             <div class="col-12" >
                 <p><label class="form-label" for="post-tags" >Tags</label></p>
-                @if(isset($post))
-                {!! tags_checkbox($post) !!}
-                @else
-                {!! tags_checkbox() !!}
-                @endif
+                <x-tag-form-component :post="$post" />
             </div>
         </div>
 
