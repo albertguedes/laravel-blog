@@ -22,7 +22,7 @@ class ProfileController extends Controller
     /**
      * Show edit view.
      */
-    public function edit( Request $request ){
+    public function edit(){
         return view('admin.profile.edit');
     }
 
