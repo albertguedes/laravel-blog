@@ -34,14 +34,14 @@ class ProfileController extends Controller
 
         $validated = $request->validated();
 
-        if( isset($validated['profile']['password']) && !empty($validated['profile']['password']) ){
-            $data['password'] = Hash::make($validated['profile']['password']);
+        if( isset($validated['user']['password']) && !empty($validated['user']['password']) ){
+            $validated['user']['password'] = Hash::make($validated['user']['password']);
         }
         else{
-            unset($validated['profile']['password']);
+            unset($validated['user']['password']);
         }
 
-        Auth::user()->update($validated['profile']);
+        Auth::user()->update($validated['user']);
 
         return redirect()->route('profile');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 
 class UpdateRequest extends FormRequest
@@ -23,10 +24,10 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules( Request $request )
     {
 
-        $user = $this->request->get('user');
+        $user = $request->input('user');
 
         $rules = [
             "user.name"      => "required|string|min:4|max:255",

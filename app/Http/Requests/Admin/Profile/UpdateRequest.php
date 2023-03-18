@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 
 class UpdateRequest extends FormRequest
@@ -22,18 +23,19 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules( Request $request )
     {
 
-        $profile = $this->request->get('profile');
+        $profile = $request->input('user');
 
-        $rules = [ 
-            "profile.name"  => "required|string|min:4|max:255", 
-            "profile.email" => "required|string|min:5|max:255|email:rfc|unique:App\Models\User,email,".$profile['id'],
+        $rules = [
+            "user.name"     => "required|string|min:4|max:255",
+            "user.username" => "required|string|min:4|max:255",
+            "user.email"    => "required|string|min:5|max:255|email:rfc|unique:App\Models\User,email,".$profile['id'],
         ];
 
         if( !empty( $profile['password'] ) ){
-            $rules['profile.password'] = [ 
+            $rules['user.password'] = [
                 'sometimes',
                 'string',
                 'confirmed',
