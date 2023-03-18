@@ -10,7 +10,7 @@
     </div>
     @endif
 
-    <form action="{{ $action }}" method="POST">
+    <form action="{{ $action }}" method="POST" >
 
         @csrf
 
