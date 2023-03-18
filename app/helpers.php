@@ -1,1 +1,3 @@
-require_once __DIR__.'/helpers/CategoryHelper.php';
+<?php
+
+require_once __DIR__.'/Helpers/CategoryHelper.php';
