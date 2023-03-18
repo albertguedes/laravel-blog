@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'is_active'         => true,
         ]);
 
-        User::factory()->count(15)->create();
+        User::factory()->count(9)->create();
 
     }
 

@@ -23,13 +23,11 @@ class TagFactory extends Factory
     public function definition()
     {
 
-        $sentence = $this->faker->unique()->sentence(4);
-
         $created_at  = $this->faker->dateTime();
         $updated_at  = $this->faker->dateTimeBetween($created_at,'now');
-        $title       = trim($sentence,'.');
-        $slug        = Str::slug($title,'-');
-        $description = $this->faker->text(140);
+        $title       = $this->faker->unique()->word();
+        $slug        = $title;
+        $description = $this->faker->paragraph();
         $is_active   = $this->faker->boolean();
 
         return compact(

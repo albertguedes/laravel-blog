@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -31,30 +32,34 @@ class PostFactory extends Factory
 
         $created_at  = $this->faker->dateTime();
         $updated_at  = $this->faker->dateTimeBetween($created_at,'now');
-        $author_id   = User::all()->random()->first()->id;
-        $category_id = null;
-        while( is_null($category_id) ){
-            $category = Category::all()->random()->first();
-            if($category->children()->count() == 0 ) $category_id = $category->id;
-        }
+        $author_id   = User::inRandomOrder()->first()->id;
         $title       = trim($sentence,'.');
         $slug        = Str::slug($title,'-');
         $description = $this->faker->text(140);
         $content     = $this->faker->text(2048);
+        $category_id = Category::inRandomOrder()->first()->id;
         $published   = $this->faker->boolean();
 
         return compact(
             'created_at',
             'updated_at',
             'author_id',
-            'category_id',
-            'published',
             'title',
             'slug',
             'description',
-            'content'
+            'content',
+            'category_id',
+            'published'
         );
 
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Post $post) {
+            $tags = Tag::inRandomOrder()->limit(3)->get();
+            $post->tags()->attach($tags);
+        });
     }
 
 }
