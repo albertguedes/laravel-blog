@@ -9,7 +9,7 @@ use Illuminate\Validation\Rules\Password;
 class UpdateRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determine if the profile is authorized to make this request.
      *
      * @return bool
      */
@@ -26,16 +26,16 @@ class UpdateRequest extends FormRequest
     public function rules( Request $request )
     {
 
-        $profile = $request->input('user');
+        $profile = $request->input('profile');
 
         $rules = [
-            "user.name"     => "required|string|min:4|max:255",
-            "user.username" => "required|string|min:4|max:255",
-            "user.email"    => "required|string|min:5|max:255|email:rfc|unique:App\Models\User,email,".$profile['id'],
+            "profile.name"     => "required|string|min:4|max:255",
+            "profile.username" => "required|string|min:4|max:255",
+            "profile.email"    => "required|string|min:5|max:255|email:rfc|unique:App\Models\User,email,".$profile['id'],
         ];
 
         if( !empty( $profile['password'] ) ){
-            $rules['user.password'] = [
+            $rules['profile.password'] = [
                 'sometimes',
                 'string',
                 'confirmed',

@@ -17,7 +17,7 @@
             <h1 class="text-capitalize card-title" >Edit Profile</h1>
         </div>
         <div class="col-12" >
-            <x-user-form-component action="{{ route( 'profile.update', [ 'profile' => auth()->user() ] ) }}" method="PUT" :user="auth()->user()" :errors=$errors />
+            <x-profile-form-component action="{{ route( 'profile.update', [ 'profile' => auth()->user() ] ) }}" method="PUT" :profile="auth()->user()" :errors=$errors />
         </div>
     </div>
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\CategoryHelper;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,11 @@ use Illuminate\View\View;
 class CategoriesController extends Controller
 {
 
+    private CategoryHelper $categoryHelper;
+
+    public function __construct( CategoryHelper $categoryHelper ){
+        $this->categoryHelper = $categoryHelper;
+    }
 
     /**
      * Display a listing of the resource.
@@ -94,7 +100,14 @@ class CategoriesController extends Controller
         $validated = $request->validated();
 
         if (isset($validated['category_id'])) {
-            $validated['category']['parent_id'] = $validated['category_id'];
+
+            $category = Category::find($validated['category']['id']);
+            $test = Category::find($validated['category_id']);
+
+            if ($this->categoryHelper::hasDescendant($test,$category)) {
+                $validated['category']['parent_id'] = $validated['category_id'];
+            }
+
         }
 
         $category->update($validated['category']);
