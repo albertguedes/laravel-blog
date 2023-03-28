@@ -7,7 +7,7 @@
         <h1 class="text-uppercase pb-3" >Categories</h1>
     </div>
     <div class="col-12" >
-        <x-tree-category-component />
+        <x-category-tree-component />
     </div>
 </div>
 @endsection
