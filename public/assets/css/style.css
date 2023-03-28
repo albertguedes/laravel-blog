@@ -15,3 +15,7 @@ a:link, a:hover, a:visited { text-decoration: none; }
 }
 
 .admin-body-bg { background-color: #f2f4f4; }
+
+.list-unstyled li {
+    list-style-type: none;
+}

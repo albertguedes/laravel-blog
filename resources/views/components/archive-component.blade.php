@@ -1,6 +1,6 @@
 <div>
     @if(count($archive)>0)
-    <ul>
+    <ul class='list-unstyled' >
         @foreach( $archive as $year => $months )
         <li>
 
