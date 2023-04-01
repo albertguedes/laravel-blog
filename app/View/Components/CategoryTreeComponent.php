@@ -8,7 +8,7 @@ use Illuminate\View\Component;
 class CategoryTreeComponent extends Component
 {
 
-    public string $tree;
+    public array $tree;
 
     /**
      * Create a new component instance.
@@ -17,7 +17,7 @@ class CategoryTreeComponent extends Component
      */
     public function __construct()
     {
-        $this->tree = self::printCategoryTree();
+        $this->tree = self::getCategoryTree();
     }
 
     /**
@@ -36,7 +36,30 @@ class CategoryTreeComponent extends Component
      * @param Category|null $category The starting category to build the tree from
      * @return array The hierarchical tree structure of categories and their children
      */
-    public static function getCategoryTree(Category $category = null, $level = 0 ): array
+    public static function getCategoryTree( $categories = null, $level = 0 ): array
+    {
+
+        if( $categories === null ){
+            $categories = Category::whereNull('parent_id')
+                                  ->isActive()
+                                  ->with('children')
+                                  ->orderBy('title')
+                                  ->get();
+        }
+
+        $tree = [];
+        foreach($categories as $category){
+            $tree[] = self::categoryItem($category,$level);
+            if($category->children){
+                $tree = array_merge($tree,self::getCategoryTree($category->children,$level+1));
+            }
+        }
+
+        return $tree;
+
+    }
+
+    public static function oldGetCategoryTree(Category $category = null, $level = 0 ): array
     {
 
         if( $category === null ){
@@ -54,7 +77,7 @@ class CategoryTreeComponent extends Component
                     'slug'     => $category->slug,
                     'level'    => $level,
                     'children' => $category->children()->get()->map(
-                        fn($child) => self::getCategoryTree($child, $level + 1)
+                        fn($child) => self::oldGetCategoryTree($child, $level + 1)
                     )->all(),
                     'count_posts' => self::countPosts($category)
                 ];
@@ -69,7 +92,7 @@ class CategoryTreeComponent extends Component
                 'slug'     => $category->slug,
                 'level'    => $level,
                 'children' => $category->children()->get()->map(
-                    fn($child) => self::getCategoryTree($child, $level + 1)
+                    fn($child) => self::oldGetCategoryTree($child, $level + 1)
                 )->all(),
                 'count_posts' => self::countPosts($category)
             ];
@@ -78,6 +101,16 @@ class CategoryTreeComponent extends Component
 
         return $tree;
 
+    }
+
+    public static function categoryItem( Category $category = null, int $level = 0 ){
+        return $category === null ? null : [
+            'id'          => $category->id,
+            'title'       => $category->title,
+            'slug'        => $category->slug,
+            'level'       => $level,
+            'count_posts' => self::countPosts($category)
+        ];
     }
 
     /**
