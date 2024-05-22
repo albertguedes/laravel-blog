@@ -22,9 +22,9 @@
             </div>
             @endif
             @if( $post->tags()->count() )
-            <div class="col-6 py-3" >
+            <div class="col-6 py-3 d-flex justify-content-end" >
                 @foreach ( $post->tags as $tag )
-                <a href="{{ route('tag',['tag' => $tag ]) }}" ><i class="fas fa-tag" ></i> {{ $tag->title }}</a>
+                <a class="ms-4" href="{{ route('tag',['tag' => $tag ]) }}" ><i class="fas fa-tag" ></i> {{ $tag->title }}</a>
                 @endforeach
             </div>
             @endif

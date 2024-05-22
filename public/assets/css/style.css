@@ -1,8 +1,24 @@
-a:link, a:hover, a:visited { text-decoration: none; }
+body {
+    color: #565454;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5rem;
+    background-color: #f2f4f4;
+}
+
+a:link, a:hover, a:visited {
+    color: #F9322C;
+    text-decoration: none;
+}
+
+h1 {
+    color: #232323;
+}
 
 #sitename {
   width: 100%;
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: bolder;
   padding: 0;
   margin: 0;
@@ -14,8 +30,22 @@ a:link, a:hover, a:visited { text-decoration: none; }
   min-height: 100%;
 }
 
-.admin-body-bg { background-color: #f2f4f4; }
+.nav .nav-item .nav-link:link, .nav .nav-item .nav-link:visited {
+  color: #565454!important;
+  font-size: 1.2rem;
+}
 
 .list-unstyled li {
     list-style-type: none;
 }
+
+.page-item.active .page-link {
+    background-color: #F9322C;
+    border-color: #F9322C;
+}
+
+.page-item .page-link:hover {
+    color: #232323;
+}
+
+.admin-body-bg { background-color: #f2f4f4; }

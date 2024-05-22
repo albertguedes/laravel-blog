@@ -1,0 +1,44 @@
+/* Nunito Normal */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400&display=swap');
+
+.nunito-normal {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Nunito Itálico */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,400&display=swap');
+
+.nunito-italic {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Nunito Negrito */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+
+.nunito-bold {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Nunito Fino */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+
+.nunito-thin {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+/* Nunito Mais Negrito */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap');
+
+.nunito-bolder {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
