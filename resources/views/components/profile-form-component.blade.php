@@ -26,7 +26,7 @@
             <div class="col-3" >
                 <div class="form-check form-switch">
                     <input type="hidden" name="profile[is_active]" value="0" >
-                    <input class="form-check-input" type="checkbox" name="profile[is_active]" id="check_is_active" {{ ( $profile && $profile->is_active ) ? 'checked="checked"' : '' }} value="1" >
+                    <input class="form-check-input bg-danger border-danger" type="checkbox" name="profile[is_active]" id="check_is_active" {{ ( $profile && $profile->is_active ) ? 'checked="checked"' : '' }} value="1" >
                     <label class="form-check-label" for="check_is_active">Is Active</label>
                 </div>
             </div>

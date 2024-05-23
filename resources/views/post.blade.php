@@ -24,9 +24,11 @@
             @endif
 
             @if( $post->tags()->count() )
-            <div class="col-6 py-3 d-flex justify-content-end" >
-                @foreach ( $post->tags as $tag )
-                <a class="ms-4" href="{{ route('tag',['tag' => $tag ]) }}" ><i class="fas fa-tag" ></i> {{ $tag->title }}</a>
+            <div class="col-6 py-3" >
+                @foreach ($post->tags as $tag)
+                    <a class="me-2 d-inline-flex align-items-center" href="{{ route('tag', compact('tag')) }}">
+                        <i class="fas fa-tag mr-2 me-2"></i> {{ $tag->title }}
+                    </a>
                 @endforeach
             </div>
             @endif

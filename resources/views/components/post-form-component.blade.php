@@ -29,7 +29,7 @@
             <div class="col-3" >
                 <div class="form-check form-switch">
                     <input name="post[published]" type="hidden" value="0" />
-                    <input id="check_published" class="form-check-input" name="post[published]" type="checkbox" {{ ( $post && $post->published ) ? 'checked="checked"' : '' }} value="1" />
+                    <input id="check_published" class="form-check-input bg-danger border-danger" name="post[published]" type="checkbox" {{ ( $post && $post->published ) ? 'checked="checked"' : '' }} value="1" />
                     <label class="form-check-label" for="check_published">Published</label>
                 </div>
             </div>

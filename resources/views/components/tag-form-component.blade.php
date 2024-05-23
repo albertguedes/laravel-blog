@@ -4,7 +4,7 @@
     @foreach ($tags as $tag)
     <li class="list-item me-4">
         <input id="tag-{{ $tag['id'] }}"
-            class="form-check-input"
+            class="form-check-input bg-danger border-danger"
             type="checkbox"
             name="post[tags][]"
             value="{{ $tag['id'] }}"

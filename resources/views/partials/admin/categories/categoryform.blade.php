@@ -24,7 +24,7 @@
         <div class="col-3" >
             <div class="form-check form-switch" >
                 <input type="hidden" name="category[is_active]" value=0 >
-                <input class="form-check-input" type="checkbox" name="category[is_active]" id="check_is_active" @if( isset($category) && $category->is_active ) checked="checked" @endif value=1 >
+                <input class="form-check-input bg-danger border-danger" type="checkbox" name="category[is_active]" id="check_is_active" @if( isset($category) && $category->is_active ) checked="checked" @endif value=1 >
                 <label class="form-check-label" for="check_is_active" >Is Active</label>
             </div>
         </div>

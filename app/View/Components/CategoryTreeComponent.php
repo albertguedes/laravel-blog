@@ -71,54 +71,6 @@ class CategoryTreeComponent extends Component
     }
 
     /**
-     * Generate a hierarchical tree structure of categories, including children categories.
-     *
-     * @param Category $category The starting category to build the tree from
-     * @param int $level The level of the category in the tree structure
-     *
-     * @return array The hierarchical tree structure of categories and their children
-     */
-    public static function oldGetCategoryTree(Category $category = null, int $level = 0 ): array
-    {
-        if (null === $category) {
-            $categories = Category::whereNull('parent_id')
-                ->isActive()
-                ->with('children')
-                ->orderBy('title')
-                ->get();
-
-            foreach ($categories as $c) {
-                $tree[] = [
-                    'id' => $c->id,
-                    'title' => $c->title,
-                    'slug' => $c->slug,
-                    'level' => $level,
-                    'children' => $c->children
-                        ? $c->children->map(fn($child) => self::oldGetCategoryTree($child, $level + 1))
-                            ->all()
-                        : [],
-                    'count_posts' => self::countPosts($c),
-                ];
-            }
-
-        } else {
-            $tree = [
-                'id' => $category->id,
-                'title' => $category->title,
-                'slug' => $category->slug,
-                'level' => $level,
-                'children' => $category->children
-                    ? $category->children->map(fn($child) => self::oldGetCategoryTree($child, $level + 1))
-                        ->all()
-                    : [],
-                'count_posts' => self::countPosts($category),
-            ];
-        }
-
-        return $tree;
-    }
-
-    /**
      * Generate an array containing the category item information.
      *
      * @param Category $category The category item to generate the array for
@@ -147,58 +99,14 @@ class CategoryTreeComponent extends Component
     public static function countPosts(Category $category): int
     {
         $count = $category->posts()
-            ->where('published', true)
-            ->count();
+                          ->where('published', true)
+                          ->count();
 
         foreach ($category->children as $childCategory) {
             $count += self::countPosts($childCategory);
         }
 
         return $count;
-    }
-
-    /**
-     * Generate a HTML string representing a category tree.
-     *
-     * @param array $categories The categories to generate the tree for
-     * @param int $id The ID of the parent node
-     *
-     * @return string The HTML string representing the category tree
-     */
-    public static function printCategoryTree(array $categories = [], int $id = 0): string
-    {
-        $html = "<ul id='children-$id' class='collapse' >";
-
-        if ([] === $categories) {
-            $categories = self::getCategoryTree();
-            $html = "<ul id='category-tree' class='list-unstyled' >";
-        }
-
-        foreach ($categories as $category) {
-            if($category->posts()->where('published', true)->count() === 0) {
-
-                $html .= "<li class='text-decoration-none mb-2' >";
-
-                if (!empty($category['children'])) {
-                    $html .= "<a class='collapse-link pe-2 fw-bold' data-bs-toggle='collapse' data-bs-target='#children-$category[id]' href='#' >[<span class='collapse-icon' >+</span>]</a>";
-                    $html .= "<a class='text-uppercase' href='".route('category', [ 'category' => $category['slug'] ] )."' >";
-                    $html .= $category['title'] . " (" . $category['count_posts'] . ")";
-                    $html .= "</a>";
-                    $html .= self::printCategoryTree($category['children'], $category['id']);
-                } else {
-                    $html .= "<span class='pe-4' >&nbsp;</span>";
-                    $html .= "<a class='text-uppercase' href='".route('category', [ 'category' => $category['slug'] ] )."' >";
-                    $html .= $category['title'] . " (" . $category['count_posts'] . ")";
-                    $html .= "</a>";
-                }
-
-                $html .= "</li>";
-            }
-        }
-
-        $html .= "</ul>";
-
-        return $html;
     }
 }
 
