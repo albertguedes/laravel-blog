@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('title', "Delete '".ucwords($user->name)."'" )
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="card-body">
         <div class="col-12" >
             <x-tabs-component prefix='users' :model=$user />
         </div>
         <div class="col-12 pt-5" >
-            <h1 class="text-capitalize" >Delete '<em>{{ $user->name }}</em>'</h1>
+            <h1 class="text-capitalize card-title" >Delete '<em>{{ $user->name }}</em>'</h1>
         </div>
         <div class="col-12 pt-5" >
             <p class="text-center" >You are shure that want delete user '<em>{{ $user->name }}</em>' ?</p>

@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 @section('title', "Delete '".ucwords($post->title)."'" )
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="card-body" >
 
         <div class="col-12" >
             <x-tabs-component prefix='posts' :model=$post />
         </div>
-        <div class="col-12 pt-5" >
-            <h1 class="text-capitalize card-body" >Delete '<em>{{ $post->title }}</em>'</h1>
+        <div class="col-12 py-5" >
+            <h1 class="text-capitalize card-title" >Delete '<em>{{ $post->title }}</em>'</h1>
         </div>
-        <div class="col-12 pt-5" >
+        <div class="col-12" >
             <p class="text-center" >You are shure that want delete post '<em>{{ $post->title }}</em>' ?</p>
             <div class="row justify-content-center" >
                 <div class="col-1" >

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', ucwords($user->name) )
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="card-body" >
         <div class="col-12" >
             <x-tabs-component prefix='users' :model=$user />

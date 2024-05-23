@@ -8,17 +8,16 @@ use Illuminate\View\Component;
 
 class TagFormComponent extends Component
 {
-
-    public $html;
+    public array $tags = [];
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct( Post $post = null )
+    public function __construct( Post $post = null)
     {
-        $this->html = $this->tags_checkboxes($post);
+        $this->tags = $this->tags_checkboxes($post);
     }
 
     /**
@@ -35,35 +34,36 @@ class TagFormComponent extends Component
      * Generate a set of checkbox to select the tags.
      *
      * @param Post $post
-     * @return $html
+     *
+     * @return array $list
      */
-    function tags_checkboxes( Post $post = null ): string {
-
+    function tags_checkboxes( Post $post = null ): array
+    {
         $tags = Tag::IsActive()
                     ->select(['id','title'])
                     ->orderBy('title','asc')
                     ->get();
 
-        $html="";
-        foreach($tags as $tag){
+        $list = [];
+
+        foreach ($tags as $tag)
+        {
+            $item = [];
+            $item['id'] = $tag->id;
+            $item['title'] = $tag->title;
+            $item['checked'] = false;
 
             // Verify if exists tags previouly selected.
             // If yes, checked the checkbox of that tag.
-            $checked='';
-            if( $post && $post->tags->count() > 0 ){
+            if ( !is_null($post) && ($post->tags->count() > 0)) {
                 foreach( $post->tags as $curr_tag ){
-                    if($tag->id == $curr_tag->id) $checked="checked='checked'";
+                    if($tag->id == $curr_tag->id) $item['checked'] = true;
                 }
             }
 
-            $html.="<input type='checkbox' name='post[tags][]' value='".$tag->id."' ".$checked." >&nbsp;&nbsp;&nbsp;";
-            $html.=ucwords($tag->title);
-            $html.="<br><br>";
-
+            $list[] = $item;
         }
 
-        return $html;
-
+        return $list;
     }
-
 }

@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('title','Posts')
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="card-body" >
-        <div class="col-12 pt-5" >
+        <div class="col-12" >
             <h1 class="text-capitalize card-title" >Posts</h1>
         </div>
         <div class="col-12 py-5" >
-            <a class="btn btn-primary" href="{{ route('posts.create') }}" ><i class="fas fa-plus"></i> Create Post</a>
+            <a class="btn btn-dark" href="{{ route('posts.create') }}" ><i class="fas fa-plus"></i> Create Post</a>
         </div>
         <div class="col-12" >
             @if( count($posts) > 0)

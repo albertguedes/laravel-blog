@@ -69,7 +69,7 @@
 
     <div class="row pt-4" >
         <div class="col-3" >
-            <input type="submit" class="btn btn-primary" value="Submit" />
+            <input type="submit" class="btn btn-dark" value="Submit" />
         </div>
     </div>
 

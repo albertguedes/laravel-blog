@@ -3,25 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\CategoryHelper;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\StoreRequest;
 use App\Http\Requests\Admin\Categories\UpdateRequest;
 use App\Models\Category;
-
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class CategoriesController extends Controller
 {
-
-    private CategoryHelper $categoryHelper;
-
-    public function __construct( CategoryHelper $categoryHelper ){
-        $this->categoryHelper = $categoryHelper;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -29,11 +19,9 @@ class CategoriesController extends Controller
      */
     public function index(): View
     {
-
-        $categories = Category::orderBy('id','ASC')->paginate(10);
-
-        return view('admin.categories.index',compact('categories'));
-
+        return view('admin.categories.index',[
+            'categories' => Category::orderBy('id','ASC')->paginate(10)
+        ]);
     }
 
     /**
@@ -54,13 +42,11 @@ class CategoriesController extends Controller
      */
     public function store( StoreRequest $request ): RedirectResponse
     {
-
         $validated = $request->validated();
 
-        $category = Category::create($validated['category']);
-
-        return redirect()->route('categories.show', compact('category') );
-
+        return redirect()->route('categories.show', [
+            ' category' => Category::create($validated['category'])
+        ]);
     }
 
     /**
@@ -96,25 +82,24 @@ class CategoriesController extends Controller
      */
     public function update( UpdateRequest $request, Category $category ): RedirectResponse
     {
-
         $validated = $request->validated();
 
-        if (isset($validated['category_id'])) {
+        if (isset($validated['category']['parent_id']))
+        {
+            // Get the parent candidate.
+            $parent = Category::find($validated['category']['parent_id']);
 
-            $category = Category::find($validated['category']['id']);
-            $test = Category::find($validated['category_id']);
-
-            if ($this->categoryHelper::hasDescendant($test,$category)) {
-                $validated['category']['parent_id'] = $validated['category_id'];
+            if (CategoryHelper::hasDescendant($parent,$category)) {
+                return back()->withErrors([
+                    'danger' => 'You can not set a category as a child of its own descendant'
+                ]);
             }
-
         }
 
         $category->update($validated['category']);
         $category->save();
 
         return redirect()->route('categories.show',compact('category'));
-
     }
 
     /**
@@ -138,11 +123,8 @@ class CategoriesController extends Controller
      */
     public function destroy( Category $category ): RedirectResponse
     {
-
         $category->delete();
 
         return redirect()->route('categories.index');
-
     }
-
 }

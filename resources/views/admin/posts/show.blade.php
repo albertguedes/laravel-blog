@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 @section('title', ucwords($post->title) )
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="card-body" >
         <div class="col-12" >
             <x-tabs-component prefix='posts' :model=$post />
         </div>
-        <div class="col-12 pt-5" >
+        <div class="col-12 py-5" >
             <h1 class="text-capitalize card-title" >{{ $post->title }}</h1>
             <h6 class="text-secondary" >
                 <small>
@@ -16,7 +16,7 @@
                 </small>
             </h6>
         </div>
-        <div class="col-12 pt-5" >
+        <div class="col-12" >
             <div class="row" >
 
                 <div class="col-1 pb-3 fw-bolder" >ID</div>

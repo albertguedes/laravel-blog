@@ -73,7 +73,7 @@
         <div class="row pt-4" >
             <div class="col-6" >
                 <label class="form-label" >Description</label>
-                <textarea name="post[description]" rows=4 class="form-control @error('post.description') is-invalid @enderror" >@if(isset($post)){{ $post->description }}@endif</textarea>
+                <textarea name="post[description]" rows="4" class="form-control @error('post.description') is-invalid @enderror" >@if(isset($post)){{ $post->description }}@endif</textarea>
                 @error('post.description')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -92,7 +92,7 @@
 
         <div class="row pt-4" >
             <div class="col-3" >
-                <input type="submit" class="btn btn-primary" value="Submit" />
+                <input type="submit" class="btn btn-dark" value="Submit" />
             </div>
         </div>
 

@@ -16,11 +16,13 @@
 
     <div class="col-12 py-3" >
         <div class="row" >
+
             @if( $post->category )
             <div class="col-6 py-3" >
                 <a href="{{ route('category',['category'=>$post->category]) }}" ><i class="fas fa-sitemap"></i> {{ $post->category->title }}</a>
             </div>
             @endif
+
             @if( $post->tags()->count() )
             <div class="col-6 py-3 d-flex justify-content-end" >
                 @foreach ( $post->tags as $tag )
@@ -28,6 +30,7 @@
                 @endforeach
             </div>
             @endif
+
         </div>
     </div>
 

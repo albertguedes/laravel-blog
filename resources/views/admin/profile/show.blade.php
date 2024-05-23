@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Profile' )
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="card-body" >
         <div class="col-12" >
             <ul class="nav nav-tabs">
@@ -13,7 +13,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-12" >
+        <div class="col-12 pt-5" >
             <h1 class="text-capitalize card-title" >Profile</h1>
             <h6 class="text-secondary" ><small>
                 <i class="fas fa-calendar-plus"></i> {{ auth()->user()->created_at->format("Y-m-d h:i \h") }}

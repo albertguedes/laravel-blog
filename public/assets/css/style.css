@@ -30,9 +30,30 @@ h1 {
   min-height: 100%;
 }
 
+a.btn {
+    color: #ffffff;
+}
+
+a.btn.btn-light {
+    color: #000000;
+}
+
 .nav .nav-item .nav-link:link, .nav .nav-item .nav-link:visited {
-  color: #565454!important;
+  color: #565454;
   font-size: 1.2rem;
+}
+
+#sidebar-nav .sidebar-icon {
+    width: 32px;
+    height: 32px;
+}
+
+#sidebar-nav .nav-link {
+    color: #ffffff;
+}
+
+#sidebar-nav .nav-link:hover, #sidebar-nav .nav-link.active  {
+    color: #F9322C;
 }
 
 .list-unstyled li {
