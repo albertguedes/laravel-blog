@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 @section('title', "Delete '".ucwords($tag->title)."'" )
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="col-12" >
         @include('partials.admin.tabs',compact('routes'))
     </div>
     <div class="col-12 pt-5" >
-        <h1 class="text-capitalize" >Delete '<em>{{ $tag->title }}</em>'</h1>
+        <h1 class="text-capitalize card-title" >Delete '<em>{{ $tag->title }}</em>'</h1>
     </div>
     <div class="col-12 py-5" >
         <p class="text-center" >You are shure that want delete tag '<em>{{ $tag->title }}</em>' ?</p>

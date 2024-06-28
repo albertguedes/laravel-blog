@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 @section('title','Tags')
 @section('content')
-<div class="row card shadow" >
-    <div class="col-12 pt-5" >
-        <h1 class="text-capitalize" >Tags</h1>
+<div class="row card p-5 shadow" >
+    <div class="col-12" >
+        <h1 class="text-capitalize card-title" >Tags</h1>
     </div>
     <div class="col-12 py-5" >
-        <a class="btn btn-primary" href="{{ route('tags.create') }}" ><i class="fas fa-plus"></i> Create Tag</a>
+        <a class="btn btn-dark" href="{{ route('tags.create') }}" ><i class="fas fa-plus"></i> Create Tag</a>
     </div>
     <div class="col-12" >
         @if( count($tags) > 0)

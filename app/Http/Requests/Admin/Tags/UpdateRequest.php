@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Tags;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class UpdateRequest extends FormRequest
 {
@@ -22,10 +23,10 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules( Request $request )
     {
 
-        $tag = $this->request->get('tag');
+        $tag = $request->input('tag');
 
         $rules = [
              "tag.title"       => "required|string|min:4|max:255|unique:\App\Models\Tag,title,".$tag['id'],

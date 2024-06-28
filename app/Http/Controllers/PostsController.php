@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
-
 use App\Models\Post;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View as ViewView;
+use Illuminate\View\View;
 
 class PostsController extends Controller
 {
@@ -19,16 +15,7 @@ class PostsController extends Controller
      */
     public function index(): View
     {
-
-        $posts = Post::Published()->select('slug','title','created_at','author_id','description')
-                                  ->orderBy('created_at','DESC')
-                                  ->paginate(5);
-
-        $view = 'index';
-        $data = compact('posts');
-
-        return view($view,$data);
-
+        return view('index');
     }
 
     /**
@@ -43,7 +30,7 @@ class PostsController extends Controller
         $view = 'errors.404';
         $data = [];
 
-        if($post->published){
+        if( $post && $post->published ){
             $view = 'post';
             $data = compact('post');
         }
@@ -58,24 +45,7 @@ class PostsController extends Controller
      * @return \Illuminate\Contracts\View\View
      */
     public function archive(): View {
-
-        $posts = Post::Published()->select('author_id','slug','title','created_at')
-                                  ->orderBy('created_at','DESC')
-                                  ->get();
-
-        $archive = [];
-        foreach( $posts as $post ){
-            $year  = $post->created_at->format('Y');
-            $month = $post->created_at->format('F');
-            $day   = $post->created_at->format('d');
-            $archive[$year][$month][$day][] = $post;
-        }
-
-        $view = 'archive';
-        $data = compact('archive');
-
-        return view($view,$data);
-
+        return view('archive');
     }
 
 }

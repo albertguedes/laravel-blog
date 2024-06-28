@@ -29,7 +29,7 @@
             <div class="col-3" >
                 <div class="form-check form-switch">
                     <input name="post[published]" type="hidden" value="0" />
-                    <input id="check_published" class="form-check-input" name="post[published]" type="checkbox" {{ ( $post && $post->published ) ? 'checked="checked"' : '' }} value="1" />
+                    <input id="check_published" class="form-check-input bg-danger border-danger" name="post[published]" type="checkbox" {{ ( $post && $post->published ) ? 'checked="checked"' : '' }} value="1" />
                     <label class="form-check-label" for="check_published">Published</label>
                 </div>
             </div>
@@ -66,18 +66,14 @@
         <div class="row pt-4" >
             <div class="col-12" >
                 <p><label class="form-label" for="post-tags" >Tags</label></p>
-                @if(isset($post))
-                {!! tags_checkbox($post) !!}
-                @else
-                {!! tags_checkbox() !!}
-                @endif
+                <x-tag-form-component :post="$post" />
             </div>
         </div>
 
         <div class="row pt-4" >
             <div class="col-6" >
                 <label class="form-label" >Description</label>
-                <textarea name="post[description]" rows=4 class="form-control @error('post.description') is-invalid @enderror" >@if(isset($post)){{ $post->description }}@endif</textarea>
+                <textarea name="post[description]" rows="4" class="form-control @error('post.description') is-invalid @enderror" >@if(isset($post)){{ $post->description }}@endif</textarea>
                 @error('post.description')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -96,7 +92,7 @@
 
         <div class="row pt-4" >
             <div class="col-3" >
-                <input type="submit" class="btn btn-primary" value="Submit" />
+                <input type="submit" class="btn btn-dark" value="Submit" />
             </div>
         </div>
 

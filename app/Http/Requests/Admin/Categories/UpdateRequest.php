@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Categories;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class UpdateRequest extends FormRequest
 {
@@ -22,10 +23,10 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules( Request $request )
     {
 
-        $category = $this->request->get('category');
+        $category = $request->input('category');
 
         $rules = [
              "category.parent_id"   => "nullable|integer|exists:categories,id",

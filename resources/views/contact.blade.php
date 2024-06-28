@@ -41,7 +41,7 @@
                 <textarea name="message[content]" rows=10 class="form-control" id="message-content" aria-describedby="contentHelp" placeholder="Type the message" ></textarea>
             </div>
             <div class="d-flex justify-content-center mb-3">
-                <button type="submit" class="btn btn-primary" id="submit" ><i class="far fa-paper-plane"></i> Send Message</button>
+                <button type="submit" class="btn btn-dark" id="submit" ><i class="far fa-paper-plane"></i> Send Message</button>
             </div>
         </form>
     </div>

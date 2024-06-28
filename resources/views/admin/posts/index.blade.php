@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('title','Posts')
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="card-body" >
-        <div class="col-12 pt-5" >
+        <div class="col-12" >
             <h1 class="text-capitalize card-title" >Posts</h1>
         </div>
         <div class="col-12 py-5" >
-            <a class="btn btn-primary" href="{{ route('posts.create') }}" ><i class="fas fa-plus"></i> Create Post</a>
+            <a class="btn btn-dark" href="{{ route('posts.create') }}" ><i class="fas fa-plus"></i> Create Post</a>
         </div>
         <div class="col-12" >
             @if( count($posts) > 0)
@@ -17,7 +17,9 @@
                         <th class="text-center"  scope="col" >ID</th>
                         <th scope="col" >CREATED</th>
                         <th scope="col">UPDATED</th>
+                        @if(Auth::user()->is_admin)
                         <th scope="col">AUTHOR</th>
+                        @endif
                         <th scope="col">TITLE</th>
                         <th class="text-center" scope="col"  >PUBLISHED</th>
                         <th scope="col" ></th>
@@ -29,7 +31,9 @@
                         <td class="text-center" >{{ $post->id }}</td>
                         <td>{{ $post->created_at->format('Y/m/d h:i') }}</td>
                         <td>{{ $post->updated_at->format('Y/m/d h:i') }}</td>
+                        @if(Auth::user()->is_admin)
                         <td><a href="{{ route('users.show',['user'=>$post->author]) }}">{{ $post->author->username }}</a></td>
+                        @endif
                         <td><a href="{{ route('posts.show',compact('post')) }}">{{ $post->title }}</a></td>
                         <td class="text-center" >@if($post->published)<span class="badge bg-success" >Published</span>@else<span class="badge bg-danger" >Not Published</span>@endif</td>
                         <td>

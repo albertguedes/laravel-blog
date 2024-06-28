@@ -18,11 +18,11 @@
             <span class="input-group-text" id="key-addon"><i class="fas fa-key"></i></span>
             <input type="password" name="credentials[password]" class="form-control @error('credentials.password') is-invalid @enderror" id="credential-password" aria-label="Username" aria-describedby="key-addon" placeholder="Type your password" value="" >
             @error('credentials.password')
-                <div class="alert alert-danger">{{ $message }}</div>
+            <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="col-12 d-flex justify-content-center">
-            <button class="btn btn-primary" ><i class="fas fa-sign-in-alt"></i> Login</button>
+            <button class="btn btn-dark" ><i class="fas fa-sign-in-alt"></i> Login</button>
         </div>
     </div>
 </form>

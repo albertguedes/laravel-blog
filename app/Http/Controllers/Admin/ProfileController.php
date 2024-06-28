@@ -22,26 +22,32 @@ class ProfileController extends Controller
     /**
      * Show edit view.
      */
-    public function edit( Request $request ){
+    public function edit(){
         return view('admin.profile.edit');
     }
 
+
     /**
-     * Update profile data.
+     * Update user profile.
+     *
+     * @param UpdateRequest $request
+     * @return void
      */
     public function update( UpdateRequest $request )
     {
 
         $validated = $request->validated();
 
-        if( isset($validated['profile']['password']) && !empty($validated['profile']['password']) ){
-            $data['password'] = Hash::make($validated['profile']['password']);
+        $profile = $validated['profile'];
+
+        if( isset($profile['password']) && !empty($profile['password']) ){
+            $profile['password'] = Hash::make($profile['password']);
         }
         else{
-            unset($validated['profile']['password']);
+            unset($profile['password']);
         }
 
-        Auth::user()->update($validated['profile']);
+        Auth::user()->update($profile);
 
         return redirect()->route('profile');
 

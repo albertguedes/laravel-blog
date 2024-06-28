@@ -10,7 +10,7 @@
     </div>
     @endif
 
-    <form action="{{ $action }}" method="POST">
+    <form action="{{ $action }}" method="POST" >
 
         @csrf
 
@@ -26,7 +26,7 @@
             <div class="col-3" >
                 <div class="form-check form-switch" >
                     <input type="hidden" name="category[is_active]" value=0 >
-                    <input class="form-check-input" type="checkbox" name="category[is_active]" id="check_is_active" {{ ( $category && $category->is_active ) ? "checked='checked'" : '' }} value="1" >
+                    <input class="form-check-input bg-danger border-danger" type="checkbox" name="category[is_active]" id="check_is_active" {{ ( $category && $category->is_active ) ? "checked='checked'" : '' }} value="1" >
                     <label class="form-check-label" for="check_is_active" >Is Active</label>
                 </div>
             </div>
@@ -72,7 +72,7 @@
 
         <div class="row pt-4" >
             <div class="col-3" >
-                <input type="submit" class="btn btn-primary" value="Submit" />
+                <input type="submit" class="btn btn-dark" value="Submit" />
             </div>
         </div>
 

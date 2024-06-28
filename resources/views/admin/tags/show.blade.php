@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 @section('title', ucwords($tag->title) )
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="col-12" >
         @include('partials.admin.tabs',compact('routes'))
     </div>
     <div class="col-12 pt-5" >
-        <h1 class="text-capitalize" >{{ $tag->title }}</h1>
+        <h1 class="text-capitalize card-title" >{{ $tag->title }}</h1>
         <h6 class="text-secondary" >
             <small>
                 <i class="fas fa-calendar-plus"></i> {{ $tag->created_at->format("Y-m-d h:i \h") }}

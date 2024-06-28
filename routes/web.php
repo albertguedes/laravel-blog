@@ -1,81 +1,100 @@
 <?php
 
-use App\Http\Controllers\Admin;
-use App\Http\Controllers\PostsController;
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\TagsController;
-use App\Http\Controllers\PagesController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\FeedController;
-use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\Admin\{
+    AuthController as AdminAuth,
+    CategoriesController as AdminCategories,
+    DashboardController as AdminDashboard,
+    PostsController as AdminPosts,
+    ProfileController as AdminProfile,
+    TagsController as AdminTags,
+    UsersController as AdminUsers,
+};
+
+use App\Http\Controllers\{
+    CategoriesController as Categories,
+    ContactController as Contact,
+    FeedController as Feed,
+    PagesController as Pages,
+    PostsController as Posts,
+    SitemapController as Sitemap,
+    TagsController as Tags
+};
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+/**
+ * Web Routes
+ *
+ * These routes are for the web and are loaded by the RouteServiceProvider within a group which
+ * contains the "web" middleware group. Now create something great!
+ */
+Route::prefix('admin')->group(function () {
 
-Route::prefix('admin')->group(function(){
-
-    Route::get('/',function(){
+    Route::get('/', function () {
         return redirect()->route('login');
     })->name('admin');
 
-    Route::prefix('auth')->group(function(){
-        Route::get('/login',[Admin\AuthController::class,'login'])->name('login');
-        Route::post('/login',[Admin\AuthController::class,'authenticate'])->name('authenticate');
-        Route::middleware('auth:web')->post('/logout',[Admin\AuthController::class,'logout'])->name('logout');
+    Route::prefix('auth')->group(function () {
+        Route::get('/login', [AdminAuth::class, 'login'])->name('login');
+        Route::post('/login', [AdminAuth::class, 'authenticate'])->name('authenticate');
+
+        Route::middleware('auth:web')->group(function () {
+            Route::post('/logout', [AdminAuth::class, 'logout'])->name('logout');
+        });
     });
 
-    Route::middleware('auth')->group(function(){
+    // douglas.turner abbigail.dickinson@example.org
+    Route::middleware('auth')->group(function () {
+        Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
 
-        Route::get('/dashboard',[Admin\DashboardController::class,'index'])->name('dashboard');
+        Route::resource('/posts', AdminPosts::class);
+        Route::get('/posts/{post}/delete', [AdminPosts::class, 'delete'])->name('posts.delete');
 
-        Route::get('/categories/{category}/delete',[Admin\CategoriesController::class,'delete'])->name('categories.delete');
-        Route::resource('/categories',Admin\CategoriesController::class);
-
-        Route::get('/tags/{tag}/delete',[Admin\TagsController::class,'delete'])->name('tags.delete');
-        Route::resource('/tags',Admin\TagsController::class);
-
-        Route::get('/posts/{post}/delete',[Admin\PostsController::class,'delete'])->name('posts.delete');
-        Route::resource('/posts',Admin\PostsController::class);
-
-        Route::get('/users/{user}/delete',[Admin\UsersController::class,'delete'])->name('users.delete');
-        Route::resource('/users',Admin\UsersController::class);
-
-        Route::get('/profile',[Admin\ProfileController::class,'show'])->name('profile');
-        Route::get('/profile/edit',[Admin\ProfileController::class,'edit'])->name('profile.edit');
-        Route::put('/profile/edit',[Admin\ProfileController::class,'update'])->name('profile.update');
-
+        Route::get('/profile', [AdminProfile::class, 'show'])->name('profile');
+        Route::get('/profile/edit', [AdminProfile::class, 'edit'])->name('profile.edit');
+        Route::put('/profile/edit', [AdminProfile::class, 'update'])->name('profile.update');
     });
 
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::resource('/users', AdminUsers::class);
+        Route::get('/users/{user}/delete', [AdminUsers::class, 'delete'])->name('users.delete');
+
+        Route::resource('/categories', AdminCategories::class);
+        Route::get('/categories/{category}/delete', [AdminCategories::class, 'delete'])->name('categories.delete');
+
+        Route::resource('/tags', AdminTags::class);
+        Route::get('/tags/{tag}/delete', [AdminTags::class, 'delete'])->name('tags.delete');
+    });
+
+    Route::get('/403', function () {
+        return view('admin.errors.403');
+    })->name('403');
 });
 
-Route::get('/',[PostsController::class,'index'])->name('home');
+Route::get('/categories', [Categories::class, 'index'])->name('categories');
+Route::get('/categories/{category}', [Categories::class, 'show'])->name('category');
 
-Route::get('/archive',[PostsController::class,'archive'])->name('archive');
+Route::get('/tags', [Tags::class, 'index'])->name('tags');
+Route::get('/tags/{tag}', [Tags::class, 'show'])->name('tag');
 
-Route::get('/about',[PagesController::class,'about'])->name('about');
+Route::get('/archive', [Posts::class, 'archive'])->name('archive');
 
-Route::get('/contact',[ContactController::class,'index'])->name('contact');
+Route::get('/about', [Pages::class, 'about'])->name('about');
 
-Route::post('/contact',[ContactController::class,'sendmessage'])->name('sendmessage');
+Route::get('/contact', [Contact::class, 'index'])->name('contact');
+Route::post('/contact', [Contact::class, 'sendmessage'])->name('sendmessage');
 
-Route::get('/rss.xml',FeedController::class)->name('rss');
-Route::get('/sitemap.xml',SitemapController::class)->name('sitemap');
-Route::get('/categories',[CategoriesController::class,'index'])->name('categories');
-Route::get('/categories/{category}',[CategoriesController::class,'show'])->name('category');
-Route::get('/tags',[TagsController::class,'index'])->name('tags');
-Route::get('/tags/{tag}',[TagsController::class,'show'])->name('tag');
-Route::get('/{post}',[PostsController::class,'show'])->name('post');
+Route::get('/rss.xml', Feed::class)->name('rss');
+Route::get('/sitemap.xml', Sitemap::class)->name('sitemap');
 
-Route::get('/404',function(){
+Route::get('/', [Posts::class, 'index'])->name('home');
+
+/**
+ * This route needs to be define at the end of the routes file because the
+ * argument try to find any post with the slug written in the url.
+ */
+Route::get('/{post}', [Posts::class, 'show'])->name('post');
+
+Route::get('/404', function () {
     return view('errors.404');
 })->name('404');

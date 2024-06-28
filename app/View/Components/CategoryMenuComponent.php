@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class CategoryMenuComponent extends Component
 {
-
     public $name;
 
     public $current;
 
     public $roots;
+
+    public $categories;
 
     /**
      * Create a new component instance.
@@ -24,10 +25,12 @@ class CategoryMenuComponent extends Component
     {
         $this->name    = $name;
         $this->current = $current;
-        $this->roots   = Category::where('parent_id',null)
+        $this->roots = Category::where('parent_id',null)
                                  ->with('children')
                                  ->orderBy('title')
                                  ->get();
+
+        $this->categories = $this->category_select_option($this->roots,0,$this->current);
     }
 
     /**
@@ -44,27 +47,36 @@ class CategoryMenuComponent extends Component
      * Create option of selector and options of subcategory if exists.
      *
      * @param Collection $categories
+     * @param int $level
+     * @param Category $current
      *
-     * @return string $html;
+     * @return array $list;
      */
-    public function category_select_option( Collection $categories, int $level, Category $current = null ): string {
+    public function category_select_option(
+        Collection $categories,
+        int $level,
+        Category $current = null
+    ): array {
 
-        $html='';
-        if( count($categories) > 0 ){
-            foreach ($categories as $category) {
+        $list = [];
 
-                $selected = ( $current && ( $category->id == $current->id ) ) ? "selected='selected'" : "";
+        if (count($categories) > 0)
+        {
+            foreach ($categories as $category)
+            {
+                $item['id'] = $category->id;
+                $item['title'] = $category->title;
+                $item['level'] = $level;
+                $item['selected'] = ( $current && ( $category->id == $current->id ) );
+                $list[] = $item;
 
-                $html.="<option value='{$category->id}' {$selected} >".str_repeat('-',$level).$category->title."</option>";
                 if($category->children){
-                    $html.=$this->category_select_option($category->children,$level+1,$current);
+                    $sublist = $this->category_select_option($category->children,$level+1,$current);
+                    $list = array_merge($list, $sublist);
                 }
-
             }
         }
 
-        return $html;
-
+        return $list;
     }
-
 }

@@ -28,7 +28,7 @@
     <div class="col-3" >
             <div class="form-check form-switch">
                 <input type="hidden" name="post[published]" value=0 >
-                <input class="form-check-input" type="checkbox" name="post[published]" id="check_is_active" @if( isset($post) && $post->published ) checked="checked" @endif value=1 >
+                <input class="form-check-input bg-danger border-danger" type="checkbox" name="post[published]" id="check_is_active" @if( isset($post) && $post->published ) checked="checked" @endif value=1 >
                 <label class="form-check-label" for="check_is_active">Is Active</label>
             </div>
         </div>
@@ -95,7 +95,7 @@
 
     <div class="row pt-4" >
         <div class="col-3" >
-            <input type="submit" class="btn btn-primary" value="Submit" />
+            <input type="submit" class="btn btn-dark" value="Submit" />
         </div>
     </div>
 

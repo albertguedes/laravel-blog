@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 @section('title', "Delete '".ucwords($category->title)."'" )
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="card-body" >
 
         <div class="col-12" >
             <x-tabs-component prefix='categories' :model=$category />
         </div>
 
-        <div class="col-12" >
+        <div class="col-12 py-5" >
             <h1 class="text-capitalize card-title" >Delete '<em>{{ $category->title }}</em>' ?</h1>
         </div>
 

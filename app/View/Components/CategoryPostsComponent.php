@@ -22,7 +22,6 @@ class CategoryPostsComponent extends Component
         $this->category = $category;
 
         $this->posts = $this->category_posts($category);
-
     }
 
     /**
@@ -41,18 +40,16 @@ class CategoryPostsComponent extends Component
      * @param Category $category
      * @return array
      */
-    public function category_posts( Category $category ): array {
-
+    public function category_posts( Category $category ): array
+    {
         $posts = [];
 
-        foreach($category->posts(true) as $post ){
-
+        foreach($category->posts()->Published()->get() as $post ){
             $posts[] = [
                 'title' => $post->title,
                 'author' => $post->author->name,
                 'route' => route('post', compact('post') )
             ];
-
         }
 
         if( $category->children->count() > 0 ){
@@ -63,7 +60,6 @@ class CategoryPostsComponent extends Component
         }
 
         return $posts;
-
     }
 
 }

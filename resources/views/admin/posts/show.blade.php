@@ -1,22 +1,27 @@
 @extends('layouts.admin')
 @section('title', ucwords($post->title) )
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="card-body" >
         <div class="col-12" >
             <x-tabs-component prefix='posts' :model=$post />
         </div>
-        <div class="col-12 pt-5" >
+        <div class="col-12 py-5" >
             <h1 class="text-capitalize card-title" >{{ $post->title }}</h1>
             <h6 class="text-secondary" >
                 <small>
                     <i class="fas fa-calendar-plus"></i> {{ $post->created_at->format("Y-m-d h:i \h") }}
                     <i class="fas fa-edit ps-3"></i> {{ $post->updated_at->format("Y-m-d h:i \h") }}
-                    <i class="fas fa-user ps-3"></i> <a href="{{ route('users.show',[ 'user' => $post->author->id ] ) }}" >{{ ucwords($post->author->name) }}</a>
+                    <i class="fas fa-user ps-3"></i>
+                    @if(Auth::user()->is_admin)
+                    <a href="{{ route('users.show',[ 'user' => $post->author->id ] ) }}" >{{ ucwords($post->author->name) }}</a>
+                    @else
+                    {{ ucwords($post->author->name) }}
+                    @endif
                 </small>
             </h6>
         </div>
-        <div class="col-12 pt-5" >
+        <div class="col-12" >
             <div class="row" >
 
                 <div class="col-1 pb-3 fw-bolder" >ID</div>

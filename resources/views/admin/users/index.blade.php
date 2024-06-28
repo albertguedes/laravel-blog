@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('title','Users')
 @section('content')
-<div class="row card shadow" >
+<div class="row card p-5 shadow" >
     <div class="card-body" >
-        <div class="col-12 pt-5" >
+        <div class="col-12" >
             <h1 class="text-capitalize card-title" >Users</h1>
         </div>
         <div class="col-12 py-5" >
-            <a class="btn btn-primary" href="{{ route('users.create') }}" ><i class="fas fa-plus"></i> Create User</a>
+            <a class="btn btn-dark" href="{{ route('users.create') }}" ><i class="fas fa-plus"></i> Create User</a>
         </div>
         <div class="col-12" >
             @if( count($users) > 0)

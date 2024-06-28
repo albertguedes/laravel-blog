@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Posts;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class UpdateRequest extends FormRequest
 {
@@ -21,10 +22,10 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules( Request $request )
     {
 
-       $post = $this->request->get('post');
+       $post = $request->input('post');
 
        $rules = [
             "post.author_id"   => "required|integer",

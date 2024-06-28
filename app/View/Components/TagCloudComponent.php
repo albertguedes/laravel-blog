@@ -15,11 +15,15 @@ class TagCloudComponent extends Component
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->tags = Tag::IsActive()->orderBy('title')->get();
-    }
-
+public function __construct()
+{
+    $this->tags = Tag::IsActive()
+                     ->whereHas('posts', function ($query) {
+                         $query->where('published', true);
+                     })
+                     ->orderBy('title')
+                     ->get();
+}
     /**
      * Get the view / contents that represent the component.
      *
