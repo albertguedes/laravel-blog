@@ -8,7 +8,7 @@
     </div>
     <div class="col-12" >
         <p>Click on '[+]' to expand, '[-]' to collpase, or click on title to see
-            the list of posts on that category.</p>
+            the list of posts on that category, including posts on sub-categories.</p>
     </div>
     <div class="col-12" >
         <x-category-tree-component />

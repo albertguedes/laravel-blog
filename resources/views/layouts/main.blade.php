@@ -4,7 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" >
         <meta name="description" content="@yield('description')" >
-        <title>@yield('title') | {{ env('APP_NAME') }}</title>
+        @php($title = View::getSections()['title'] ?? null)
+        @if (is_null($title) || $title == 'Home')
+            <title>{{ env('APP_NAME') }}</title>
+        @else
+            <title>@yield('title') | {{ env('APP_NAME') }}</title>
+        @endif
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

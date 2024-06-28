@@ -79,7 +79,6 @@ Route::get('/tags/{tag}', [Tags::class, 'show'])->name('tag');
 
 Route::get('/archive', [Posts::class, 'archive'])->name('archive');
 
-
 Route::get('/about', [Pages::class, 'about'])->name('about');
 
 Route::get('/contact', [Contact::class, 'index'])->name('contact');
@@ -95,3 +94,7 @@ Route::get('/', [Posts::class, 'index'])->name('home');
  * argument try to find any post with the slug written in the url.
  */
 Route::get('/{post}', [Posts::class, 'show'])->name('post');
+
+Route::get('/404', function () {
+    return view('errors.404');
+})->name('404');
