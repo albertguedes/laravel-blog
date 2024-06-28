@@ -26,9 +26,9 @@
             @if( $post->tags()->count() )
             <div class="col-6 py-3" >
                 @foreach ($post->tags as $tag)
-                    <a class="me-2 d-inline-flex align-items-center" href="{{ route('tag', compact('tag')) }}">
-                        <i class="fas fa-tag mr-2 me-2"></i> {{ $tag->title }}
-                    </a>
+                <a class="me-2 d-inline-flex align-items-center" href="{{ route('tag', compact('tag')) }}">
+                    <i class="fas fa-tag"></i><span class="hidden-char" >_</span>{{ $tag->title }}
+                </a>
                 @endforeach
             </div>
             @endif

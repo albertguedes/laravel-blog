@@ -56,6 +56,10 @@ a.btn.btn-light {
     color: #F9322C;
 }
 
+.hidden-char {
+    color: #f2f4f4;
+}
+
 .list-unstyled li {
     list-style-type: none;
 }

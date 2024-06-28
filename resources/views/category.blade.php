@@ -4,7 +4,7 @@
 @section('content')
 <div class="row" >
     <div class="col-12 pb-3" >
-        <h1 class="text-capitalize pb-3" >{{ $category->title }}</h1>
+        <h1 class="text-capitalize pb-3" ><i class="fas fa-sitemap"></i> {{ $category->title }}</h1>
     </div>
     <div class="col-12 pb-5" >
         {{ $category->description }}

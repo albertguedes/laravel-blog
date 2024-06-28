@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Database\Factories;
 
@@ -10,7 +10,6 @@ use App\Models\User;
 
 class UserFactory extends Factory
 {
-
     /**
      * The name of the factory's corresponding model.
      *
@@ -25,7 +24,6 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-
         $created_at        = $this->faker->dateTime();
         $updated_at        = $this->faker->dateTimeBetween($created_at,'now');
         $name              = $this->faker->name();
@@ -35,6 +33,7 @@ class UserFactory extends Factory
         $password          = Hash::make($email);
         $remember_token    = Str::random(10);
         $is_active         = $this->faker->boolean();
+        $is_admin          = false;
 
         return compact(
             'created_at',
@@ -45,7 +44,8 @@ class UserFactory extends Factory
             'email_verified_at',
             'password',
             'remember_token',
-            'is_active'
+            'is_active',
+            'is_admin'
         );
 
     }

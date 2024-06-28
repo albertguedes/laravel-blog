@@ -10,6 +10,12 @@
             <i class="fas fa-border-all sidebar-icon"></i> Dashboard
         </a>
     </li>
+    @if(Auth::user()->is_admin)
+    <li class="nav-item">
+        <a class="nav-link @if(Request::routeIs('users.index')) active @endif" href="{{ route('users.index') }}">
+            <i class="fas fa-users sidebar-icon"></i> Users
+        </a>
+    </li>
     <li class="nav-item">
         <a class="nav-link @if(Request::routeIs('categories.index')) active @endif" href="{{ route('categories.index') }}">
             <i class="fas fa-sitemap sidebar-icon"></i> Categories
@@ -20,14 +26,10 @@
             <i class="fas fa-tag sidebar-icon"></i> Tags
         </a>
     </li>
+    @endif
     <li class="nav-item">
         <a class="nav-link @if(Request::routeIs('posts.index')) active @endif" href="{{ route('posts.index') }}">
             <i class="fas fa-newspaper sidebar-icon"></i> Posts
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link @if(Request::routeIs('users.index')) active @endif" href="{{ route('users.index') }}">
-            <i class="fas fa-users sidebar-icon"></i> Users
         </a>
     </li>
 </ul>

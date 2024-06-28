@@ -5,7 +5,10 @@
     <div class="col-12 pt-4" >
         <h1 class="display-4 fst-italic">Dashboard</h1>
     </div>
+
+    @if(Auth::user()->is_admin)
     <div class="col-3 pt-5" >
+
         <div class="card text-white bg-danger w-10 shadow">
             <div class="card-header fw-bolder">
                 Users
@@ -17,6 +20,8 @@
             </div>
         </div>
     </div>
+    @endif
+
     <div class="col-3 pt-5" >
         <div class="card text-white bg-warning w-10 shadow">
             <div class="card-header fw-bolder">
@@ -29,6 +34,8 @@
             </div>
         </div>
     </div>
+
+    @if(Auth::user()->is_admin)
     <div class="col-3 pt-5" >
         <div class="card text-white bg-primary w-10 shadow">
             <div class="card-header fw-bolder">
@@ -41,6 +48,9 @@
             </div>
         </div>
     </div>
+    @endif
+
+    @if(Auth::user()->is_admin)
     <div class="col-3 pt-5" >
         <div class="card text-white bg-success w-10 shadow">
             <div class="card-header fw-bolder">
@@ -53,5 +63,7 @@
             </div>
         </div>
     </div>
+    @endif
+
 </div>
 @endsection

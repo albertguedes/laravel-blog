@@ -163,3 +163,9 @@ Breadcrumbs::for('tags.delete', function (BreadcrumbTrail $trail, $tags){
     $trail->parent('tags.show',$tags);
     $trail->push("Delete", route('tags.delete', $tags));
 });
+
+// Home > 403 Error
+Breadcrumbs::for('403', function (BreadcrumbTrail $trail){
+    $trail->parent('dashboard');
+    $trail->push("403 Forbidden", route('403'));
+});

@@ -12,7 +12,12 @@
                 <small>
                     <i class="fas fa-calendar-plus"></i> {{ $post->created_at->format("Y-m-d h:i \h") }}
                     <i class="fas fa-edit ps-3"></i> {{ $post->updated_at->format("Y-m-d h:i \h") }}
-                    <i class="fas fa-user ps-3"></i> <a href="{{ route('users.show',[ 'user' => $post->author->id ] ) }}" >{{ ucwords($post->author->name) }}</a>
+                    <i class="fas fa-user ps-3"></i>
+                    @if(Auth::user()->is_admin)
+                    <a href="{{ route('users.show',[ 'user' => $post->author->id ] ) }}" >{{ ucwords($post->author->name) }}</a>
+                    @else
+                    {{ ucwords($post->author->name) }}
+                    @endif
                 </small>
             </h6>
         </div>

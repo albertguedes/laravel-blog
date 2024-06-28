@@ -10,10 +10,10 @@ use App\Models\Post;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
-
     /**
      * Get the routes for tabs.
      *
@@ -44,10 +44,14 @@ class PostsController extends Controller
      */
     public function index(): View
     {
-        $posts = Post::orderBy('id','ASC')->paginate(10);
+        if(Auth::user()->is_admin) {
+            $posts = Post::orderBy('created_at','ASC')->paginate(10);
+        }
+        else {
+            $posts = Post::where('author_id',Auth::user()->id)->orderBy('created_at','ASC')->paginate(10);
+        }
 
         return view('admin.posts.index',compact('posts'));
-
     }
 
     /**
@@ -95,6 +99,7 @@ class PostsController extends Controller
     public function show( Post $post ): View
     {
         $routes = $this->getRoutes($post);
+
         return view('admin.posts.show',compact('post','routes'));
     }
 
