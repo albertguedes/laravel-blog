@@ -28,7 +28,9 @@ class CategoriesController extends Controller
      */
     public function show( Category $category ): View
     {
-        return view('category',compact('category'));
+        return view('category',[
+            'category' => $category,
+        ]);
     }
 
 }

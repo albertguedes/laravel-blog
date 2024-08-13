@@ -8,7 +8,7 @@
         @foreach( $tree as $i => $categoria )
 
                 @if($categoria['level'] > $level)
-                    <ul id='children-{{ $tree[$i-1]['id'] }}' class="collapse" >
+                <ul id='children-{{ $tree[$i-1]['id'] }}' class="collapse" >
                 @endif
 
                 @if($categoria['level'] < $level)
@@ -24,7 +24,7 @@
                         [<span class='collapse-icon'>+</span>]
                     </a>
                     @else
-                    &nbsp;-&nbsp;
+                    <span class='ps-2 pe-4'>-</span>
                     @endif
                     <a href="{{ route('category', ['category' => $categoria['slug']]) }}" >
                         {{ $categoria['title'] }} ({{ $categoria['count_posts'] }})

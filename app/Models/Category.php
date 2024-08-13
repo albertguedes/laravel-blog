@@ -63,7 +63,7 @@ class Category extends Model
      */
     public function posts($published = false): HasMany
     {
-        $query = $this->hasMany(Post::class)->orderBy('title');
+        $query = $this->hasMany(Post::class)->orderBy('title','ASC');
 
         if ($published) {
             $query->where('published', true);

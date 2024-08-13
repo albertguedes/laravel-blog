@@ -7,7 +7,6 @@ use Illuminate\View\Component;
 
 class CategoryPostsComponent extends Component
 {
-
     public $category;
 
     public $posts;
@@ -35,16 +34,18 @@ class CategoryPostsComponent extends Component
     }
 
     /**
-     * Get all posts of a category and of the children recursively.
+     * Get all posts of a category and of the children recursively
+     * change on a formatted array ready to print.
      *
      * @param Category $category
      * @return array
      */
-    public function category_posts( Category $category ): array
+    public function category_posts (Category $category): array
     {
         $posts = [];
 
-        foreach($category->posts()->Published()->get() as $post ){
+        // Get posts of current category.
+        foreach($category->posts(true)->get() as $post ){
             $posts[] = [
                 'title' => $post->title,
                 'author' => $post->author->name,
@@ -52,6 +53,7 @@ class CategoryPostsComponent extends Component
             ];
         }
 
+        // Get children posts to add on current category.
         if( $category->children->count() > 0 ){
             foreach ($category->children as $children) {
                 $children_posts = $this->category_posts($children);
@@ -59,7 +61,11 @@ class CategoryPostsComponent extends Component
             }
         }
 
+        // Sort posts by title.
+        usort($posts, function($a, $b) {
+            return strcmp($a['title'], $b['title']);
+        });
+
         return $posts;
     }
-
 }

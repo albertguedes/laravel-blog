@@ -7,8 +7,9 @@ use Illuminate\View\Component;
 
 class TagPostsComponent extends Component
 {
-
     public $tag;
+
+    public $posts;
 
     /**
      * Create a new component instance.
@@ -18,6 +19,7 @@ class TagPostsComponent extends Component
     public function __construct($tag)
     {
         $this->tag = $tag;
+        $this->posts = $tag->posts()->Published()->orderBy('title','asc')->get();
     }
 
     /**
@@ -29,5 +31,4 @@ class TagPostsComponent extends Component
     {
         return view('components.tag-posts-component');
     }
-
 }

@@ -4,7 +4,7 @@
 @section('content')
 <div class="row" >
 <div class="col-12 pb-5">
-        <h2 class="text-uppercase" >Archive</h2>
+        <h2 class="text-uppercase" ><i class="fas fa-archive"></i> Archive</h2>
     </div>
     <div class="col-12" >
         <x-archive-component />

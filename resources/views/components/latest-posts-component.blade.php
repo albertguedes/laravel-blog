@@ -7,7 +7,7 @@
             <em>{{ ucwords($post->author->name) }}</em></h6>
             <div class="py-3" >
                 {{ $post->description }}
-                <p><a href="{{ route('post',['post'=>$post]) }}" >Read More</a></p>
+                <p class="fs-5 pt-3" ><a class="text-danger" href="{{ route('post',['post'=>$post]) }}" >Read More &raquo;</a></p>
             </div>
         </div>
         @endforeach

@@ -15,9 +15,11 @@
                     <div class="col-11 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-8
                     px-0" >
                         <header class="row pt-5" >
-                            <div class="col-12 py-4 text-md-start" >
-                                <h1 id="sitename" class="text-center text-primary" >
-                                    {{ env('APP_NAME') }}
+                            <div class="col-12 py-4 text-center" >
+                                <h1 id="sitename" >
+                                    <a href="{{ route('home') }}" >
+                                        {{ env('APP_NAME') }}
+                                    </a>
                                 </h1>
                             </div>
                         </header>

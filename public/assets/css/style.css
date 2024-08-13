@@ -58,6 +58,7 @@ a.btn.btn-light {
 
 .hidden-char {
     color: #f2f4f4;
+    margin-right: -13px;
 }
 
 .list-unstyled li {

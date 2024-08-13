@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\QueryException;
+use Illuminate\Database\PDOException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -41,8 +43,12 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof \PDOException) {
-            return response()->view('errors.500', [], 500);
+        if ($exception instanceof QueryException) {
+            return response()->view('errors.503', [], Response::HTTP_SERVICE_UNAVAILABLE);
+        }
+
+        if ($exception instanceof PDOException) {
+            return response()->view('errors.500', [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return parent::render($request, $exception);
