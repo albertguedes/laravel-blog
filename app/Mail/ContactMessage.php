@@ -32,5 +32,4 @@ class ContactMessage extends Mailable
     {
         return $this->view('mail.contact');
     }
-
 }
