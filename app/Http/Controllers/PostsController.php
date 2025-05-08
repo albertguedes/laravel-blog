@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostsController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -22,21 +22,15 @@ class PostsController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Post  $post
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\View|Response
      */
-    public function show( Post $post ): View
+    public function show (Post $post): View|Response
     {
-
-        $view = 'errors.404';
-        $data = [];
-
-        if( $post && $post->published ){
-            $view = 'post';
-            $data = compact('post');
+        if (!$post->exists() || !$post->published) {
+            return response('errors.404', Response::HTTP_NOT_FOUND);
         }
 
-        return view($view,$data);
-
+        return view('post',compact('post'));
     }
 
     /**
@@ -47,5 +41,4 @@ class PostsController extends Controller
     public function archive(): View {
         return view('archive');
     }
-
 }

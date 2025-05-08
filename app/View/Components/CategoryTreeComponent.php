@@ -48,14 +48,13 @@ class CategoryTreeComponent extends Component
     public static function getCategoryTree( $categories = null, int $level = 0 ): array
     {
         if (null === $categories) {
-            $categories = Category::whereNull('parent_id')
-                ->isActive()
-                ->with(['children', 'posts' => function ($query) {
-                    $query->where('published', true);
-                }])
-                ->withPublishedPosts()
-                ->orderBy('title')
-                ->get();
+            $categories = Category::whereNull('parent_id')->isActive()
+                                                          ->with(['children', 'posts' => function ($query) {
+                                                            $query->where('published', true);
+                                                          }])
+                                                          ->withPublishedPosts()
+                                                          ->orderBy('title')
+                                                          ->get();
         }
 
         $tree = [];

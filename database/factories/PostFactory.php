@@ -27,7 +27,6 @@ class PostFactory extends Factory
      */
     public function definition()
     {
-
         $sentence = $this->faker->unique()->sentence(4);
 
         $created_at  = $this->faker->dateTime();

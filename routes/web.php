@@ -82,7 +82,7 @@ Route::get('/archive', [Posts::class, 'archive'])->name('archive');
 Route::get('/about', [Pages::class, 'about'])->name('about');
 
 Route::get('/contact', [Contact::class, 'index'])->name('contact');
-Route::post('/contact', [Contact::class, 'sendmessage'])->name('sendmessage');
+Route::post('/contact', [Contact::class, 'sendMessage'])->name('sendmessage');
 
 Route::get('/rss.xml', Feed::class)->name('rss');
 Route::get('/sitemap.xml', Sitemap::class)->name('sitemap');

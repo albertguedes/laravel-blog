@@ -43,6 +43,10 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            return response()->view('errors.404', [], Response::HTTP_NOT_FOUND);
+        }
+
         if ($exception instanceof QueryException) {
             return response()->view('errors.503', [], Response::HTTP_SERVICE_UNAVAILABLE);
         }
