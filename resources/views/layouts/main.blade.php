@@ -10,7 +10,7 @@
         @else
             <title>@yield('title') | {{ env('APP_NAME') }}</title>
         @endif
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
@@ -49,11 +49,11 @@
                 </div>
             </div>
         </main>
-        <footer id="#footer" class="container sticky-bottom my-5 py-5 border-top" >
+        <footer id="footer" class="container mt-5 pt-5 border-top" >
             @include('partials.footer')
         </footer>
         <script src="{{ asset('assets/js/f761473b22.js') }}" ></script>
-        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" ></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
         <script src="{{ asset('assets/js/script.js') }}" ></script>
     </body>
 </html>
