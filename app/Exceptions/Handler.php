@@ -1,10 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Illuminate\Database\QueryException;
 use Illuminate\Database\PDOException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -57,5 +58,4 @@ class Handler extends ExceptionHandler
 
         return parent::render($request, $exception);
     }
-
 }

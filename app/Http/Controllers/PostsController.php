@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
+use App\Http\Requests\Profile\Posts\StoreRequest;
+use App\Http\Requests\Profile\Posts\UpdateRequest;
 use App\Models\Post;
 
 class PostsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\View\View
-     */
     public function index(): View
     {
-        return view('index');
+        $posts = Post::where('author_id', auth()->user()->id)
+                        ->orderBy('title','ASC')
+                        ->paginate(9);
+
+        return view('profile.posts.index', compact('posts'));
     }
 
     /**
@@ -28,42 +31,109 @@ class PostsController extends Controller
      */
     public function show (Post $post): View
     {
-        if (!$post->exists() || !$post->published) {
+        if ($post->author_id !== auth()->user()->id) {
             return view('errors.404', Response::HTTP_NOT_FOUND, );
         }
 
-        return view('post',compact('post'));
+        return view('profile.posts.show',compact('post'));
+    }
+
+    public function create(): View
+    {
+        return view('profile.posts.create');
     }
 
     /**
-     * Undocumented function
+     * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function archive(Request $request): View
+    public function store(StoreRequest $request)
     {
-        if ($request->get('month') && !$request->get('year')) {
-            return view('404');
+        $validated = $request->validated();
+
+        $post = Post::create($validated);
+        $post->save();
+
+        return redirect()->route('post', $post)
+                        ->with([ 'success' => 'Post created successfully' ]);
+    }
+
+    public function edit(Post $post): View
+    {
+        if ($post->author_id !== auth()->user()->id) {
+            return view('errors.404', Response::HTTP_NOT_FOUND, );
         }
 
-        if ($request->get('day') && !$request->get('month') || $request->get('day') && !$request->get('year')) {
-            return view('404');
+        return view('profile.posts.edit',compact('post'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\posts  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateRequest $request, Post $post)
+    {
+        if ($post->author_id !== auth()->user()->id) {
+            return view('errors.404', Response::HTTP_NOT_FOUND);
         }
 
-        $year = 0;
-        $month = 0;
-        $day = 0;
+        $validated = $request->validated();
 
-        if ($request->get('year')) {
-            $year = $request->get('year');
-            if ($request->get('month')) {
-                $month = $request->get('month');
-                if ($request->get('day')) {
-                    $day = $request->get('day');
-                }
-            }
+        DB::transaction(function () use ($post, $validated) {
+            $post->tags()->sync($validated['tags'] ?? []);
+            $post->update($validated);
+            $post->save();
+        });
+
+        return redirect()->route('profile.post', compact('post'))->with([
+            'success' => 'Post updated successfully',
+        ]);
+    }
+
+    public function delete(Post $post): View
+    {
+        if ($post->author_id !== auth()->user()->id) {
+            return view('errors.404');
         }
 
-        return view('archive', compact('year','month','day'));
+        return view('profile.posts.delete',compact('post'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\posts  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Post $post): RedirectResponse
+    {
+        if ($post->author_id !== auth()->user()->id) {
+            return redirect()->route('profile.posts')
+                            ->with('danger','You don\'t have permission to delete this post.');
+        }
+
+        $post_id = $post->id;
+
+        DB::transaction(function () use ($post) {
+            $post->tags()->detach();
+            $post->category()->dissociate();
+            $post->save();
+
+            $post->delete();
+        });
+
+        if (Post::whereKey($post_id)->exists()) {
+            return redirect()->route('profile.posts')
+                            ->with('danger','Wasn\'t possible to delete post. Try again later or contact support.');
+        }
+
+        return redirect()->route('profile.posts')->with([
+            'success' => 'Post deleted successfully',
+        ]);
     }
 }

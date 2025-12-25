@@ -13,32 +13,27 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-
+        Schema::create('categories', function (Blueprint $table)
+        {
             $table->id();
 
             $table->timestamps();
 
-            $table->unsignedBigInteger('parent_id')
-                  ->nullable()
-                  ->default(null);
-
-            $table->boolean('is_active')
-                  ->default(true);
+            $table->foreignId('parent_id')
+                ->nullable()
+                ->constrained('categories')
+                ->nullOnDelete();
 
             $table->string('title')
-                  ->unique();
+                    ->unique();
 
             $table->text('slug')
-                  ->unique();
+                    ->unique();
 
             $table->text('description');
 
-            $table->foreign('parent_id')
-                  ->references('id')
-                  ->on('categories')
-                  ->onDelete('set null');
-
+            $table->boolean('is_active')
+                    ->default(true);
         });
 
     }

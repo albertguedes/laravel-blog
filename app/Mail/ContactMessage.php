@@ -1,35 +1,47 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class ContactMessage extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $mail;
+    protected array $mail;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct( array $mail = [] )
+    public function __construct (array $mail)
     {
         $this->mail = $mail;
     }
 
     /**
-     * Build the message.
-     *
-     * @return $this
+     * Get the message envelope.
      */
-    public function build()
+    public function envelope(): Envelope
     {
-        return $this->view('mail.contact');
+        return new Envelope(
+            subject: $this->mail['subject'] . ' - ' . env('APP_NAME'),
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     */
+    public function content(): Content
+    {
+        return new Content(
+            view: 'mail.contact.contact',
+            with: [ 'mail' => $this->mail ],
+        );
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,10 +18,18 @@ class Category extends Model
      */
     protected $fillable = [
         'parent_id',
-        'is_active',
         'title',
         'slug',
         'description',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'parent_id' => 'integer',
+        'title' => 'string',
+        'slug' => 'string',
+        'description' => 'string',
+        'is_active' => 'boolean',
     ];
 
     /**
@@ -52,7 +59,7 @@ class Category extends Model
      */
     public function children(): HasMany
     {
-        return $this->hasMany(Category::class, 'parent_id')->with('children')->orderBy('title');
+        return $this->hasMany(Category::class, 'parent_id');
     }
 
     /**
@@ -61,38 +68,8 @@ class Category extends Model
      * @param bool $published
      * @return HasMany
      */
-    public function posts($published = false): HasMany
+    public function posts(): HasMany
     {
-        $query = $this->hasMany(Post::class)->orderBy('title','ASC');
-
-        if ($published) {
-            $query->where('published', true);
-        }
-
-        return $query;
-    }
-
-    /**
-     * Scope a query to only include categories that have published posts.
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeWithPublishedPosts(Builder $query): Builder
-    {
-        return $query->whereHas('posts', function (Builder $query) {
-            $query->where('published', true);
-        });
-    }
-
-    /**
-     * Scope a query to only include active posts.
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeIsActive(Builder $query): Builder
-    {
-        return $query->where('is_active', '=', true);
+        return $this->hasMany(Post::class);
     }
 }

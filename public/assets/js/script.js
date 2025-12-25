@@ -1,17 +1,23 @@
-/*
- * Alternate '+' and '-' symbols on item on categories list page.
- */
-const collapseLinks = document.querySelectorAll('.collapse-link');
-collapseLinks.forEach( link => {
-    link.addEventListener('click', function() {
-        let icon = this.querySelector('.collapse-icon');
-        if (icon.innerText == '-') {
-            // Altera o texto dentro do link para indicar que o conteúdo está visível
-            icon.innerText = '+';
-        }
-        else {
-            // Altera o texto dentro do link para indicar que o conteúdo está oculto
-            icon.innerText = '-';
-        }
-    });
+$(function() {
+    //footerAtBottom('#footer');
 });
+
+function footerAtBottom(footerSelector) {
+
+    console.log('footerAtBottom');
+
+    isString(footerSelector);
+
+    let page = $(window);
+    let body = $(document);
+    let footer = $(footerSelector);
+
+    var windowHeight = page.height();
+    var bodyHeight = body.height();
+    var footerHeight = footer.height();
+
+    if (windowHeight > bodyHeight + footerHeight) {
+        footer.css('position', 'fixed').css('bottom', 0);
+    }
+}
+

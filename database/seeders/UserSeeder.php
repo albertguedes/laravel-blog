@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
+use App\Models\Role;
 use App\Models\User;
 
 class UserSeeder extends Seeder
@@ -16,17 +17,28 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // Create first admin user.
-        User::factory()->create([
-            'name'              => 'Administrator',
-            'username'          => 'admin',
-            'email'             => 'admin@fakemail.com',
-            'password'          => Hash::make('admin@fakemail.com'),
-            'is_active'         => true,
-            'is_admin'          => true
-        ]);
-
         User::factory()->count(9)->create();
 
+        User::each(function ($user) {
+            $role = Role::inRandomOrder()
+                            ->where('title', '!=', 'admin')
+                            ->where('is_active', true)
+                            ->first();
+
+            $user->roles()->attach($role);
+            $user->save();
+        });
+
+        // Create admin user.
+        $admin = User::factory()->create([
+            'email'             => 'admin@fakemail.com',
+            'password'          => Hash::make('admin@fakemail.com'),
+            'email_verified_at' => now(),
+            'is_active'         => true
+        ]);
+
+        $role = Role::where('title', 'admin')->first();
+        $admin->roles()->attach($role);
+        $admin->save();
     }
 }

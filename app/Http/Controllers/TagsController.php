@@ -1,14 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
-
 use Illuminate\View\View;
+
+use App\Models\Tag;
 
 class TagsController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -16,12 +15,12 @@ class TagsController extends Controller
      */
     public function index(): View
     {
+        $tags = Tag::select('id','slug','title')
+                    ->where('is_active',true)
+                    ->orderBy('title','ASC')
+                    ->get();
 
-        $tags = Tag::IsActive()->select('slug','title')
-                               ->orderBy('title','ASC');
-
-        return view('tags',compact('tags'));
-
+        return View('tags.index',compact('tags'));
     }
 
     /**
@@ -32,7 +31,10 @@ class TagsController extends Controller
      */
     public function show(Tag $tag)
     {
-        return view('tag',compact('tag'));
-    }
+        if (!$tag || !$tag->is_active) {
+            abort(404);
+        }
 
+        return view('tags.show',compact('tag'));
+    }
 }

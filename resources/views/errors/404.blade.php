@@ -2,10 +2,16 @@
 @section('title','404 - Page not Found')
 @section('description','Error 404 - Page Not Found on Server')
 @section('content')
-<div class="row" >
-    <div class="col-12 text-center pb-3" >
-        <h1 class="text-uppercase pb-3" >404 - Page Not Found</h1>
-        <p>A página com o endereço solicitado não existe.</p>
-    </div>
-</div>
+<article class="row" >
+    <header class="col-12" >
+        <x-page-title-component title="404 - Page Not Found" />
+    </header>
+
+    <section class="col-12" >
+        <p>
+            This page don't exist or has been moved. <a href="{{ route('home') }}" >Return to Home</a>
+        </p>
+    </section>
+
+</article>
 @endsection

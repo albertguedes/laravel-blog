@@ -2,12 +2,15 @@
 @section('title', 'Archive')
 @section('description','Archive of all posts')
 @section('content')
-<div class="row" >
-<div class="col-12 pb-5">
-        <h2 class="text-uppercase" ><i class="fas fa-archive"></i> Archive</h2>
-    </div>
-    <div class="col-12" >
-        <x-archive-component :year="$year" :month="$month" :day="$day" />
-    </div>
-</div>
+<section class="row" >
+
+    <header class="col-12">
+        <x-page-title-component title="Archive" icon="archive" />
+    </header>
+
+    <article class="col-12" >
+        <x-posts.archive-component :year="$year" :month="$month" :day="$day" />
+    </article>
+
+</section>
 @endsection

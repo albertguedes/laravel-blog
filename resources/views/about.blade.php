@@ -1,11 +1,11 @@
 @extends('layouts.main')
 @section('title', 'About Us')
 @section('content')
-<div class="row" >
-    <div class="col-12 pb-5">
-        <h2 class="text-uppercase" >About</h2>
-    </div>
-    <div class="col-12 pt-3" >
+<section class="row" >
+    <header class="col-12">
+        <x-page-title-component title="About Us" />
+    </header>
+    <article class="col-12" >
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Non
             consectetur a erat nam at lectus. Amet dictum sit amet justo donec
@@ -19,6 +19,6 @@
              egestas. Ut lectus arcu bibendum at varius vel pharetra vel turpis.
              Scelerisque in dictum non consectetur a. Lectus quam id leo in
              vitae turpis massa.</p>
-    </div>
-</div>
+    </article>
+</section>
 @endsection

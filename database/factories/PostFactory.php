@@ -1,18 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-use App\Models\User;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
+use App\Models\User;
 
 class PostFactory extends Factory
 {
-
     /**
      * The name of the factory's corresponding model.
      *
@@ -27,7 +26,7 @@ class PostFactory extends Factory
      */
     public function definition()
     {
-        $sentence = $this->faker->unique()->sentence(4);
+        $sentence = $this->faker->unique()->sentence(rand(1,10));
 
         $created_at  = $this->faker->dateTime();
         $updated_at  = $this->faker->dateTimeBetween($created_at,'now');
@@ -36,7 +35,7 @@ class PostFactory extends Factory
         $slug        = Str::slug($title,'-');
         $description = $this->faker->text(140);
         $content     = $this->faker->text(2048);
-        $category_id = Category::inRandomOrder()->first()->id;
+        $category_id = null;
         $published   = $this->faker->boolean();
 
         return compact(
@@ -50,15 +49,28 @@ class PostFactory extends Factory
             'category_id',
             'published'
         );
-
     }
 
     public function configure()
     {
-        return $this->afterCreating(function (Post $post) {
-            $tags = Tag::inRandomOrder()->limit(3)->get();
-            $post->tags()->attach($tags);
+        return $this->afterCreating(function (Post $post)
+        {
+            // Set some random leaf category to the post.
+            $post->category_id = Category::whereDoesntHave('children')
+                                            ->where('is_active', true)
+                                            ->inRandomOrder()
+                                            ->value('id');
+
+            // Set random tags to the post
+            $post->tags()->attach(
+                Tag::inRandomOrder()
+                            ->where('is_active', true)
+                            ->limit(rand(1,5))
+                            ->get()
+                            ->pluck('id')
+            );
+
+            $post->save();
         });
     }
-
 }

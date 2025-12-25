@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
+
+use App\Http\Requests\Contact\MessageRequest;
 use App\Mail\ContactMessage;
 
 class ContactController extends Controller
@@ -13,19 +14,21 @@ class ContactController extends Controller
         return view('contact');
     }
 
-    public function sendMessage (Request $request): RedirectResponse
+    public function send (MessageRequest $request): RedirectResponse
     {
-        $message = $request->get('message');
-
         try {
-            $ContactMessage = new ContactMessage($message);
-            Mail::to(env('MAIL_TO_ADDRESS'))->send($ContactMessage);
-            return redirect()->route('contact')
-                             ->with('success','Message sended with success!');
-        }
-        catch( \Exception $e ){
-            return redirect()->route('contact')
-                             ->with('danger','Error on send message. Try again later.');
+            $validated = $request->validated();
+
+            Mail::to([env('MAIL_TO_ADDRESS'), $validated['email']])
+                    ->send(new ContactMessage($validated));
+
+            return redirect()
+                ->route('contact')
+                ->with('success', 'Message sent successfully.');
+        } catch (TransportExceptionInterface $e) {
+            return redirect()
+                ->route('contact')
+                ->with('error', 'Failed to send message: ' . $e->getMessage());
         }
     }
 }

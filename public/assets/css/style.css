@@ -75,3 +75,21 @@ a.btn.btn-light {
 }
 
 .admin-body-bg { background-color: #f2f4f4; }
+
+.form-check-input:checked {
+    background-color: #F9322C;
+    border-color: #F9322C;
+}
+
+.list-group-item.active {
+    background-color: #F9322C!important;
+    border-color: #F9322C;
+}
+
+.archive-folder-icon {
+    font-size: 5rem;
+}
+
+.archive-title-link:hover {
+    color: #F9322C!important;
+}

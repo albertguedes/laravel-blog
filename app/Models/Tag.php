@@ -1,40 +1,37 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tag extends Model
 {
-
     use HasFactory;
 
     protected $fillable = [
-        'is_active',
         'title',
         'slug',
-        'description'
+        'description',
+        'is_active',
     ];
 
-    public function getRouteKeyName()
+    protected $casts = [
+        'title' => 'string',
+        'slug' => 'string',
+        'description' => 'string',
+        'is_active' => 'boolean',
+    ];
+
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    public function posts(){
-        return $this->belongsToMany(Post::class);
-    }
-
-    /**
-    * Scope a query to only include active tags.
-    * https://www.scratchcode.io
-    * @param  \Illuminate\Database\Eloquent\Builder  $query
-    * @return \Illuminate\Database\Eloquent\Builder
-    */
-    public function scopeIsActive($query)
+    public function posts(): BelongsToMany
     {
-        return $query->where('is_active', '=', true);
+        return $this->belongsToMany(Post::class)
+                    ->withPivot('created_at');
     }
-
 }

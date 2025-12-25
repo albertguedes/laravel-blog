@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use Illuminate\Contracts\View\View;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Response;
+
+use App\Models\Category;
 
 class CategoriesController extends Controller
 {
@@ -16,7 +16,7 @@ class CategoriesController extends Controller
      */
     public function index(): View
     {
-        return view('categories');
+        return view('categories.index');
     }
 
     /**
@@ -25,12 +25,12 @@ class CategoriesController extends Controller
      * @param  \App\Models\Category $category
      * @return \Illuminate\View\View|Symfony\Component\HttpFoundation\Response
      */
-    public function show (Category $category): View|Response
+    public function show (Category $category): View
     {
-        if (!$category->exists() || !$category->is_active) {
-            return response('errors.404', Response::HTTP_NOT_FOUND);
+        if (!$category || !$category->is_active) {
+            return view('errors.404');
         }
 
-        return view('category', compact('category'));
+        return view('categories.show', compact('category'));
     }
 }

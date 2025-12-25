@@ -24,30 +24,24 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $created_at        = $this->faker->dateTime();
-        $updated_at        = $this->faker->dateTimeBetween($created_at,'now');
-        $name              = $this->faker->name();
-        $username          = $this->faker->username();
-        $email             = $this->faker->unique()->safeEmail();
-        $email_verified_at = $created_at;
-        $password          = Hash::make($email);
-        $remember_token    = Str::random(10);
-        $is_active         = $this->faker->boolean();
-        $is_admin          = false;
+        $created_at = $this->faker->dateTime();
+        $updated_at = $this->faker->dateTimeBetween($created_at,'now');
+        $email = $this->faker->unique()->safeEmail();
+        $email_verified_at = $this->faker->boolean() ? $created_at : null;
+        $password = Hash::make($email);
+        $remember_token = Str::random(10);
+        // User can be active only if email is verified.
+        $is_active = (!is_null($email_verified_at)) ? $this->faker->boolean() : false;
 
         return compact(
             'created_at',
             'updated_at',
-            'name',
-            'username',
             'email',
             'email_verified_at',
             'password',
             'remember_token',
-            'is_active',
-            'is_admin'
+            'is_active'
         );
-
     }
 
     /**
