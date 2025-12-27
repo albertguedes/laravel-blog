@@ -1,85 +1,74 @@
-@extends('layouts.auth')
-@section('title', env('APP_NAME') . ' - Register')
-@section('content')
-<form method="POST" action="{{ route('auth.register.store') }}" >
+<x-layouts.auth-layout-component title="Register" description="User registration" >
+    <article class="row justify-content-center" >
 
-    @csrf
+        <header class="text-center col-12" >
+            <x-page-title-component title="Register" />
+        </header>
 
-    <h2 class="h3 mb-3 fw-normal">Register</h2>
+        <div class="col-6" >
+            <form method="POST" action="{{ route('register') }}">
 
-    <div class="input-group mb-3">
-        <label for="email" class="input-group-text">
-            <i class="far fa-envelope" ></i>
-        </label>
-        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Type your email" required>
-        @error('email')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
+                @csrf
 
-    <div class="input-group mb-3">
-        <label for="password" class="input-group-text">
-            <i class="fas fa-key" ></i>
-        </label>
-        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Type your password" required>
-        @error('password')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
+                <div class="mb-3 input-group">
+                    <label for="name" class="input-group-text"><i class="px-0 fas fa-user-circle"></i></label>
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Type your name" required>
+                    @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-    <div class="input-group mb-3">
-        <label for="password_confirmation" class="input-group-text">
-            <i class="fas fa-key" ></i>
-        </label>
-        <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="Confirm your password" required>
-        @error('password_confirmation')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
+                <div class="mb-3 input-group">
+                    <label for="username" class="input-group-text"><i class="px-0 fas fa-id-badge"></i></label>
+                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" placeholder="Type a cool username" required>
+                    @error('username')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-    <div class="input-group mb-3">
-        <label for="name" class="input-group-text"><i class="fas fa-id-card px-0"></i></label>
-        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Type your name" required>
-        @error('name')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
+                <div class="mb-3 input-group">
+                    <label for="email" class="input-group-text"><i class="px-0 far fa-envelope"></i></label>
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Type your email" required>
+                    @error('email')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-    <div class="input-group mb-3">
-        <label for="username" class="input-group-text"><i class="fas fa-id-badge"></i></label>
-        <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" placeholder="Type a cool username" required>
-        @error('username')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
+                <div class="mb-3 input-group">
+                    <label for="password" class="input-group-text"><i class="px-0 fas fa-key"></i></label>
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Type your password" required autocomplete="new-password">
+                    @error('password')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-    <div class="input-group mb-3">
-        <label for="about" class="input-group-text"><i class="fas fa-info"></i></label>
-        <textarea name="about" class="form-control @error('about') is-invalid @enderror" placeholder="Type something about you" rows="4">{{ old('about') }}</textarea>
-        @error('about')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
+                <div class="mb-3 input-group">
+                    <label for="password_confirmation" class="input-group-text"><i class="px-0 fas fa-key"></i></label>
+                    <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="Confirm your password" required autocomplete="new-password">
+                    @error('password_confirmation')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-    <div class="text-center">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-user-plus"></i> Register
-        </button>
-    </div>
+                <div class="mb-3 form-group">
+                    <div class="input-group">
+                        <label for="about" class="input-group-text"><i class="px-0 fas fa-info-circle"></i></label>
+                        <textarea name="about" class="form-control @error('about') is-invalid @enderror" placeholder="Tell us something about yourself" required>{{ old('about') }}</textarea>
+                        @error('about')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
 
-</form>
-<div class="text-center h6 mt-5 pt-3 border-top">
-    <div class="row" >
-        <div class="col text-center" >
-            <a class="text-secondary me-3" href="{{ route('auth.login') }}" >
-                <i class="fas fa-sign-in-alt"></i> Login
-            </a>
+                <x-send-button-component />
+            </form>
         </div>
-        <div class="col text-center" >
-            <a class="text-secondary me-3" href="{{ route('auth.password.forget') }}" >
-                <i class="fas fa-key"></i> Forgot Password
+
+        <footer class="pt-5 mt-5 text-center h6 col-12 border-top" >
+            <a href="{{ route('login') }}">
+                <i class="fa fa-arrow-left"></i>
+                {{ __('Back') }}
             </a>
-        </div>
-    </div>
-</div>
-@endsection
+        </footer>
+    </article>
+</x-layouts.auth-layout-component>

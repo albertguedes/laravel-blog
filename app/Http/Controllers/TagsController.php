@@ -32,7 +32,7 @@ class TagsController extends Controller
     public function show(Tag $tag)
     {
         if (!$tag || !$tag->is_active) {
-            abort(404);
+            abort(Response::HTTP_NOT_FOUND);
         }
 
         return view('tags.show',compact('tag'));

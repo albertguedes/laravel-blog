@@ -1,45 +1,57 @@
-@extends('layouts.auth')
-@section('title', env('APP_NAME') . ' - Login')
-@section('content')
-<form method="POST" action="{{ route('auth.login.authenticate') }}" >
-    @csrf
+<x-layouts.auth-layout-component title="Login" description="User login" >
+    <section class="row justify-content-center" >
 
-    <h2 class="h3 mb-3 fw-normal">Login</h2>
+        <header class="text-center col-12" >
+            <x-page-title-component title="Login" />
+        </header>
 
-    <div class="input-group mb-3">
-        <label for="email" class="input-group-text"><i class="far fa-envelope"></i></label>
-        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Type your email" required>
-        @error('email')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-    <div class="input-group mb-3">
-        <label for="password" class="input-group-text">
-            <i class="fas fa-key" ></i>
-        </label>
-        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Type your password" required>
-        @error('password')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-    <div class="text-center">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-sign-in-alt"></i> Sign in
-        </button>
-    </div>
-</form>
-<div class="text-center h6 mt-5 pt-3 border-top">
-    <div class="row" >
-        <div class="col text-center" >
-            <a class="text-secondary me-3" href="{{ route('auth.register') }}" >
-                <i class="fas fa-user-plus"></i> Register
+        <article class="col-6" >
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+
+                <div class="mb-4 input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Type your email" required>
+                    @error('email')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-4 input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Type your password" required>
+                    @error('password')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="row justify-content-center" >
+                    <div class="col-5" >
+                        <div class="mb-4 form-check h6" >
+                            <input class="form-check-input @error('remember') is-invalid @enderror" type="checkbox" value="1" id="remember" name="remember" >
+                            <label class="form-check-label" for="remember">
+                                {{ __('Remember me') }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <x-send-button-component />
+
+            </form>
+        </article>
+
+        <footer class="pt-5 mt-5 text-center h6 col-12 border-top" >
+            <a class="me-5" href="{{ route('password') }}" >
+                <i class="fa fa-key"></i>
+                {{ __('Reset Password') }}
             </a>
-        </div>
-        <div class="col text-center" >
-            <a class="text-secondary me-3" href="{{ route('auth.password.forget') }}" >
-                <i class="fas fa-key"></i> Forgot Password
+
+            <a href="{{ route('register') }}" >
+                <i class="fa fa-user-plus"></i>
+                {{ __('Register') }}
             </a>
-        </div>
-    </div>
-</div>
-@endsection
+        </footer>
+
+    </section>
+</x-layouts.auth-layout-component>

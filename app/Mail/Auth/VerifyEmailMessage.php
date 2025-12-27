@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Mail;
+namespace App\Mail\Auth;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -8,21 +8,16 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class RegisterConfirmMessage extends Mailable
+class VerifyEmailMessage extends Mailable
 {
     use Queueable, SerializesModels;
-
-    protected array $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct (array $data)
-    {
-        $this->data = $data;
-    }
+    public function __construct (protected array $data) {}
 
     /**
      * Get the message envelope.
@@ -30,7 +25,7 @@ class RegisterConfirmMessage extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Register Confirm Request - ' . env('APP_NAME'),
+            subject: 'Verify Email Request- ' . env('APP_NAME'),
         );
     }
 
@@ -40,7 +35,7 @@ class RegisterConfirmMessage extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.auth.register-confirm',
+            view: 'mail.auth.verify-email',
             with: [
                 'name' => $this->data['name'],
                 'url' => $this->data['url']

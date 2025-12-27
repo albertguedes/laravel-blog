@@ -32,7 +32,7 @@ class PostsController extends Controller
     public function show (Post $post): View
     {
         if ($post->author_id !== auth()->user()->id) {
-            return view('errors.404', Response::HTTP_NOT_FOUND, );
+            abort(Response::HTTP_NOT_FOUND);
         }
 
         return view('profile.posts.show',compact('post'));
@@ -63,7 +63,7 @@ class PostsController extends Controller
     public function edit(Post $post): View
     {
         if ($post->author_id !== auth()->user()->id) {
-            return view('errors.404', Response::HTTP_NOT_FOUND, );
+            abort(Response::HTTP_NOT_FOUND);
         }
 
         return view('profile.posts.edit',compact('post'));
@@ -79,7 +79,7 @@ class PostsController extends Controller
     public function update(UpdateRequest $request, Post $post)
     {
         if ($post->author_id !== auth()->user()->id) {
-            return view('errors.404', Response::HTTP_NOT_FOUND);
+            abort(Response::HTTP_NOT_FOUND);
         }
 
         $validated = $request->validated();
@@ -98,7 +98,7 @@ class PostsController extends Controller
     public function delete(Post $post): View
     {
         if ($post->author_id !== auth()->user()->id) {
-            return view('errors.404');
+            abort(Response::HTTP_NOT_FOUND);
         }
 
         return view('profile.posts.delete',compact('post'));

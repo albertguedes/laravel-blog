@@ -2,114 +2,80 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 use App\Http\Requests\Profile\UpdateRequest;
 use App\Http\Requests\Profile\PasswordUpdateRequest;
 
-use App\Models\Profile;
-
 class ProfileController extends Controller
 {
-    /**
-     * Show the user profile page.
-     *
-     * @return View
-     */
     public function index(): View
     {
-        $user = auth()->user();
-        return view('profile.index', compact('user'));
+        return view('profile.index', [
+            'user' => auth()->user(),
+        ]);
     }
 
     /**
-     * Show the form for editing the profile information.
-     *
-     * @return View
+     * Display the user's profile form.
      */
-    public function edit(): View
+    public function edit(Request $request): View
     {
-        $user = auth()->user();
-        return view('profile.edit', compact('user'));
+        return view('profile.edit', [
+            'user' => $request->user(),
+        ]);
     }
 
     /**
-     * Update the profile information.
-     *
-     * @param UpdateRequest $request
-     * @param Profile $profile
-     * @return RedirectResponse
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * Update the user's profile information.
      */
     public function update(UpdateRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
+        $request->user()->fill($request->validated());
 
-        $user = auth()->user();
-        $user->email = $validated['email'];
-        $user->save();
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
 
-        $user->profile->update($validated);
-        $user->profile->save();
+        $request->user()->save();
 
-        return redirect()->route('profile')
-                            ->with('success','Profile updated.');
+        return redirect()->route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
-     * Return the view for password update.
-     *
-     * @return View
+     * Delete the user's account.
      */
+    public function destroy(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+
+        auth()->logout();
+
+        $user->is_active = false;
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::to('/');
+    }
+
     public function password(): View
     {
         return view('profile.password');
     }
 
-    /**
-     * Update the user's password.
-     *
-     * @param PasswordUpdateRequest $request
-     * @return RedirectResponse
-     */
     public function passwordUpdate(PasswordUpdateRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
-        auth()->user()->update([
-            'password' => Hash::make($validated['password'])
+        $request->user()->update([
+            'password' => Hash::make($validated['password']),
         ]);
 
-        auth()->logoutOtherDevices($validated['password']);
-
-        return redirect()->route('profile')
-                            ->with('success','Password updated.');
-    }
-
-    public function delete(): View
-    {
-        $user = auth()->user();
-        return view('profile.delete', compact('user'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(): RedirectResponse
-    {
-        $result = auth()->user()->delete();
-
-        if (!$result) {
-            return redirect()->route('profile.delete')
-                                ->with('danger','Wasn\'t possible to delete profile. Try again later or contact support.');
-        }
-
-        auth()->logout();
-
-        return redirect()->route('auth.logout')
-                            ->with('success','Account canceled.');
+        return Redirect::back()->with('success', 'Password updated successfully');
     }
 }

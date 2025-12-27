@@ -1,4 +1,3 @@
-
 <form action="{{ route('profile.update', $user) }}" method="POST">
 
     @csrf

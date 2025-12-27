@@ -28,7 +28,7 @@ class CategoriesController extends Controller
     public function show (Category $category): View
     {
         if (!$category || !$category->is_active) {
-            return view('errors.404');
+            abort(Response::HTTP_NOT_FOUND);
         }
 
         return view('categories.show', compact('category'));

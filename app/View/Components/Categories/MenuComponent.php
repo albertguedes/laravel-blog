@@ -11,7 +11,6 @@ class MenuComponent extends Component
 {
     public $name;
     public $current;
-    public $roots;
     public $categories;
 
     /**
@@ -23,12 +22,8 @@ class MenuComponent extends Component
     {
         $this->name = $name;
         $this->current = $current;
-        $this->roots = Category::where('parent_id',null)
-                                    ->with('children')
-                                    ->orderBy('title')
-                                    ->get();
 
-        $this->categories = $this->categorySelectOption($this->roots,0,$this->current);
+        $this->categories = $this->categorySelectOption($this->current);
     }
 
     /**
@@ -43,6 +38,8 @@ class MenuComponent extends Component
 
     /**
      * Create option of selector and options of subcategory if exists.
+     * Only categories without children can be selected.
+     * Path of category is generated.
      *
      * @param Collection $categories
      * @param int $level
@@ -51,34 +48,39 @@ class MenuComponent extends Component
      * @return array $list;
      */
     public function categorySelectOption(
-        Collection $categories,
-        int $level = 0,
         ?Category $current = null
     ): array {
 
-        if (!$categories) {
-            throw new \Exception('categories is required');
-        }
+        // Get all categories without children.
+        $roots = Category::doesntHave('children')
+                        ->where('is_active', true)
+                        ->orderBy('title')
+                        ->get();
 
-        $list = [];
-
-        if (count($categories) > 0)
+        foreach ($roots as $root)
         {
-            foreach ($categories as $category)
-            {
-                $item['id'] = $category->id;
-                $item['title'] = $category->title;
-                $item['level'] = $level;
-                $item['selected'] = ( $current && ( $category->id == $current->id ) );
-                $list[] = $item;
-
-                if($category->children){
-                    $sublist = $this->categorySelectOption($category->children,$level+1,$current);
-                    $list = array_merge($list, $sublist);
+            $path = '';
+            $parent = $root->parent;
+            while (!is_null($parent)) {
+                if($parent->is_active) {
+                    $path = $parent->title . ' / ' . $path;
                 }
+                $parent = $parent->parent;
             }
+
+            $options[] = [
+                'id' => $root->id,
+                'title' => $root->title,
+                'path' => $path,
+                'selected' => (!is_null($current)) ? ($root->id == $current->id) : '',
+            ];
         }
 
-        return $list;
+        // Order the options by path.
+        usort($options, function ($a, $b) {
+            return strcmp($a['path'], $b['path']);
+        });
+
+        return $options;
     }
 }

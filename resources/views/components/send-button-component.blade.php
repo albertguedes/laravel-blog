@@ -1,5 +1,5 @@
-<div class="w-100 text-center" >
+<div class="text-center w-100" >
     <button type="submit" class="btn btn-dark btn-lg">
-        <i class="fa fa-arrow-right"></i> Send
+        Send <i class="fa fa-arrow-right"></i>
     </button>
 </div>

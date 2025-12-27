@@ -33,7 +33,7 @@ class AuthorsController extends Controller
     public function show(User $author): View
     {
         if (!$author) {
-            return view('errors.404', Response::HTTP_NOT_FOUND);
+            abort(Response::HTTP_NOT_FOUND);
         }
 
         $posts = $author->posts()
