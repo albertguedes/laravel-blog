@@ -18,8 +18,8 @@
 
         <div class="row" >
 
-            <div class="col-12 pb-3" >
-                <div class="alert alert-warning text-center" role="alert">
+            <div class="pb-3 col-12" >
+                <div class="text-center alert alert-warning" role="alert">
                     <h2><i class="fas fa-exclamation-triangle"></i> Once you delete this post, there is no going back.</h2>
                     <p class="alert-heading">Are you sure?</p>
                 </div>
@@ -27,7 +27,7 @@
 
             <div class="col-6 text-end">
                 <a href="{{ route('profile.post', compact('post')) }}" class="btn btn-lg btn-primary">
-                    <i class="fas fa-arrow-left"></i> Back
+                    <i class="fas fa-arrow-left"></i> No, i want to back
                 </a>
             </div>
 
@@ -36,7 +36,7 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-lg btn-danger">
-                        <i class="fas fa-trash"></i> Delete
+                        <i class="fas fa-trash"></i> Yes, delete this post
                     </button>
                 </form>
             </div>
