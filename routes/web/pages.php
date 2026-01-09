@@ -6,6 +6,7 @@ use App\Http\Controllers\ArchiveController as Archive;
 use App\Http\Controllers\IndexController as Index;
 use App\Http\Controllers\ContactController as Contact;
 use App\Http\Controllers\FeedController as Feed;
+use App\Http\Controllers\SearchController as Search;
 use App\Http\Controllers\SitemapController as Sitemap;
 
 // Home Page
@@ -20,6 +21,9 @@ Route::post('/contact', [Contact::class, 'send'])->name('contact.send');
 
 // Archive of posts page
 Route::get('/archive', Archive::class)->name('archive');
+
+// Search Page
+Route::get('/search', Search::class)->name('search');
 
 // RSS feed
 Route::get('/rss.xml', Feed::class)->name('rss');
