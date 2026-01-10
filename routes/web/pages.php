@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ArchiveController as Archive;
 use App\Http\Controllers\IndexController as Index;
+use App\Http\Controllers\ChatController as Chat;
 use App\Http\Controllers\ContactController as Contact;
 use App\Http\Controllers\FeedController as Feed;
 use App\Http\Controllers\SearchController as Search;
@@ -21,6 +22,10 @@ Route::post('/contact', [Contact::class, 'send'])->name('contact.send');
 
 // Archive of posts page
 Route::get('/archive', Archive::class)->name('archive');
+
+// Chat page
+Route::get('/chat', [Chat::class, 'index'])->name('chat');
+Route::post('/chat', [Chat::class, 'ask'])->name('chat.ask');
 
 // Search Page
 Route::get('/search', Search::class)->name('search');

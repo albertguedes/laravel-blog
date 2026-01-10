@@ -179,6 +179,7 @@ return [
          * Custom service providers.
          */
         App\Providers\CustomServiceProvider::class,
+        App\Providers\ObserverServiceProvider::class,
     ],
 
     /*
