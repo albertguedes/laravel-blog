@@ -1,27 +1,33 @@
-![GitHub](https://img.shields.io/github/license/albertguedes/portfolio-laravel-blog) ![GitHub language count](https://img.shields.io/github/languages/count/albertguedes/portfolio-laravel-blog) ![GitHub last commit](https://img.shields.io/github/last-commit/albertguedes/portfolio-laravel-blog) 
+# Laravel Blog
 
-## Laravel Blog
+A simple blog with admin dashboard built with **Laravel**, featuring post management, categories, contact form, and RSS feeds.
 
-This is a simple blog made with Laravel Framework.  
+## Features
 
-The blog contains:
+- **Public pages**: Home (latest posts with pagination), post viewing, about, contact
+- **Admin dashboard**: User management (CRUD), post management (CRUD), profile manager
+- **Content**: Categories, posts with rich text, RSS feed
+- **Contact**: Email contact form
 
-- a home page that show hte latest posts, and use paginating to see old posts.
-- post page.
-- about page.
-- added categories for posts.
-- contact page with contact form.
-- added rss.
+## Tech Stack
 
-The admin dashboard contains:
+- Laravel (PHP)
+- MySQL/MariaDB
+- Bootstrap (frontend)
+- Composer dependencies
 
-- a login initial page
-- sidebar with links for the sections
-- navbar with breadcrumbs, profile link and logout button.
-- a profile manager section
-- a user manager section with basic crud: list, create, show, edit and delete users. 
-- a post manager section with basic crud too.
+## Installation
 
-# References
+```bash
+git clone https://github.com/albertguedes/laravel-blog.git
+cd laravel-blog
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
 
-- Laravel Framework: [https://laravel.com/docs/9.x](https://laravel.com/docs/9.x)
+## License
+
+MIT License - see [LICENSE](LICENSE.md)
