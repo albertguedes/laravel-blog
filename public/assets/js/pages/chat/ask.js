@@ -5,6 +5,12 @@ $(function () {
     const chatThinking = $('#chat-thinking');
     const clearChatBtn = $('#clear-chat');
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     chatForm.on('submit', handleSubmit);
     clearChatBtn.on('click', handleClear);
 
@@ -15,6 +21,8 @@ $(function () {
 
         const question = questionInput.val().trim();
         if (!question) {
+            questionInput.css('border', '1px solid #F9322C');
+            setTimeout(() => questionInput.css('border', ''), 1500);
             return;
         }
 
@@ -23,14 +31,23 @@ $(function () {
 
         showThinking();
 
-        $.post('/chat', chatForm.serialize())
+        const data = {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            question: question
+        };
+
+        $.post('/chat', data)
             .done(function (response) {
                 hideThinking();
                 addMessage('assistant', response.answer);
             })
-            .fail(function () {
+            .fail(function (xhr) {
                 hideThinking();
-                addMessage('assistant', 'Desculpe, occurred an error processing your request. Please try again.');
+                let errorMsg = 'Ocorreu um erro ao processar sua mensagem.';
+                if (xhr.responseJSON && xhr.responseJSON.errors && xhr.responseJSON.errors.question) {
+                    errorMsg = xhr.responseJSON.errors.question[0];
+                }
+                addMessage('assistant', errorMsg);
             });
     }
 

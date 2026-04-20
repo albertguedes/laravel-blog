@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" >
         <meta name="description" content="{{ $description }}" >
+        <meta name="csrf-token" content="{{ csrf_token() }}" >
         <title>{{ isset($title) ? $title . ' | ' : '' }}{{ config('app.name') }}</title>
         <x-json-ld-schema-component type="WebSite" />
         <script type="text/javascript" src="{{ asset('assets/vendor/FontAwesome/f761473b22.js') }}" ></script>
