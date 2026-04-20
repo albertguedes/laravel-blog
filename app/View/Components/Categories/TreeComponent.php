@@ -64,8 +64,10 @@ class TreeComponent extends Component
                 if ($category->children->count() > 0) {
                     $tree = array_merge($tree, self::getCategoryTree($category->children, $level + 1));
                 }
-            } else {
+            } elseif ($category->children->count() === 0) {
                 array_pop($tree);
+            } else {
+                $tree = array_merge($tree, self::getCategoryTree($category->children, $level + 1));
             }
         }
 
