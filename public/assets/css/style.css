@@ -93,3 +93,95 @@ a.btn.btn-light {
 .archive-title-link:hover {
     color: #F9322C!important;
 }
+
+.navbar {
+    background-color: transparent;
+}
+
+.navbar-nav .nav-link {
+    color: #565454;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+    color: #dc3545;
+}
+
+.navbar-nav .btn-link {
+    text-decoration: none;
+    color: #565454;
+    font-size: 0.9rem;
+    padding: 0;
+}
+
+.navbar-nav {
+    align-items: center;
+    gap: 1rem;
+}
+
+.logout-link {
+    color: #dc3545;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.logout-link:hover {
+    color: #f8d7da;
+    text-decoration: none;
+}
+
+/**
+ * Footer styles
+ *
+ * Contains styles for the footer section
+ */
+.footer a {
+    transition: color 0.2s ease;
+}
+.footer a:hover {
+    color: #dc3545 !important;
+}
+.footer .logout-link:hover {
+    color: #f8d7da;
+}
+
+.chat-history {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.chat-message {
+    max-width: 85%;
+    word-wrap: break-word;
+}
+
+.chat-message-user {
+    margin-left: auto;
+    background-color: #f8f9fa;
+}
+
+.chat-message-bot {
+    margin-right: auto;
+    background-color: #ffffff;
+}
+
+.chat-message-error {
+    max-width: 85%;
+    margin-left: auto;
+}
+
+.chat-message-bot a {
+    color: #dc3545;
+    text-decoration: underline;
+}
+
+.chat-message-bot a:hover {
+    color: #bb2d3b;
+}
+
+.chat-message-bot strong {
+    font-weight: 600;
+}

@@ -24,7 +24,7 @@
             <ul class="list-unstyled h6">
                 @foreach ($results as $post)
                 <li class="list-item pb-3">
-                    <a href="{{ route('post', compact('post')) }}" property="url" href="{{ route('post', compact('post')) }}" class="list-link text-decoration-none">
+                    <a href="{{ route('post', ['post' => $post]) }}" property="url" class="list-link text-decoration-none">
                         <h2 class="mb-1 h6">{{ $post->title }}</h2>
                         <p class="text-black-50">{{ Str::limit(strip_tags($post->content), 150) }}</p>
                     </a>
@@ -35,6 +35,10 @@
 
         <section class="pt-5 col-12 d-flex justify-content-center">
             {!! $results->links() !!}
+        </section>
+        @elseif($query)
+        <section class="col-12">
+            <div class="alert alert-info">Nenhum resultado encontrado para <strong>'{{ $query }}'</strong></div>
         </section>
         @endif
 
