@@ -30,7 +30,7 @@ class RoleFactory extends Factory
     {
         $created_at = $this->faker->dateTime();
         $updated_at = $this->faker->dateTimeBetween($created_at, 'now');
-        $title = $this->faker->unique()->word();
+        $title = $this->faker->word();
         $description = $this->faker->paragraph();
         $is_active = $this->faker->boolean();
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\Author;
 use App\Models\Post;
+use App\Models\User;
 
 class StatsService
 {
@@ -24,7 +24,7 @@ class StatsService
         }
 
         if (str_contains($q, 'autor') && str_contains($q, 'inativo')) {
-            $count = Author::where('is_active', false)
+            $count = User::where('is_active', false)
                 ->whereHas('posts')
                 ->count();
 

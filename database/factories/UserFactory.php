@@ -27,7 +27,7 @@ class UserFactory extends Factory
     {
         $created_at = $this->faker->dateTime();
         $updated_at = $this->faker->dateTimeBetween($created_at, 'now');
-        $email = $this->faker->unique()->safeEmail();
+        $email = $this->faker->safeEmail();
         $email_verified_at = $this->faker->boolean() ? $created_at : null;
         $password = Hash::make($email);
         $remember_token = Str::random(10);

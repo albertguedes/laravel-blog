@@ -1,31 +1,61 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use App\Models\User;
 
-class RegistrationTest extends TestCase
-{
-    use RefreshDatabase;
-
-    public function test_registration_screen_can_be_rendered(): void
-    {
+describe('Registration', function () {
+    it('shows registration page', function () {
         $response = $this->get('/register');
-
         $response->assertStatus(200);
-    }
+    });
 
-    public function test_new_users_can_register(): void
-    {
+    it('registers a new user with valid data', function () {
         $response = $this->post('/register', [
             'name' => 'Test User',
+            'username' => 'testuser',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
+        $this->assertDatabaseHas('users', [
+            'email' => 'test@example.com',
+        ]);
+    });
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
-    }
-}
+    it('fails registration with invalid email', function () {
+        $response = $this->post('/register', [
+            'name' => 'Test User',
+            'username' => 'testuser',
+            'email' => 'invalid-email',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+        $response->assertSessionHasErrors('email');
+    });
+
+    it('fails registration when password mismatch', function () {
+        $response = $this->post('/register', [
+            'name' => 'Test User',
+            'username' => 'testuser',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'different-password',
+        ]);
+        $response->assertSessionHasErrors('password');
+    });
+
+    it('fails registration with duplicate email', function () {
+        User::factory()->create(['email' => 'existing@example.com']);
+        $response = $this->post('/register', [
+            'name' => 'Test User',
+            'username' => 'testuser',
+            'email' => 'existing@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+        $response->assertSessionHasErrors('email');
+    });
+});

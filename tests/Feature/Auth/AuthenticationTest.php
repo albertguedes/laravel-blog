@@ -1,54 +1,55 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
-class AuthenticationTest extends TestCase
-{
-    use RefreshDatabase;
+describe('Authentication', function () {
+    beforeEach(function () {
+        \Artisan::call('migrate');
+    });
 
-    public function test_login_screen_can_be_rendered(): void
-    {
-        $response = $this->get('/login');
-
+    it('shows login page', function () {
+        $response = $this->get(route('login'));
         $response->assertStatus(200);
-    }
+    });
 
-    public function test_users_can_authenticate_using_the_login_screen(): void
-    {
+    it('logs in with valid credentials', function () {
         $user = User::factory()->create();
-
-        $response = $this->post('/login', [
+        $response = $this->post(route('login.store'), [
             'email' => $user->email,
             'password' => 'password',
         ]);
+        $response->assertRedirect(route('profile'));
+        $this->assertAuthenticatedAs($user);
+    });
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
-    }
-
-    public function test_users_can_not_authenticate_with_invalid_password(): void
-    {
+    it('fails login with invalid password', function () {
         $user = User::factory()->create();
-
-        $this->post('/login', [
+        $this->post(route('login.store'), [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
-
         $this->assertGuest();
-    }
+    });
 
-    public function test_users_can_logout(): void
-    {
+    it('logs out successfully', function () {
         $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->post('/logout');
-
+        $response = $this->actingAs($user)->post(route('logout'));
+        $response->assertRedirect(route('login'));
         $this->assertGuest();
-        $response->assertRedirect('/');
-    }
-}
+    });
+
+    it('redirects guest users from protected pages', function () {
+        $response = $this->get(route('profile'));
+        $response->assertRedirect(route('login'));
+    });
+
+    it('authenticated user can access protected pages', function () {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get(route('profile'));
+        $response->assertStatus(200);
+    });
+});

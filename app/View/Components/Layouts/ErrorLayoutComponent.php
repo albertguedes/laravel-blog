@@ -26,6 +26,6 @@ class ErrorLayoutComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components..layouts.error-layout-component');
+        return view('components.layouts.error-layout-component');
     }
 }

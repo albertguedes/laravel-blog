@@ -5,18 +5,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" >
         <meta name="description" content="{{ $description }}" >
         <title>@if($title) {{ $title }} | @endif {{ env('APP_NAME') }}</title>
-        <script type="application/ld+json" >
-        {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "{{ env('APP_NAME') }}",
-            "url": "{{ url('/') }}",
-            "description": "{{ env('APP_TAGLINE') }}",
-            "author": {
-                "@type": "Person",
-                "name": "{{ env('APP_AUTHOR') }}"
-            }
-        }
+        <script type="application/ld+json">
+        @php
+            $schema = [
+                '@context' => 'https://schema.org',
+                '@type' => 'WebSite',
+                'name' => config('app.name'),
+                'url' => url('/'),
+                'description' => config('app.tagline'),
+                'author' => [
+                    '@type' => 'Person',
+                    'name' => config('app.author')
+                ]
+            ];
+        @endphp
+        {!! json_encode($schema, JSON_UNESCAPED_SLASHES) !!}
         </script>
         <script type="text/javascript" src="{{ asset('assets/vendor/FontAwesome/f761473b22.js') }}" ></script>
         <link type="text/css" href="{{ asset('assets/vendor/Bootstrap/bootstrap.min.css') }}" rel="stylesheet" >
@@ -53,6 +56,8 @@
         </footer>
         <script type="text/javascript" src="{{ asset('assets/vendor/Jquery/jquery-3.7.1.min.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('assets/vendor/Bootstrap/bootstrap.bundle.min.js') }}" ></script>
-        @if($footer_scripts){{ $footer_scripts }}@endif
+        @if(isset($footer_scripts) && $footer_scripts)
+            {{ $footer_scripts }}
+        @endif
     </body>
 </html>

@@ -31,7 +31,7 @@ class ProfileFactory extends Factory
     {
         $user_id = User::inRandomOrder()->first()->id;
         $name = $this->faker->name();
-        $username = $this->faker->unique()->username();
+        $username = $this->faker->userName();
         $about = $this->faker->paragraph();
 
         return compact(

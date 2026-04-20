@@ -24,7 +24,7 @@ class TagFactory extends Factory
      */
     public function definition()
     {
-        $sentence = $this->faker->unique()->sentence(rand(1, 3));
+        $sentence = $this->faker->sentence();
 
         $created_at = $this->faker->dateTime();
         $updated_at = $this->faker->dateTimeBetween($created_at, 'now');
