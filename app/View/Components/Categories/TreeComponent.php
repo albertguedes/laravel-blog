@@ -57,23 +57,36 @@ class TreeComponent extends Component
 
         $tree = [];
         foreach ($categories as $category) {
-            if (!$category->is_active) {
-                if ($category->children->count() > 0) {
-                    $tree = array_merge($tree, self::getCategoryTree($category->children, $level));
-                }
-                continue;
-            }
+            $item = self::categoryItem($category, $level);
+            $hasPosts = $item['count_posts'] > 0;
 
-            $tree[] = self::categoryItem($category, $level);
+            if ($category->is_active) {
+                if ($hasPosts || $category->children->count() > 0) {
+                    if ($hasPosts) {
+                        $tree[] = $item;
+                    }
 
-            if (last($tree)['count_posts'] > 0) {
-                if ($category->children->count() > 0) {
-                    $tree = array_merge($tree, self::getCategoryTree($category->children, $level + 1));
+                    if ($category->children->count() > 0) {
+                        $childTree = self::getCategoryTree($category->children, $level + 1);
+                        foreach ($childTree as $child) {
+                            $child['level'] = $hasPosts ? $item['level'] + 1 : $item['level'];
+                            $tree[] = $child;
+                        }
+                    }
+
+                    if (!$hasPosts && $category->children->count() === 0) {
+                        // skip
+                    }
                 }
-            } elseif ($category->children->count() === 0) {
-                array_pop($tree);
             } else {
-                $tree = array_merge($tree, self::getCategoryTree($category->children, $level + 1));
+                // Deactivated: bubble children up to this level
+                if ($category->children->count() > 0) {
+                    $childTree = self::getCategoryTree($category->children, $level);
+                    foreach ($childTree as $child) {
+                        $child['level'] = $level;
+                        $tree[] = $child;
+                    }
+                }
             }
         }
 

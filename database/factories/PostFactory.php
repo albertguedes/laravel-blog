@@ -55,9 +55,8 @@ class PostFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Post $post) {
-            // Set some random leaf category to the post.
+            // Set some random leaf category to the post (any status - deactivated posts bubble up to active ancestor)
             $post->category_id = Category::whereDoesntHave('children')
-                ->where('is_active', true)
                 ->inRandomOrder()
                 ->value('id');
 
