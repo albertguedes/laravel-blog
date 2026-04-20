@@ -17,7 +17,6 @@ class AuthorsController extends Controller
         $authors = User::whereHas('roles', function ($query) {
             $query->where('title', 'author');
         })
-            ->where('is_active', true)
             ->paginate(9);
 
         return view('authors.index', compact('authors'));
@@ -28,10 +27,6 @@ class AuthorsController extends Controller
      */
     public function show(User $author): View
     {
-        if (! $author) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
-
         $posts = $author->posts()
             ->where('published', true)
             ->orderBy('updated_at', 'DESC')

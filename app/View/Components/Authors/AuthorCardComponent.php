@@ -26,6 +26,8 @@ class AuthorCardComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.authors.author-card-component');
+        return view('components.authors.author-card-component', [
+            'isActive' => $this->author->is_active,
+        ]);
     }
 }

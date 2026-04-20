@@ -50,7 +50,11 @@
             </div>
         </main>
         <footer id="footer" class="container mt-5 pt-5 border-top" itemprop="footer">
-            @include('partials.footer')
+            <div class="row justify-content-center align-items-center">
+                <div class="col-11 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-8 px-0" itemprop="text">
+                    <x-layouts.main.footer />
+                </div>
+            </div>
         </footer>
         <script type="text/javascript" src="{{ asset('assets/vendor/Jquery/jquery-3.7.1.min.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('assets/vendor/Bootstrap/bootstrap.bundle.min.js') }}" ></script>

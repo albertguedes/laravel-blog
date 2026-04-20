@@ -93,3 +93,8 @@ a.btn.btn-light {
 .archive-title-link:hover {
     color: #F9322C!important;
 }
+
+.author-inactive {
+    opacity: 0.5;
+    filter: grayscale(50%);
+}
