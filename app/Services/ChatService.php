@@ -7,17 +7,21 @@ namespace App\Services;
 class ChatService
 {
     public function __construct(
-        private QuestionClassifierService $classifier,
-        private StatsService $stats,
+        private QuestionRouterService $router,
+        private SqlAgentService $sqlAgent,
         private RAGService $rag
     ) {}
 
     public function answer(string $question): string
     {
-        $intent = $this->classifier->classify($question);
+        $intent = $this->router->route($question);
 
-        if ($intent === 'stats') {
-            return $this->stats->answer($question);
+        if ($intent === QuestionRouterService::INTENT_SQL) {
+            $answer = $this->sqlAgent->answer($question);
+
+            if (! empty($answer)) {
+                return $answer;
+            }
         }
 
         return $this->rag->answer($question);

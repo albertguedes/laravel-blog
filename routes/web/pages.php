@@ -27,6 +27,7 @@ Route::get('/archive', Archive::class)->name('archive');
 // Chat page
 Route::get('/chat', [Chat::class, 'index'])->name('chat');
 Route::post('/chat', [Chat::class, 'ask'])->name('chat.ask');
+Route::post('/chat/clear', [Chat::class, 'clearHistory'])->name('chat.clear');
 
 // Search Page
 Route::get('/search', Search::class)->name('search');
