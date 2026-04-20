@@ -4,23 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" >
         <meta name="description" content="{{ $description }}" >
-        <title>@if($title) {{ $title }} | @endif {{ env('APP_NAME') }}</title>
-        <script type="application/ld+json">
-        @php
-            $schema = [
-                '@context' => 'https://schema.org',
-                '@type' => 'WebSite',
-                'name' => config('app.name'),
-                'url' => url('/'),
-                'description' => config('app.tagline'),
-                'author' => [
-                    '@type' => 'Person',
-                    'name' => config('app.author')
-                ]
-            ];
-        @endphp
-        {!! json_encode($schema, JSON_UNESCAPED_SLASHES) !!}
-        </script>
+        <title>@if($title) {{ $title }} | @endif {{ config('app.name') }}</title>
+        <x-json-ld-schema-component type="WebSite" />
         <script type="text/javascript" src="{{ asset('assets/vendor/FontAwesome/f761473b22.js') }}" ></script>
         <link type="text/css" href="{{ asset('assets/vendor/Bootstrap/bootstrap.min.css') }}" rel="stylesheet" >
         <link type="text/css" href="{{ asset('assets/css/fonts.css') }}" rel="stylesheet" >

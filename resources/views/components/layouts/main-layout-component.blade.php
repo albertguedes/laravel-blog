@@ -4,28 +4,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" >
         <meta name="description" content="{{ $description }}" >
-        <title>@if($title) {{ $title }} | @endif {{ env('APP_NAME') }}</title>
-        <script type="application/ld+json" >
-        {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "{{ env('APP_NAME') }}",
-            "url": "{{ url('/') }}",
-            "description": "{{ env('APP_TAGLINE') }}",
-            "author": {
-                "@type": "Person",
-                "name": "{{ env('APP_AUTHOR') }}"
-            }
-        }
-        </script>
+        <title>{{ isset($title) ? $title . ' | ' : '' }}{{ config('app.name') }}</title>
+        <x-json-ld-schema-component type="WebSite" />
         <script type="text/javascript" src="{{ asset('assets/vendor/FontAwesome/f761473b22.js') }}" ></script>
         <link type="text/css" href="{{ asset('assets/vendor/Bootstrap/bootstrap.min.css') }}" rel="stylesheet" >
         <link type="text/css" href="{{ asset('assets/css/fonts.css') }}" rel="stylesheet" >
         <link type="text/css" href="{{ asset('assets/css/style.css') }}" rel="stylesheet" >
         <link type="text/css" href="{{ asset('assets/css/footerbottom.css') }}" rel="stylesheet" >
-        @if($styles){{ $styles }}@endif
+        {{ isset($styles) ? $styles : '' }}
         <link type="image/x-icon" rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" >
-        @if($scripts){{ $scripts }}@endif
+        {{ isset($scripts) ? $scripts : '' }}
     </head>
     <body class="d-flex flex-column h-100" itemscope itemtype="http://schema.org/WebSite">
         <main id="main" class="flex-shrink-0" itemprop="mainContentOfPage">
@@ -72,7 +60,7 @@
         <script type="text/javascript" src="{{ asset('assets/js/helpers/strings.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('assets/js/helpers/time.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('assets/js/script.js') }}" ></script>
-        @if($footer_scripts){{ $footer_scripts }}@endif
+        {{ isset($footer_scripts) ? $footer_scripts : '' }}
     </body>
 </html>
 
