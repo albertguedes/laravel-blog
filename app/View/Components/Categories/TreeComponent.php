@@ -48,7 +48,6 @@ class TreeComponent extends Component
     {
         if ($categories === null) {
             $categories = Category::whereNull('parent_id')
-                ->where('is_active', true)
                 ->with(['children', 'posts' => function ($query) {
                     $query->where('published', true);
                 }])
@@ -58,6 +57,13 @@ class TreeComponent extends Component
 
         $tree = [];
         foreach ($categories as $category) {
+            if (!$category->is_active) {
+                if ($category->children->count() > 0) {
+                    $tree = array_merge($tree, self::getCategoryTree($category->children, $level));
+                }
+                continue;
+            }
+
             $tree[] = self::categoryItem($category, $level);
 
             if (last($tree)['count_posts'] > 0) {
