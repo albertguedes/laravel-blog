@@ -10,7 +10,7 @@
             @endforeach
 
             <div class="col-12 d-flex justify-content-center pt-5">
-                {!! $posts->links() !!}
+                <x-bootstrap-pagination :paginator="$posts" />
             </div>
 
         @else

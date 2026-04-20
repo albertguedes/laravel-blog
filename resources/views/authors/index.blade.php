@@ -16,7 +16,7 @@
             </div>
         </article>
         <footer class="col-12 d-flex justify-content-center pt-5">
-            {!! $authors->links() !!}
+            <x-bootstrap-pagination :paginator="$authors" />
         </footer>
         @else
         <article class="col-12" >

@@ -34,7 +34,7 @@
         </article>
 
         <section class="pt-5 col-12 d-flex justify-content-center">
-            {!! $results->links() !!}
+            <x-bootstrap-pagination :paginator="$results" />
         </section>
         @endif
 

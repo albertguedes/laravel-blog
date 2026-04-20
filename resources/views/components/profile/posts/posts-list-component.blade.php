@@ -52,7 +52,7 @@
             </div>
             @if($posts->hasPages())
             <div class="pt-5 border-0 card-footer d-flex justify-content-center">
-                {!! $posts->links() !!}
+                <x-bootstrap-pagination :paginator="$posts" />
             </div>
             @endif
         </div>
