@@ -9,15 +9,16 @@ use Illuminate\View\View;
 
 class AuthorsController extends Controller
 {
-    /**
-     * Returns a view of all authors, including their published posts.
-     */
+    protected const PER_PAGE = 9;
+
     public function index(): View
     {
-        $authors = User::whereHas('roles', function ($query) {
-            $query->where('title', 'author');
+        $authors = User::whereHas('posts', function ($q) {
+            $q->where('published', true);
         })
-            ->paginate(9);
+        ->join('profiles', 'profiles.user_id', '=', 'users.id')
+        ->orderBy('profiles.name')
+        ->paginate(self::PER_PAGE);
 
         return view('authors.index', compact('authors'));
     }

@@ -1,24 +1,15 @@
-<div class="card @if(!$isActive) author-inactive @endif" >
+<div class="card flex-fill mb-4 @if(!$isActive) author-inactive @endif" >
 
-    <header class="card-header border-bottom-0" >
-
-        <h2 class="card-title text-capitalize author-name" >
-            <a href="{{ route('author',compact('author')) }}" >
+    <header class="card-header border-bottom-0 my-3 py-0 d-flex align-items-center" >
+        <h2 class="card-title text-capitalize author-name m-0 p-0" >
+            <a class="p-0 m-0" href="{{ route('author',compact('author')) }}" >
                 {{ $author->profile->name ?? 'Unnamed Author' }}
             </a>
         </h2>
-
-        <h6 class="card-subtitle m-0 p-0" >
-            <i class="fas fa-calendar-alt"></i> {{ $author->created_at->format("Y M d") }}
-            @if(!$isActive)
-            <span class="badge bg-secondary ms-1">Inactive</span>
-            @endif
-        </h6>
-
     </header>
 
-    <article class="card-body" >
-        <div class="card-text author-about py-2 mb-0 h6" >
+    <article class="card-body mt-0 pt-0" >
+        <div class="card-text author-about py-0 my-0 h6" >
             {{ $author->profile->about ?? '' }}
         </div>
     </article>

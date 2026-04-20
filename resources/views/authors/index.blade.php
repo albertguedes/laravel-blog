@@ -9,7 +9,7 @@
         <article class="col-12" >
             <div class="row" >
                 @foreach ($authors as $author)
-                <div class="col-4" >
+                <div class="col-4 d-flex" >
                     <x-authors.author-card-component :author="$author" />
                 </div>
                 @endforeach
