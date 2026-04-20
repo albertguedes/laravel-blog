@@ -30,7 +30,7 @@ class VectorSearchService
 
                 $chunk->score = $this->similarity->cosine(
                     $embedding,
-                    json_decode($chunk->embedding, true)
+                    json_decode($chunk->embedding, true)['embedding']
                 );
 
                 return $chunk;
