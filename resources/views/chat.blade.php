@@ -6,20 +6,47 @@
         </header>
 
         <article class="col-12" >
-            <div id="answer" ></div>
-        </article>
-
-        <section class="pt-5 col-12">
-            <form id="chat-form">
-                <div class="input-group" >
-                    @csrf
-                    <textarea id="question" name="question" rows="5" class="form-control" placeholder="Type your message here..." ></textarea>
-                    <button id="send" class="input-group-button btn btn-dark" >
-                        <i class="fa fa-send"></i>
+            <div class="chat-container" >
+                <div class="chat-header" >
+                    <h3 class="m-0" >
+                        <i class="fas fa-comments me-2" ></i>Chat
+                    </h3>
+                    <button type="button" id="clear-chat" class="btn btn-sm btn-outline-secondary" >
+                        <i class="fas fa-trash me-1" ></i>Clear
                     </button>
                 </div>
-            </form>
-        </section>
+
+                <div class="chat-messages" id="chat-messages" >
+                    @forelse($chatHistory as $msg)
+                    <div class="message message-{{ $msg['role'] }}" >
+                        <div class="message-content" >{!! nl2br(e($msg['content'])) !!}</div>
+                        <div class="message-time" >{{ \Carbon\Carbon::parse($msg['timestamp'])->format('H:i') }}</div>
+                    </div>
+                    @empty
+                    <div class="chat-empty" >
+                        <i class="fas fa-robot fs-1 mb-3" ></i>
+                        <p>Welcome! Ask me anything about the blog.</p>
+                        <p class="small text-muted" >Try questions like "How many posts?", "Posts by author X", or "Explain topic Y"</p>
+                    </div>
+                    @endforelse
+                </div>
+
+                <div class="chat-thinking" id="chat-thinking" >
+                    <div class="thinking-dots" >
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span class="ms-2" >Thinking...</span>
+                </div>
+
+                <form id="chat-form" class="chat-input-area" >
+                    @csrf
+                    <textarea id="question" name="question" rows="1" placeholder="Type your message... (Enter to send, Shift+Enter for new line)" ></textarea>
+                    <button type="submit" class="btn btn-primary" >
+                        <i class="fas fa-paper-plane" ></i>
+                    </button>
+                </form>
+            </div>
+        </article>
 
     </section>
 

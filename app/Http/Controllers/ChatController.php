@@ -37,6 +37,7 @@ class ChatController extends Controller
 
         return response()->json([
             'answer' => $answer,
+            'timestamp' => now()->toIso8601String(),
         ]);
     }
 
