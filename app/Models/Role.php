@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -13,18 +15,18 @@ class Role extends Model
     protected $fillable = [
         'title',
         'description',
-        'is_active'
+        'is_active',
     ];
 
     protected $cast = [
         'title' => 'string',
         'description' => 'string',
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
     ];
 
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
-                    ->withPivot('created_at');
+            ->withPivot('created_at');
     }
 }

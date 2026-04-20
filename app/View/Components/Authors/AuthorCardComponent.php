@@ -1,12 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Authors;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-
-use App\Models\User;
 
 class AuthorCardComponent extends Component
 {
@@ -15,8 +16,9 @@ class AuthorCardComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct (public User $author) {
-        $this->posts_count = $author->posts()->where('published',true)->count();
+    public function __construct(public User $author)
+    {
+        $this->posts_count = $author->posts()->where('published', true)->count();
     }
 
     /**

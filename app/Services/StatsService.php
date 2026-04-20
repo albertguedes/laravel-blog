@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\Post;
 use App\Models\Author;
+use App\Models\Post;
 
 class StatsService
 {
@@ -12,11 +14,12 @@ class StatsService
         $q = mb_strtolower($question);
 
         if (str_contains($q, 'quantos') && str_contains($q, 'post')) {
-            return 'O blog possui ' . Post::count() . ' posts.';
+            return 'O blog possui '.Post::count().' posts.';
         }
 
         if (str_contains($q, 'maior post')) {
             $post = Post::orderByRaw('LENGTH(content) DESC')->first();
+
             return "O maior post é '{$post->title}'.";
         }
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Mail\Auth;
 
@@ -17,7 +19,7 @@ class VerifyEmailMessage extends Mailable
      *
      * @return void
      */
-    public function __construct (protected array $data) {}
+    public function __construct(protected array $data) {}
 
     /**
      * Get the message envelope.
@@ -25,7 +27,7 @@ class VerifyEmailMessage extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Verify Email Request- ' . env('APP_NAME'),
+            subject: 'Verify Email Request- '.env('APP_NAME'),
         );
     }
 
@@ -38,7 +40,7 @@ class VerifyEmailMessage extends Mailable
             view: 'mail.auth.verify-email',
             with: [
                 'name' => $this->data['name'],
-                'url' => $this->data['url']
+                'url' => $this->data['url'],
             ],
         );
     }

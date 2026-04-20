@@ -1,16 +1,19 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Posts;
 
+use App\Models\Post;
 use Illuminate\View\Component;
 use Illuminate\View\View;
-
-use App\Models\Post;
 
 class PostFormComponent extends Component
 {
     public string $action;
+
     public string $method;
+
     public ?Post $post;
 
     /**
@@ -34,5 +37,4 @@ class PostFormComponent extends Component
     {
         return view('components.posts.post-form-component');
     }
-
 }

@@ -1,11 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-
-use App\Models\Tag;
 
 class TagFactory extends Factory
 {
@@ -23,12 +24,12 @@ class TagFactory extends Factory
      */
     public function definition()
     {
-        $sentence = $this->faker->unique()->sentence(rand(1,3));
+        $sentence = $this->faker->unique()->sentence(rand(1, 3));
 
         $created_at = $this->faker->dateTime();
-        $updated_at = $this->faker->dateTimeBetween($created_at,'now');
-        $title = trim($sentence,'.');
-        $slug = Str::slug($title,'-');
+        $updated_at = $this->faker->dateTimeBetween($created_at, 'now');
+        $title = trim($sentence, '.');
+        $slug = Str::slug($title, '-');
         $description = $this->faker->paragraph();
         $is_active = $this->faker->boolean();
 

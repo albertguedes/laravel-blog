@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -22,7 +24,8 @@ class Post extends Model
         'published',
     ];
 
-    protected function casts() {
+    protected function casts()
+    {
         return [
             'author_id' => 'integer',
             'category_id' => 'integer',
@@ -38,8 +41,6 @@ class Post extends Model
      * Boot the model.
      *
      * Set the slug of the post using the title when creating or updating.
-     *
-     * @return void
      */
     protected static function booted(): void
     {
@@ -74,6 +75,6 @@ class Post extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class)
-                    ->withPivot('created_at');
+            ->withPivot('created_at');
     }
 }

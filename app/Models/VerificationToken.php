@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -20,8 +22,6 @@ class VerificationToken extends Model
 
     /**
      * Checks if the verification token has expired.
-     *
-     * @return bool
      */
     public function isExpired(): bool
     {

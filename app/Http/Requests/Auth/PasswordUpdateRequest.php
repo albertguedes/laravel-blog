@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 use App\Models\User;
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class PasswordUpdateRequest extends FormRequest
 {
@@ -19,7 +21,7 @@ class PasswordUpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -33,7 +35,7 @@ class PasswordUpdateRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     $user = User::where('email', $value)->where('is_active', true)->first();
                     if (is_null($user)) {
-                        $fail('The ' . $attribute . ' does not exist.');
+                        $fail('The '.$attribute.' does not exist.');
                     }
                 },
             ],
@@ -42,7 +44,7 @@ class PasswordUpdateRequest extends FormRequest
                 'string',
                 'min:10',
                 'max:10',
-            ]
+            ],
         ];
     }
 }

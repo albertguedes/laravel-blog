@@ -13,22 +13,21 @@ class CreateTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table)
-        {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
 
             $table->timestamps();
 
             $table->string('title')
-                    ->unique();
+                ->unique();
 
             $table->text('slug')
-                    ->unique();
+                ->unique();
 
             $table->text('description');
 
             $table->boolean('is_active')
-                    ->default(true);
+                ->default(true);
         });
 
     }

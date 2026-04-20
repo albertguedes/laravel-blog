@@ -1,12 +1,12 @@
-<?php declare(strict_types=1);
+<?php
 
+declare(strict_types=1);
+
+use App\Http\Controllers\PostsController as Posts;
+use App\Http\Controllers\ProfileController as Profile;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\ProfileController as Profile;
-use App\Http\Controllers\PostsController as Posts;
-
-Route::middleware('auth')->group(function ()
-{
+Route::middleware('auth')->group(function () {
     /**
      * User profile management
      */

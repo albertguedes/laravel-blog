@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Tags;
 
-use Illuminate\View\Component;
-
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
 class TagsFormComponent extends Component
 {
@@ -16,7 +18,7 @@ class TagsFormComponent extends Component
      *
      * @return void
      */
-    public function __construct( ?Post $post = null)
+    public function __construct(?Post $post = null)
     {
         $this->tags = $this->tagsCheckboxes($post);
     }
@@ -24,7 +26,7 @@ class TagsFormComponent extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View|\Closure|string
      */
     public function render()
     {
@@ -34,21 +36,19 @@ class TagsFormComponent extends Component
     /**
      * Generate a set of checkbox to select the tags.
      *
-     * @param Post $post
      *
      * @return array $list
      */
-    function tagsCheckboxes (?Post $post = null): array
+    public function tagsCheckboxes(?Post $post = null): array
     {
-        $tags = Tag::where('is_active',true)
-                    ->select(['id','title'])
-                    ->orderBy('title','asc')
-                    ->get();
+        $tags = Tag::where('is_active', true)
+            ->select(['id', 'title'])
+            ->orderBy('title', 'asc')
+            ->get();
 
         $list = [];
 
-        foreach ($tags as $tag)
-        {
+        foreach ($tags as $tag) {
             $item = [];
             $item['id'] = $tag->id;
             $item['title'] = $tag->title;
@@ -56,7 +56,7 @@ class TagsFormComponent extends Component
 
             // Verify if exists tags previouly selected.
             // If yes, checked the checkbox of that tag.
-            if ( !is_null($post) && ($post->tags->count() > 0)) {
+            if (! is_null($post) && ($post->tags->count() > 0)) {
                 $curr_tags_ids = $post->tags->pluck('id')->toArray();
                 if (in_array($tag->id, $curr_tags_ids)) {
                     $item['checked'] = true;

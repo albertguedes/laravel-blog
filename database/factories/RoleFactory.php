@@ -1,15 +1,16 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @template TModel of \App\Role
  *
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<TModel>
+ * @extends Factory<TModel>
  */
 class RoleFactory extends Factory
 {
@@ -28,7 +29,7 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         $created_at = $this->faker->dateTime();
-        $updated_at = $this->faker->dateTimeBetween($created_at,'now');
+        $updated_at = $this->faker->dateTimeBetween($created_at, 'now');
         $title = $this->faker->unique()->word();
         $description = $this->faker->paragraph();
         $is_active = $this->faker->boolean();

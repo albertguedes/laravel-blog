@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -23,7 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'email',
         'password',
-        'is_active'
+        'is_active',
     ];
 
     /**
@@ -62,14 +64,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class)
-                    ->withPivot('created_at');
+            ->withPivot('created_at');
     }
 
-    public function isEmailVerified() {
+    public function isEmailVerified()
+    {
         return $this->email_verified_at !== null;
     }
 
-    public function verificationToken() {
+    public function verificationToken()
+    {
         return $this->hasOne(VerificationToken::class, 'email', 'email');
     }
 }

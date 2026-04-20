@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Custom\TreeCategory;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\ServiceProvider;
 
 class CustomServiceProvider extends ServiceProvider
 {
@@ -14,8 +15,8 @@ class CustomServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        App::bind('treecategory',function(){
-            return new \App\Custom\TreeCategory();
+        App::bind('treecategory', function () {
+            return new TreeCategory;
         });
     }
 

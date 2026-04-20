@@ -1,22 +1,20 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Categories;
 
-use Illuminate\View\Component;
-
 use App\Models\Category;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
 /**
  * Class responsible for generating a hierarchical tree structure of categories, including children categories.
- *
- * @package App\View\Components
  */
 class TreeComponent extends Component
 {
     /**
      * The tree structure of categories and their children.
-     *
-     * @var array
      */
     public array $tree;
 
@@ -33,7 +31,7 @@ class TreeComponent extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View|\Closure|string
      */
     public function render()
     {
@@ -43,19 +41,19 @@ class TreeComponent extends Component
     /**
      * Generate a hierarchical tree structure of categories, including children categories.
      *
-     * @param Category|null $category The starting category to build the tree from
+     * @param  Category|null  $category  The starting category to build the tree from
      * @return array The hierarchical tree structure of categories and their children
      */
-    public static function getCategoryTree( $categories = null, int $level = 0 ): array
+    public static function getCategoryTree($categories = null, int $level = 0): array
     {
-        if (null === $categories) {
+        if ($categories === null) {
             $categories = Category::whereNull('parent_id')
-                                    ->where('is_active', true)
-                                    ->with(['children', 'posts' => function ($query) {
-                                        $query->where('published', true);
-                                    }])
-                                    ->orderBy('title')
-                                    ->get();
+                ->where('is_active', true)
+                ->with(['children', 'posts' => function ($query) {
+                    $query->where('published', true);
+                }])
+                ->orderBy('title')
+                ->get();
         }
 
         $tree = [];
@@ -66,8 +64,7 @@ class TreeComponent extends Component
                 if ($category->children->count() > 0) {
                     $tree = array_merge($tree, self::getCategoryTree($category->children, $level + 1));
                 }
-            }
-            else {
+            } else {
                 array_pop($tree);
             }
         }
@@ -78,14 +75,13 @@ class TreeComponent extends Component
     /**
      * Generate an array containing the category item information.
      *
-     * @param Category $category The category item to generate the array for
-     * @param int $level The level of the category in the tree structure
-     *
+     * @param  Category  $category  The category item to generate the array for
+     * @param  int  $level  The level of the category in the tree structure
      * @return array The category item information
      */
-    public static function categoryItem(?Category $category = null, int $level = 0 ): array
+    public static function categoryItem(?Category $category = null, int $level = 0): array
     {
-        return null === $category ? [] : [
+        return $category === null ? [] : [
             'id' => $category->id,
             'title' => $category->title,
             'slug' => $category->slug,
@@ -98,15 +94,14 @@ class TreeComponent extends Component
      * Counts the total number of posts belonging to a category, including posts
      * in its children categories.
      *
-     * @param Category $category The category to count posts for
-     *
+     * @param  Category  $category  The category to count posts for
      * @return int The total number of posts
      */
     public static function countPosts(Category $category): int
     {
         $count = $category->posts()
-                            ->where('published', true)
-                            ->count();
+            ->where('published', true)
+            ->count();
 
         if ($category->children->count() > 0) {
             foreach ($category->children as $childCategory) {

@@ -1,16 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Tags;
 
-use Illuminate\Support\Collection;
+use App\Models\Tag;
 use Illuminate\View\Component;
 use Illuminate\View\View;
-
-use App\Models\Tag;
 
 class PostsComponent extends Component
 {
     public Tag $tag;
+
     public $posts;
 
     /**
@@ -22,9 +23,9 @@ class PostsComponent extends Component
     {
         $this->tag = $tag;
         $this->posts = $tag->posts()
-                            ->where('published',true)
-                            ->orderBy('title', 'ASC')
-                            ->paginate(5);
+            ->where('published', true)
+            ->orderBy('title', 'ASC')
+            ->paginate(5);
     }
 
     public function render(): View

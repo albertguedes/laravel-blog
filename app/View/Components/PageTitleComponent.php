@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components;
 
@@ -11,7 +13,7 @@ class PageTitleComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct (public string $title, public string $icon = '') {}
+    public function __construct(public string $title, public string $icon = '') {}
 
     /**
      * Get the view / contents that represent the component.

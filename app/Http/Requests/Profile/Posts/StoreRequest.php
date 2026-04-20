@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Requests\Profile\Posts;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -18,7 +20,7 @@ class StoreRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -26,7 +28,7 @@ class StoreRequest extends FormRequest
             'author_id' => 'required|exists:users,id',
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|min:4|max:255|unique:posts,title',
-            'slug' =>[
+            'slug' => [
                 'nullable',
                 'string',
                 'min:4',
@@ -35,8 +37,8 @@ class StoreRequest extends FormRequest
             ],
             'description' => 'required|string|min:4',
             'content' => 'required|string|min:4',
-            'published' => [ 'nullable', 'boolean' ], //'boolean',
-            'tags'   => ['array'],
+            'published' => ['nullable', 'boolean'], // 'boolean',
+            'tags' => ['array'],
             'tags.*' => ['integer', 'exists:tags,id'],
         ];
     }
@@ -44,7 +46,7 @@ class StoreRequest extends FormRequest
     public function prepareForValidation(): void
     {
         $this->merge([
-            'published' => $this->has('published')
+            'published' => $this->has('published'),
         ]);
     }
 }

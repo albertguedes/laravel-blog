@@ -23,6 +23,6 @@ return [
         'timeout' => env('OLLAMA_CONNECTION_TIMEOUT', 300),
     ],
     'headers' => [
-        'Authorization' => 'Bearer ' . env('OLLAMA_API_KEY'),
+        'Authorization' => 'Bearer '.env('OLLAMA_API_KEY'),
     ],
 ];

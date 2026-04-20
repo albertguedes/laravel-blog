@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Mail;
 
@@ -19,7 +21,7 @@ class ContactMessage extends Mailable
      *
      * @return void
      */
-    public function __construct (array $mail)
+    public function __construct(array $mail)
     {
         $this->mail = $mail;
     }
@@ -30,7 +32,7 @@ class ContactMessage extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->mail['subject'] . ' - ' . env('APP_NAME'),
+            subject: $this->mail['subject'].' - '.env('APP_NAME'),
         );
     }
 
@@ -41,7 +43,7 @@ class ContactMessage extends Mailable
     {
         return new Content(
             view: 'mail.contact.contact',
-            with: [ 'mail' => $this->mail ],
+            with: ['mail' => $this->mail],
         );
     }
 }

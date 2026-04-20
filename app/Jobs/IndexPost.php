@@ -1,15 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Jobs;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Queue\Queueable;
-
 use App\Models\Post;
 use App\Models\PostChunk;
-
 use App\Services\EmbeddingService;
 use App\Support\TextChunker;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Queue\Queueable;
 
 class IndexPost implements ShouldQueue
 {
@@ -18,7 +18,7 @@ class IndexPost implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct (private Post $post) {}
+    public function __construct(private Post $post) {}
 
     /**
      * Execute the job.
@@ -29,8 +29,8 @@ class IndexPost implements ShouldQueue
 
         foreach (TextChunker::chunk($this->post->content) as $chunk) {
             PostChunk::create([
-                'post_id'   => $this->post->id,
-                'content'   => $chunk,
+                'post_id' => $this->post->id,
+                'content' => $chunk,
                 'embedding' => json_encode($embed->embed($chunk)),
             ]);
         }

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DatabaseTest extends TestCase
 {
@@ -13,6 +13,6 @@ class DatabaseTest extends TestCase
     public function test_conexao_com_banco_de_dados()
     {
         $database = DB::connection()->getDatabaseName();
-        $this->assertEquals(':memory:',$database);
+        $this->assertEquals(':memory:', $database);
     }
 }

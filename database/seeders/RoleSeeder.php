@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-
 use App\Models\Role;
+use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
 {
@@ -17,7 +18,7 @@ class RoleSeeder extends Seeder
             [
                 'title' => 'admin',
                 'description' => 'Admin role',
-                'is_active' => true
+                'is_active' => true,
             ],
         );
 
@@ -25,7 +26,7 @@ class RoleSeeder extends Seeder
             [
                 'title' => 'user',
                 'description' => 'User role',
-                'is_active' => true
+                'is_active' => true,
             ],
         );
 
@@ -33,7 +34,7 @@ class RoleSeeder extends Seeder
             [
                 'title' => 'guest',
                 'description' => 'Guest role',
-                'is_active' => true
+                'is_active' => true,
             ],
         );
 
@@ -41,7 +42,7 @@ class RoleSeeder extends Seeder
             [
                 'title' => 'author',
                 'description' => 'Author role',
-                'is_active' => true
+                'is_active' => true,
             ],
         );
 
@@ -49,7 +50,7 @@ class RoleSeeder extends Seeder
             [
                 'title' => 'subscriber',
                 'description' => 'Subscriber role',
-                'is_active' => false
+                'is_active' => false,
             ],
         );
     }

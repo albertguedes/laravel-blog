@@ -1,12 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-
 use App\Helpers\CategoryHelper;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class CategoryFactory extends Factory
 {
@@ -24,15 +25,15 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
-        $sentence = $this->faker->unique()->sentence(rand(1,3));
+        $sentence = $this->faker->unique()->sentence(rand(1, 3));
 
-        $created_at  = $this->faker->dateTime();
-        $updated_at  = $this->faker->dateTimeBetween($created_at,'now');
-        $parent_id   = null; // Parents are created separately. See `configure` method bellow.
-        $title       = trim($sentence,'.');
-        $slug        = Str::slug($title,'-');
+        $created_at = $this->faker->dateTime();
+        $updated_at = $this->faker->dateTimeBetween($created_at, 'now');
+        $parent_id = null; // Parents are created separately. See `configure` method bellow.
+        $title = trim($sentence, '.');
+        $slug = Str::slug($title, '-');
         $description = $this->faker->paragraph();
-        $is_active   = $this->faker->boolean();
+        $is_active = $this->faker->boolean();
 
         return compact(
             'created_at',
@@ -48,13 +49,10 @@ class CategoryFactory extends Factory
 
     /**
      * Set actions after create a category.
-     *
-     * @return static
      */
     public function configure(): static
     {
-        return $this->afterCreating(function (Category $category)
-        {
+        return $this->afterCreating(function (Category $category) {
             // Define a maximum number of attempts to find a parent category.
             $maxAttempts = 10;
             $attemptCount = 0;
@@ -68,8 +66,8 @@ class CategoryFactory extends Factory
             do {
                 // Get new parent if the old is a descendant of the category.
                 $parent = Category::inRandomOrder()
-                                    ->where('is_active', true)
-                                    ->first();
+                    ->where('is_active', true)
+                    ->first();
 
                 $attemptCount++;
             } while (

@@ -1,14 +1,15 @@
-<?php declare(strict_types=1);
+<?php
 
-use Illuminate\Support\Facades\Route;
+declare(strict_types=1);
 
 use App\Http\Controllers\ArchiveController as Archive;
-use App\Http\Controllers\IndexController as Index;
 use App\Http\Controllers\ChatController as Chat;
 use App\Http\Controllers\ContactController as Contact;
 use App\Http\Controllers\FeedController as Feed;
+use App\Http\Controllers\IndexController as Index;
 use App\Http\Controllers\SearchController as Search;
 use App\Http\Controllers\SitemapController as Sitemap;
+use Illuminate\Support\Facades\Route;
 
 // Home Page
 Route::get('/', [Index::class, 'index'])->name('home');

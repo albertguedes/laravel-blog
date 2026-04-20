@@ -1,17 +1,20 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Authors;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-use App\Models\User;
-
 class Link extends Component
 {
     public string $route;
+
     public string $name;
+
     public int $is_active;
 
     /**
@@ -19,13 +22,13 @@ class Link extends Component
      */
     public function __construct(int $authorId)
     {
-        if (!$authorId) {
+        if (! $authorId) {
             throw new \Exception('author is required');
         }
 
         $author = User::findOrFail($authorId);
 
-        if (!$author) {
+        if (! $author) {
             throw new \Exception('author not found');
         }
 

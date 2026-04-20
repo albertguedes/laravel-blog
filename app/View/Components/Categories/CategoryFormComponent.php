@@ -1,15 +1,19 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Categories;
 
-use Illuminate\View\Component;
-
 use App\Models\Category;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
 class CategoryFormComponent extends Component
 {
     public string $action;
+
     public string $method;
+
     public Category $category;
 
     /**
@@ -17,17 +21,17 @@ class CategoryFormComponent extends Component
      *
      * @return void
      */
-    public function __construct (string $action, string $method, Category $category)
+    public function __construct(string $action, string $method, Category $category)
     {
-        if (!$action) {
+        if (! $action) {
             throw new \Exception('action is required');
         }
 
-        if (!$method) {
+        if (! $method) {
             throw new \Exception('method is required');
         }
 
-        if (!$category) {
+        if (! $category) {
             throw new \Exception('category is required');
         }
 
@@ -39,7 +43,7 @@ class CategoryFormComponent extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View|\Closure|string
      */
     public function render()
     {

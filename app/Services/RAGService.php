@@ -1,12 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Services;
 
 use Cloudstudio\Ollama\Facades\Ollama;
-
-use App\Services\BlogContextService;
-use App\Services\EmbeddingService;
-use App\Services\VectorSearchService;
 
 class RAGService
 {
@@ -40,10 +38,10 @@ PERGUNTA:
 PROMPT;
 
         $response = Ollama::agent('Você responde usando apenas o conteúdo fornecido.')
-                            ->prompt($prompt)
-                            ->model(config('ollama-laravel.model'))
-                            ->options(['temperature' => 0.2])
-                            ->ask();
+            ->prompt($prompt)
+            ->model(config('ollama-laravel.model'))
+            ->options(['temperature' => 0.2])
+            ->ask();
 
         return $response['response'];
     }

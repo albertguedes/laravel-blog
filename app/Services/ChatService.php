@@ -1,10 +1,8 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Services;
-
-use App\Services\QuestionClassifierService;
-use App\Services\StatsService;
-use App\Services\RAGService;
 
 class ChatService
 {

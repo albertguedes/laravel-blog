@@ -1,28 +1,27 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Response;
-
 use App\Models\Post;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class SitemapController extends Controller
 {
-
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
      */
     public function __invoke(): Response
     {
-        $posts = Post::where('published',true)
-                        ->orderBy('created_at','DESC')
-                        ->get();
+        $posts = Post::where('published', true)
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
-        return response()->view('sitemap',compact('posts'))
-                            ->header('Content-Type','text/xml');
+        return response()->view('sitemap', compact('posts'))
+            ->header('Content-Type', 'text/xml');
     }
-
 }

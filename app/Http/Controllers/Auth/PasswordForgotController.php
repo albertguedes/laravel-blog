@@ -1,15 +1,16 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
-
 use App\Models\User;
 use App\Models\VerificationToken;
 use App\Services\Auth\PasswordForgotService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PasswordForgotController extends Controller
 {
@@ -25,14 +26,11 @@ class PasswordForgotController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'email' => "required|string|min:5|max:255|email:rfc",
+            'email' => 'required|string|min:5|max:255|email:rfc',
         ]);
 
         $email = $validated['email'];
@@ -43,7 +41,7 @@ class PasswordForgotController extends Controller
             PasswordForgotService::sendPasswordForgotEmail($user);
 
             return redirect()->route('login')
-                            ->with('success', 'We have e-mailed your password reset link!');
+                ->with('success', 'We have e-mailed your password reset link!');
         }
 
         return redirect()->route('login')->with('danger', 'We can\'t find a user with that e-mail address.');
@@ -52,7 +50,6 @@ class PasswordForgotController extends Controller
     /**
      * Display the password reset form for the given token.
      *
-     * @param string $token
      * @return \Illuminate\Contracts\View\View
      */
     public function edit(string $token): View
@@ -67,15 +64,13 @@ class PasswordForgotController extends Controller
     /**
      * Reset the given user's password.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string $token
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  string  $token
      */
     public function update(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'password' => "required|string|min:8|confirmed",
-            'token' => "required|string",
+            'password' => 'required|string|min:8|confirmed',
+            'token' => 'required|string',
         ]);
 
         $password = $validated['password'];

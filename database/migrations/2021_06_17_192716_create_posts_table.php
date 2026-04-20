@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,36 +15,35 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table)
-        {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
 
             $table->timestamps();
 
             $table->foreignId('author_id')
-                    ->references('id')
-                    ->on('users')
-                    ->onUpdate('cascade')
-                    ->onDelete('set null');
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
 
             $table->foreignId('category_id')
-                    ->nullable()
-                    ->constrained('categories')
-                    ->cascadeOnUpdate()
-                    ->nullOnDelete();
+                ->nullable()
+                ->constrained('categories')
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
 
             $table->string('title')
-                    ->unique();
+                ->unique();
 
             $table->text('description');
 
             $table->text('content');
 
             $table->text('slug')
-                    ->unique();
+                ->unique();
 
             $table->boolean('published')
-                    ->default(true);
+                ->default(true);
         });
 
     }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -34,8 +36,6 @@ class Category extends Model
 
     /**
      * Get the route key for the model.
-     *
-     * @return string
      */
     public function getRouteKeyName(): string
     {
@@ -44,8 +44,6 @@ class Category extends Model
 
     /**
      * Get the parent category of the current category.
-     *
-     * @return BelongsTo
      */
     public function parent(): BelongsTo
     {
@@ -54,8 +52,6 @@ class Category extends Model
 
     /**
      * Get the children categories of the current category.
-     *
-     * @return HasMany
      */
     public function children(): HasMany
     {
@@ -65,8 +61,7 @@ class Category extends Model
     /**
      * Get the posts of the current category.
      *
-     * @param bool $published
-     * @return HasMany
+     * @param  bool  $published
      */
     public function posts(): HasMany
     {

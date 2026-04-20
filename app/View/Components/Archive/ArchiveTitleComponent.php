@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Archive;
 
@@ -14,36 +16,36 @@ class ArchiveTitleComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct (int $year, int $month = 0, int $day = 0)
+    public function __construct(int $year, int $month = 0, int $day = 0)
     {
         $this->items = [
             'archive' => [
                 'route' => route('archive'),
                 'label' => '',
                 'icon' => 'fa fa-calendar',
-                'active' => true
+                'active' => true,
             ],
 
             'year' => [
                 'route' => route('archive', compact('year')),
                 'label' => $year,
                 'icon' => null,
-                'active' => $year > 0 ? true : false
+                'active' => $year > 0 ? true : false,
             ],
 
             'month' => [
                 'route' => route('archive', compact('year', 'month')),
-                'label' => Carbon::create(1,$month,1)->format('M'),
+                'label' => Carbon::create(1, $month, 1)->format('M'),
                 'icon' => null,
-                'active' => $month > 0 ? true : false
+                'active' => $month > 0 ? true : false,
             ],
 
             'day' => [
                 'route' => '',
                 'label' => $day,
                 'icon' => null,
-                'active' => $day > 0 ? true : false
-            ]
+                'active' => $day > 0 ? true : false,
+            ],
         ];
     }
 

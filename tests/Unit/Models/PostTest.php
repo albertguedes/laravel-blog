@@ -5,39 +5,34 @@ namespace Tests\Unit\Models;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
-
-use Carbon\Carbon;
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
 use Tests\TestCase;
 
 class PostTest extends TestCase
 {
-
     use RefreshDatabase;
 
     // Teste data to create a new post.
     protected $data = [
-        'created_at'  => '2020-02-22 22:22:22',
-        'updated_at'  => '2020-02-22 22:22:22',
-        'title'       => 'title de teste',
-        'slug'        => 'title-de-teste',
+        'created_at' => '2020-02-22 22:22:22',
+        'updated_at' => '2020-02-22 22:22:22',
+        'title' => 'title de teste',
+        'slug' => 'title-de-teste',
         'description' => 'description de teste',
-        'content'     => 'content de teste',
-        'published'   => true
+        'content' => 'content de teste',
+        'published' => true,
     ];
 
     // Test data to update a existing post.
     protected $new_data = [
-        'title'       => 'novo title de teste',
-        'slug'        => 'novo-title-de-teste',
+        'title' => 'novo title de teste',
+        'slug' => 'novo-title-de-teste',
         'description' => 'novo description de teste',
-        'content'     => 'novo content de teste',
-        'published'   => false
+        'content' => 'novo content de teste',
+        'published' => false,
     ];
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->seed();
@@ -50,8 +45,8 @@ class PostTest extends TestCase
         $category = Category::factory()->create()->first();
 
         $post = Post::create(array_merge($this->data, [
-            'author_id'   => $user->id,
-            'category_id' => $category->id
+            'author_id' => $user->id,
+            'category_id' => $category->id,
         ]));
 
         $this->assertModelExists($post);
@@ -65,8 +60,8 @@ class PostTest extends TestCase
         $category = Category::factory()->create()->first();
 
         $post = Post::create(array_merge($this->data, [
-            'author_id'   => $user->id,
-            'category_id' => $category->id
+            'author_id' => $user->id,
+            'category_id' => $category->id,
         ]));
 
         $retrievedPost = Post::where('title', $this->data['title'])->first();
@@ -88,8 +83,8 @@ class PostTest extends TestCase
         $category = Category::factory()->create()->first();
 
         $post = Post::create(array_merge($this->data, [
-            'author_id'   => $user->id,
-            'category_id' => $category->id
+            'author_id' => $user->id,
+            'category_id' => $category->id,
         ]));
 
         $retrievedPost = Post::find($post->id);
@@ -112,8 +107,8 @@ class PostTest extends TestCase
         $category = Category::factory()->create()->first();
 
         $post = Post::create(array_merge($this->data, [
-            'author_id'   => $user->id,
-            'category_id' => $category->id
+            'author_id' => $user->id,
+            'category_id' => $category->id,
         ]));
 
         $retrievedPost = Post::where('title', $this->data['title'])->first();
@@ -123,6 +118,4 @@ class PostTest extends TestCase
         $this->assertModelMissing($retrievedPost);
 
     }
-
 }
-

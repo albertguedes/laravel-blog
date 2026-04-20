@@ -1,12 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Profile\Posts;
 
+use App\Models\Post;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-
-use App\Models\Post;
 
 class PostTabsComponent extends Component
 {
@@ -19,28 +20,28 @@ class PostTabsComponent extends Component
     {
         $this->tabs = [
 
-            'list' =>  [
+            'list' => [
                 'label' => 'List',
                 'icon' => 'fa fa-list',
                 'route' => route('profile.posts'),
                 'active' => request()->routeIs('profile.posts'),
             ],
 
-            'show' =>  [
+            'show' => [
                 'label' => 'Show',
                 'icon' => 'fa fa-eye',
-                'route' => route('profile.post',compact('post')),
+                'route' => route('profile.post', compact('post')),
                 'active' => request()->routeIs('profile.post'),
             ],
 
-            'edit' =>  [
+            'edit' => [
                 'label' => 'Edit',
                 'icon' => 'fa fa-edit',
                 'route' => route('profile.post.edit', compact('post')),
                 'active' => request()->routeIs('profile.post.edit'),
             ],
 
-            'delete' =>  [
+            'delete' => [
                 'label' => 'Delete',
                 'icon' => 'fa fa-trash',
                 'route' => route('profile.post.delete', compact('post')),

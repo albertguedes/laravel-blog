@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -10,7 +12,7 @@ class EmbeddingService
     {
         // Use 'nomic-embed-text' model to get embeddings for RAG
         return Ollama::model('nomic-embed-text')
-                    ->embeddings($text);
+            ->embeddings($text);
 
     }
 }

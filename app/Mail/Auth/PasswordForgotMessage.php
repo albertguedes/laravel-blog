@@ -1,9 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Mail\Auth;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -23,7 +26,7 @@ class PasswordForgotMessage extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Password Reset Request - ' . env('APP_NAME'),
+            subject: 'Password Reset Request - '.env('APP_NAME'),
         );
     }
 
@@ -36,7 +39,7 @@ class PasswordForgotMessage extends Mailable
             view: 'mail.auth.password-forgot',
             with: [
                 'name' => $this->data['name'],
-                'url' => $this->data['url']
+                'url' => $this->data['url'],
             ],
         );
     }
@@ -44,7 +47,7 @@ class PasswordForgotMessage extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {

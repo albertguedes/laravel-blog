@@ -1,9 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Tags;
 
-use Illuminate\View\Component;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
+use Illuminate\View\Component;
 
 class CloudComponent extends Component
 {
@@ -23,8 +26,8 @@ class CloudComponent extends Component
                 'id' => $tag->id,
                 'title' => $tag->title,
                 'slug' => $tag->slug,
-                'n_posts' => $tag->posts()->where('published',true)->count(),
-                'font_size' => 'style=font-size:' . (self::MIN_FONT_SIZE + 2*$tag->posts->count()) . 'px;',
+                'n_posts' => $tag->posts()->where('published', true)->count(),
+                'font_size' => 'style=font-size:'.(self::MIN_FONT_SIZE + 2 * $tag->posts->count()).'px;',
             ];
         }
     }
@@ -32,7 +35,7 @@ class CloudComponent extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View|\Closure|string
      */
     public function render()
     {

@@ -1,11 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Response;
-
-use App\Models\Category;
 
 class CategoriesController extends Controller
 {
@@ -22,12 +23,11 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category $category
      * @return \Illuminate\View\View|Symfony\Component\HttpFoundation\Response
      */
-    public function show (Category $category): View
+    public function show(Category $category): View
     {
-        if (!$category || !$category->is_active) {
+        if (! $category || ! $category->is_active) {
             abort(Response::HTTP_NOT_FOUND);
         }
 

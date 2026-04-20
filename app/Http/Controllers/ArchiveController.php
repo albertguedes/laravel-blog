@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -18,6 +20,6 @@ class ArchiveController extends Controller
         $month = (int) $request->get('month', 0);
         $day = (int) $request->get('day', 0);
 
-        return view('archive', compact('year','month','day'));
+        return view('archive', compact('year', 'month', 'day'));
     }
 }

@@ -1,10 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 use App\Models\User;
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class LoginRequest extends FormRequest
 {
@@ -19,12 +22,12 @@ class LoginRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'email' => "required|string|min:5|max:255|email:rfc",
+            'email' => 'required|string|min:5|max:255|email:rfc',
             'password' => ['required', 'string'],
             'remember' => ['boolean'],
         ];
@@ -36,16 +39,14 @@ class LoginRequest extends FormRequest
      * If the user is not active, an error message will be added to the
      * validator's errors bag.
      *
-     * @param  \Illuminate\Validation\Validator  $validator
-     * @return void
+     * @param  Validator  $validator
      */
     public function withValidator($validator): void
     {
-        $validator->after(function ($validator)
-        {
+        $validator->after(function ($validator) {
             $user = User::where('email', $this->email)->first();
 
-            if ($user && !$user->is_active) {
+            if ($user && ! $user->is_active) {
                 $validator->errors()->add(
                     'email',
                     'This account does exist.'

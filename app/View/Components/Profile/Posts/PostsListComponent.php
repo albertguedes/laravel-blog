@@ -1,18 +1,20 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Profile\Posts;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\View\Component;
 
 class PostsListComponent extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct (public LengthAwarePaginator $posts) {}
+    public function __construct(public LengthAwarePaginator $posts) {}
 
     /**
      * Get the view / contents that represent the component.

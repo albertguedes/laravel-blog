@@ -1,16 +1,20 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Categories;
 
+use App\Models\Category;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
-
-use App\Models\Category;
 
 class MenuComponent extends Component
 {
     public $name;
+
     public $current;
+
     public $categories;
 
     /**
@@ -18,7 +22,7 @@ class MenuComponent extends Component
      *
      * @return void
      */
-    public function __construct (string $name, ?Category $current = null)
+    public function __construct(string $name, ?Category $current = null)
     {
         $this->name = $name;
         $this->current = $current;
@@ -29,7 +33,7 @@ class MenuComponent extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View|\Closure|string
      */
     public function render()
     {
@@ -41,10 +45,8 @@ class MenuComponent extends Component
      * Only categories without children can be selected.
      * Path of category is generated.
      *
-     * @param Collection $categories
-     * @param int $level
-     * @param Category $current
-     *
+     * @param  Collection  $categories
+     * @param  int  $level
      * @return array $list;
      */
     public function categorySelectOption(
@@ -53,17 +55,16 @@ class MenuComponent extends Component
 
         // Get all categories without children.
         $roots = Category::doesntHave('children')
-                        ->where('is_active', true)
-                        ->orderBy('title')
-                        ->get();
+            ->where('is_active', true)
+            ->orderBy('title')
+            ->get();
 
-        foreach ($roots as $root)
-        {
+        foreach ($roots as $root) {
             $path = '';
             $parent = $root->parent;
-            while (!is_null($parent)) {
-                if($parent->is_active) {
-                    $path = $parent->title . ' / ' . $path;
+            while (! is_null($parent)) {
+                if ($parent->is_active) {
+                    $path = $parent->title.' / '.$path;
                 }
                 $parent = $parent->parent;
             }
@@ -72,7 +73,7 @@ class MenuComponent extends Component
                 'id' => $root->id,
                 'title' => $root->title,
                 'path' => $path,
-                'selected' => (!is_null($current)) ? ($root->id == $current->id) : '',
+                'selected' => (! is_null($current)) ? ($root->id == $current->id) : '',
             ];
         }
 

@@ -1,19 +1,24 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Posts;
 
+use App\Models\Post;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\Component;
 use Illuminate\View\View;
-use Illuminate\Pagination\LengthAwarePaginator;
-
-use App\Models\Post;
 
 class ArchiveComponent extends Component
 {
     public array $archive = [];
+
     public LengthAwarePaginator $paginate;
+
     public int $current_year = 0;
+
     public int $current_month = 0;
+
     public int $current_day = 0;
 
     /**
@@ -27,9 +32,8 @@ class ArchiveComponent extends Component
         $this->current_month = $month;
         $this->current_day = $day;
 
-
         $query = Post::where('published', true)
-                        ->orderBy('created_at', 'desc');
+            ->orderBy('created_at', 'desc');
 
         if ($year > 0) {
             $query = $query->whereYear('created_at', $year);
@@ -43,7 +47,7 @@ class ArchiveComponent extends Component
 
         $posts = $query->get();
 
-        foreach($posts as $post) {
+        foreach ($posts as $post) {
             $this->archive[$post->created_at->year][$post->created_at->month][$post->created_at->day] = 1;
         }
 

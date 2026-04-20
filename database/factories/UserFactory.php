@@ -1,12 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
-
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
@@ -25,13 +26,13 @@ class UserFactory extends Factory
     public function definition()
     {
         $created_at = $this->faker->dateTime();
-        $updated_at = $this->faker->dateTimeBetween($created_at,'now');
+        $updated_at = $this->faker->dateTimeBetween($created_at, 'now');
         $email = $this->faker->unique()->safeEmail();
         $email_verified_at = $this->faker->boolean() ? $created_at : null;
         $password = Hash::make($email);
         $remember_token = Str::random(10);
         // User can be active only if email is verified.
-        $is_active = (!is_null($email_verified_at)) ? $this->faker->boolean() : false;
+        $is_active = (! is_null($email_verified_at)) ? $this->faker->boolean() : false;
 
         return compact(
             'created_at',
@@ -47,7 +48,7 @@ class UserFactory extends Factory
     /**
      * Indicate that the model's email address should be unverified.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return Factory
      */
     public function unverified()
     {

@@ -1,14 +1,14 @@
-<?php declare(strict_types=1);
+<?php
 
-use Illuminate\Support\Facades\Route;
+declare(strict_types=1);
 
 use App\Http\Controllers\Auth\LoginController as Login;
-use App\Http\Controllers\Auth\RegisterController as Register;
 use App\Http\Controllers\Auth\PasswordForgotController as PasswordForgot;
+use App\Http\Controllers\Auth\RegisterController as Register;
 use App\Http\Controllers\Auth\VerifyEmailController as VerifyEmail;
+use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function ()
-{
+Route::middleware('guest')->group(function () {
     Route::get('auth/login', [Login::class, 'create'])->name('login');
     Route::post('auth/login', [Login::class, 'store'])->name('login.store');
 
@@ -28,7 +28,6 @@ Route::middleware('guest')->group(function ()
     Route::post('auth/password/reset', [PasswordForgot::class, 'update'])->name('password.reset.update');
 });
 
-Route::middleware('auth')->group(function ()
-{
+Route::middleware('auth')->group(function () {
     Route::post('auth/logout', [Login::class, 'destroy'])->name('logout');
 });

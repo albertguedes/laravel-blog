@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Support;
 
@@ -9,7 +11,7 @@ class Similarity
         $dot = $normA = $normB = 0.0;
 
         foreach ($a as $i => $v) {
-            $dot   += $v * $b[$i];
+            $dot += $v * $b[$i];
             $normA += $v * $v;
             $normB += $b[$i] * $b[$i];
         }

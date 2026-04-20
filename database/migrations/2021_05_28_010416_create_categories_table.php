@@ -13,8 +13,7 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table)
-        {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
 
             $table->timestamps();
@@ -25,15 +24,15 @@ class CreateCategoriesTable extends Migration
                 ->nullOnDelete();
 
             $table->string('title')
-                    ->unique();
+                ->unique();
 
             $table->text('slug')
-                    ->unique();
+                ->unique();
 
             $table->text('description');
 
             $table->boolean('is_active')
-                    ->default(true);
+                ->default(true);
         });
 
     }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -11,25 +13,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profiles', function (Blueprint $table)
-        {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->id();
 
             $table->timestamps();
 
             $table->foreignId('user_id')
-                    ->constrained()
-                    ->onDelete('cascade')
-                    ->onUpdate('cascade')
-                    ->unique();
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('cascade')
+                ->unique();
 
             $table->string('name');
 
             $table->string('username')
-                    ->unique();
+                ->unique();
 
             $table->text('about')
-                    ->nullable();
+                ->nullable();
         });
     }
 
