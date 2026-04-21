@@ -4,16 +4,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" >
         <meta name="description" content="{{ $description }}" >
-        <title>@if($title) {{ $title }} | @endif {{ config('app.name') }}</title>
+        <title>{{ isset($title) ? $title . " | " : "" }}{{ config('app.name') }}</title>
         <x-json-ld-schema-component type="WebSite" />
         <script type="text/javascript" src="{{ asset('assets/vendor/FontAwesome/f761473b22.js') }}" ></script>
         <link type="text/css" href="{{ asset('assets/vendor/Bootstrap/bootstrap.min.css') }}" rel="stylesheet" >
         <link type="text/css" href="{{ asset('assets/css/fonts.css') }}" rel="stylesheet" >
         <link type="text/css" href="{{ asset('assets/css/style.css') }}" rel="stylesheet" >
         <link type="text/css" href="{{ asset('assets/css/footerbottom.css') }}" rel="stylesheet" >
-        @if($styles){{ $styles }}@endif
+        {{ isset($styles) ? $styles : '' }}
         <link type="image/x-icon" rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" >
-        @if($scripts){{ $scripts }}@endif
+        {{ isset($scripts) ? $scripts : '' }}
     </head>
     <body class="d-flex flex-column h-100" itemscope itemtype="http://schema.org/WebSite">
         <main id="main" class="flex-shrink-0" itemprop="mainContentOfPage">
@@ -41,8 +41,8 @@
                 </div>
             </div>
         </main>
-        <footer id="footer" class="container py-3 mt-5 text-center" itemprop="footer">
-            Laravel Blog {{ date('Y') }} - Free & Open Source
+        <footer id="footer" class="container py-3 mt-5 text-center h6" itemprop="footer">
+            <p>&copy; {{ config('app.name') }} {{ date('Y') }} <i class="fas fa-code ms-3" ></i> Free & Open Source</p>
         </footer>
         <script type="text/javascript" src="{{ asset('assets/vendor/Jquery/jquery-3.7.1.min.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('assets/vendor/Bootstrap/bootstrap.bundle.min.js') }}" ></script>
@@ -52,6 +52,6 @@
         <script type="text/javascript" src="{{ asset('assets/js/helpers/strings.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('assets/js/helpers/time.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('assets/js/script.js') }}" ></script>
-        @if($footer_scripts){{ $footer_scripts }}@endif
+        {{ isset($footer_scripts) ? $footer_scripts : '' }}
     </body>
 </html>

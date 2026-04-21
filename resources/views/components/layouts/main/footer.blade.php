@@ -69,9 +69,9 @@
 
     <div class="py-5 col-12" >
         <p class="p-0 m-0 text-center" >
-            <strong>{{ config('app.name') }}</strong> &copy; {{ date('Y') }} *
-            <em><i class="fas fa-code"></i> Free & Open Source</em> *
-            <a class="text-decoration-none text-secondary" href="{{ route('rss') }}" >
+            <strong>{{ config('app.name') }}</strong> &copy; {{ date('Y') }}
+            <em class="ms-4" ><i class="fas fa-code"></i> Free & Open Source</em>
+            <a class="text-decoration-none text-secondary ms-4" href="{{ route('rss') }}" >
                 <i class="fas fa-rss"></i> Follow-us
             </a>
         </p>

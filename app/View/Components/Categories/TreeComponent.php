@@ -74,7 +74,7 @@ class TreeComponent extends Component
                         }
                     }
 
-                    if (!$hasPosts && $category->children->count() === 0) {
+                    if (! $hasPosts && $category->children->count() === 0) {
                         // skip
                     }
                 }
