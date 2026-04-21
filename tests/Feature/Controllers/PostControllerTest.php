@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Controllers;
 
 use App\Models\Post;
+use App\Models\Profile;
 use App\Models\User;
 
 describe('PostController', function () {
@@ -22,6 +23,7 @@ describe('PostController', function () {
 
     it('post page returns successful response for published post', function () {
         $user = User::factory()->create();
+        Profile::factory()->create(['user_id' => $user->id]);
         $post = Post::factory()->create([
             'author_id' => $user->id,
             'published' => true,
@@ -38,6 +40,7 @@ describe('PostController', function () {
 
     it('post page returns 404 for unpublished post', function () {
         $user = User::factory()->create();
+        Profile::factory()->create(['user_id' => $user->id]);
         $post = Post::factory()->create([
             'author_id' => $user->id,
             'published' => false,

@@ -6,7 +6,7 @@
         </header>
 
         <article class="col-12" >
-            <x-tree />
+            <x-common.tree />
         </article>
 
     </section>

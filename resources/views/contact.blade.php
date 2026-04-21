@@ -20,7 +20,7 @@
         </aside>
 
         <article class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8" itemprop="hasPart" itemscope itemtype="http://schema.org/FormObject">
-            <x-contact-form />
+            <x-common.contact-form />
         </article>
 
     </section>

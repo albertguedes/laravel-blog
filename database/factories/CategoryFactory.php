@@ -53,6 +53,10 @@ class CategoryFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (Category $category) {
+            if ($category->parent_id !== null) {
+                return;
+            }
+
             if ($this->faker->boolean()) {
                 return;
             }

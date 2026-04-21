@@ -10,7 +10,7 @@
             <div class="row" >
                 @foreach ($authors as $author)
                 <div class="col-4 d-flex" >
-                    <x-author-card :author="$author" />
+                    <x-common.author-card :author="$author" />
                 </div>
                 @endforeach
             </div>

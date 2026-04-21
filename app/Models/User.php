@@ -33,6 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'is_active',
+        'is_admin',
     ];
 
     /**
@@ -46,6 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'string',
         'remember_token' => 'string',
         'is_active' => 'boolean',
+        'is_admin' => 'boolean',
     ];
 
     /**
@@ -82,5 +84,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function verificationToken()
     {
         return $this->hasOne(VerificationToken::class, 'email', 'email');
+    }
+
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return static::whereHas('profile', function ($query) use ($value) {
+            $query->where('username', $value);
+        })->first();
     }
 }

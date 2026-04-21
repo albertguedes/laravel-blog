@@ -187,7 +187,7 @@ ChatService
 
 | Model | Relationships |
 |-------|--------------|
-| `User` | hasOne Profile, hasMany Posts, belongsToMany Roles, hasOne VerificationToken |
+| `User` | hasOne Profile, hasMany Posts, belongsToMany Roles, hasOne VerificationToken, resolveRouteBinding by profile.username |
 | `Profile` | belongsTo User |
 | `Post` | belongsTo User (author), belongsTo Category, belongsToMany Tags |
 | `Category` | belongsTo Parent, hasMany Children, hasMany Posts |
@@ -276,6 +276,10 @@ Routes are loaded in this order to prevent conflicts:
 
 ```
 app/View/Components/
+├── Archive/                   # Archive-specific components
+│   └── ArchiveTitle.php
+├── Authors/                   # Author-specific components
+│   └── Link.php
 ├── Common/                    # Shared across multiple views
 │   ├── Tree.php
 │   ├── CategoryMenu.php
@@ -294,30 +298,47 @@ app/View/Components/
 │   ├── PasswordForm.php
 │   ├── PostsList.php
 │   ├── ShowPost.php
-│   └── PostTabs.php
-└── Layouts/                   # Exclusive to specific layouts
+│   ├── PostTabs.php
+│   ├── JsonLdSchema.php
+│   ├── BootstrapPagination.php
+│   ├── FlashMessages.php
+│   ├── PageTitle.php
+│   └── SendButton.php
+├── Posts/                     # Post-specific components
+│   └── PostDetails.php
+└── Layouts/                  # Exclusive to specific layouts
     ├── Main.php
+    ├── Main/Footer.php
     ├── Auth.php
-    ├── Error.php               # Error page layout (404, 500, 503)
+    ├── Error.php              # Error page layout (404, 500, 503)
     └── Mail.php
 
 resources/views/components/
+├── authors/                   # Blade templates for Authors components
+│   └── link.blade.php
 ├── common/                    # Blade templates for Common components
 │   ├── tree.blade.php
 │   ├── category-menu.blade.php
-│   └── ... (18 templates)
-└── layouts/                   # Blade templates for Layout components
-    ├── main.blade.php
-    ├── auth.blade.php
-    ├── error.blade.php
-    └── mail.blade.php
+│   ├── author-card.blade.php
+│   ├── tag-cloud.blade.php
+│   ├── tag-posts.blade.php
+│   └── ... (20 templates)
+├── layouts/                   # Blade templates for Layout components
+│   ├── main.blade.php
+│   ├── mail.blade.php
+│   ├── auth.blade.php
+│   └── error.blade.php
+└── posts/                    # Blade templates for Posts components
+    └── post-details.blade.php
 ```
 
 ### Component Naming
 
-Laravel converts kebab-case component names to PascalCase:
-- `tree` → `Tree` (in Common namespace)
-- `main` → `Main` (in Layouts namespace)
+Laravel converts kebab-case component names to PascalCase based on directory structure:
+- `common/tree` → `Common\Tree` → `<x-common.tree />`
+- `layouts/main` → `Layouts\Main` → `<x-layouts.main />`
+- `authors/link` → `Authors\Link` → `<x-authors.link />`
+- `posts/post-details` → `Posts\PostDetails` → `<x-posts.post-details />`
 
 ### Usage
 
@@ -327,6 +348,10 @@ Laravel converts kebab-case component names to PascalCase:
 <x-layouts.main title="Page Title">
     <p>Content</p>
 </x-layouts.main>
+
+<x-authors.link :author-id="$post->author->id" />
+
+<x-posts.post-details :post="$post" />
 ```
 
 ---
@@ -337,8 +362,8 @@ Laravel converts kebab-case component names to PascalCase:
 
 | Table | Purpose |
 |-------|---------|
-| `users` | User accounts with authentication |
-| `profiles` | Extended user information |
+| `users` | User accounts with authentication (includes `is_admin` flag) |
+| `profiles` | Extended user information (username, name, about) |
 | `posts` | Blog post content |
 | `categories` | Hierarchical categories |
 | `tags` | Post tags |
@@ -355,6 +380,7 @@ Laravel converts kebab-case component names to PascalCase:
 2. **Profile Separation**: User profile data in separate table for flexibility
 3. **Post Chunks**: Content chunked for efficient vector search
 4. **Soft Deletes**: Not used (hard deletes for simplicity)
+5. **Admin Flag**: `is_admin` column on users for simple admin access control
 
 ---
 

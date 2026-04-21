@@ -37,6 +37,10 @@ class IndexController extends Controller
      */
     public function post(Post $post): View
     {
+        if (! $post || ! $post->published) {
+            abort(404);
+        }
+
         return view('post', compact('post'));
     }
 
