@@ -15,7 +15,7 @@ class SqlAgentService
 
     public function answer(string $question): string
     {
-        $question = strtolower(trim($question));
+        $question = mb_strtolower(trim($question));
 
         // Count posts (generic)
         if (preg_match('/quantos?\s+posts?/i', $question)) {
@@ -46,6 +46,16 @@ class SqlAgentService
             return $this->handleRecentPosts($question);
         }
 
+        // Últimos posts (with optional limit)
+        if (preg_match('/[úu]ltimos?\s+(\d+)?\s*posts?/i', $question, $matches)) {
+            return $this->handleLastPosts($question, $matches);
+        }
+
+        // Posts recentes
+        if (preg_match('/posts?\s+recentes?/i', $question)) {
+            return $this->handleRecentPosts($question);
+        }
+
         // Authors active/inactive
         if (preg_match('/autores?\s+(ativo|inativ|cadastro)/i', $question)) {
             return $this->handleAuthorStatus($question);
@@ -66,14 +76,9 @@ class SqlAgentService
             return $this->handleListPosts($question);
         }
 
-        // Generic - try to handle as author search
-        if (preg_match('/autor\s+(.+)/i', $question, $matches)) {
-            return $this->handlePostsByAuthor($matches[1]);
-        }
-
-        // Generic - try to handle as category search
-        if (preg_match('/categoria\s+(.+)/i', $question, $matches)) {
-            return $this->handlePostsByCategory($matches[1]);
+        // List authors patterns
+        if (preg_match('/(?:quem\s+(?:s[ãa]o|são)|autores?\s+(?:dos?\s+)?posts?|lista\s+(?:de\s+)?autores?|mostrar\s+autores?|listar\s+autores?)/i', $question)) {
+            return $this->handleListAuthors($question);
         }
 
         // Fallback - return empty to trigger RAG
@@ -217,6 +222,58 @@ class SqlAgentService
                 $output .= '...';
             }
             $output .= " ({$date})\n";
+        }
+
+        return $output;
+    }
+
+    private function handleLastPosts(string $question, array $matches): string
+    {
+        $limit = isset($matches[1]) ? (int) $matches[1] : 5;
+        $limit = min(max($limit, 1), 20);
+
+        $posts = $this->queryService->getRecentPosts($limit);
+
+        if ($posts->isEmpty()) {
+            return 'Não existem posts registrados.';
+        }
+
+        $output = "Aqui estão os {$limit} últimos posts:\n\n";
+
+        foreach ($posts as $post) {
+            $title = mb_substr($post->title, 0, 60);
+            $date = $post->updated_at->format('d/m/Y');
+            $output .= "• {$title}";
+            if (mb_strlen($post->title) > 60) {
+                $output .= '...';
+            }
+            $output .= " ({$date})\n";
+        }
+
+        return $output;
+    }
+
+    private function handleListAuthors(string $question): string
+    {
+        $limit = 20;
+
+        if (preg_match('/(\d+)\s+autores?/i', $question, $matches)) {
+            $limit = min((int) $matches[1], 20);
+        }
+
+        $authors = $this->queryService->getAllAuthors($limit);
+
+        if ($authors->isEmpty()) {
+            return 'Não existem autores cadastrados.';
+        }
+
+        $output = "Lista de autores deste blog:\n\n";
+
+        foreach ($authors as $author) {
+            $name = $author->profile->name ?? 'Autor Desconhecido';
+            $status = $author->is_active ? 'ativo' : 'inativo';
+            $postCount = $author->posts_count ?? $author->posts->count();
+            $output .= "• {$name} ({$status}, {$postCount} posts)\n";
         }
 
         return $output;

@@ -16,9 +16,9 @@ class AuthorsController extends Controller
         $authors = User::whereHas('posts', function ($q) {
             $q->where('published', true);
         })
-        ->join('profiles', 'profiles.user_id', '=', 'users.id')
-        ->orderBy('profiles.name')
-        ->paginate(self::PER_PAGE);
+            ->join('profiles', 'profiles.user_id', '=', 'users.id')
+            ->orderBy('profiles.name')
+            ->paginate(self::PER_PAGE);
 
         return view('authors.index', compact('authors'));
     }

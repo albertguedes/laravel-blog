@@ -21,7 +21,7 @@ class QuestionRouterService
 
     private function isSqlQuestion(string $question): bool
     {
-        $question = strtolower(trim($question));
+        $question = mb_strtolower(trim($question));
 
         $patterns = [
             // Count posts patterns
@@ -55,6 +55,8 @@ class QuestionRouterService
             '/posts?\s+(recente|novo|mais\s+novo)/i',
             '/posts?\s+(antigo|velho|mais\s+velho)/i',
             '/posts?\s+(popular|mais\s+visto|mais\s+visualizado)/i',
+            '/[úu]ltimos?\s+(\d+)?\s*posts?/i',
+            '/posts?\s+recentes?/i',
 
             // Author statistics
             '/estat[íi]stica\s+(do|da)\s+autor/i',
@@ -71,6 +73,13 @@ class QuestionRouterService
             // Order by post count
             '/mais\s+(posts?|populares?|visualizados?)/i',
             '/menos\s+(posts?|populares?)/i',
+
+            // List authors patterns
+            '/quem\s+(s[ãa]o|são)\s+(os\s+)?autores?/i',
+            '/autores?\s+(dos?\s+)?posts?/i',
+            '/lista\s+(de\s+)?autores?/i',
+            '/mostrar\s+autores?/i',
+            '/listar\s+autores?/i',
         ];
 
         foreach ($patterns as $pattern) {

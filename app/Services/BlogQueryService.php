@@ -237,4 +237,15 @@ class BlogQueryService
             ->limit($limit)
             ->get();
     }
+
+    public function getAllAuthors(int $limit = 20): Collection
+    {
+        return User::with('profile')
+            ->withCount(['posts' => function ($q) {
+                $q->where('published', true);
+            }])
+            ->orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->get();
+    }
 }
