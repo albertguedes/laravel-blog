@@ -1,8 +1,8 @@
-<x-layouts.auth-layout-component title="Login" description="User login" >
+<x-layouts.auth title="Login" description="User login" >
     <section class="row justify-content-center" >
 
         <header class="text-center col-12" >
-            <x-page-title-component title="Login" />
+            <x-common.page-title title="Login" />
         </header>
 
         <article class="col-6" >
@@ -36,7 +36,7 @@
                     </div>
                 </div>
 
-                <x-send-button-component />
+                <x-common.send-button />
 
             </form>
         </article>
@@ -54,4 +54,4 @@
         </footer>
 
     </section>
-</x-layouts.auth-layout-component>
+</x-layouts.auth>

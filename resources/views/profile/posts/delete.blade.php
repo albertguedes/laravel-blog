@@ -5,16 +5,16 @@
 <section class="row" >
 
     <header class="col-12" >
-        <x-page-title-component title="Profile - Post - Delete" />
+        <x-common.page-title title="Profile - Post - Delete" />
     </header>
 
     <aside class="col-3" >
-        <x-profile.side-menu-component />
+        <x-side-menu />
     </aside>
 
     <article class="col-9" >
 
-        <x-profile.posts.post-tabs-component :post="$post" />
+        <x-post-tabs :post="$post" />
 
         <div class="row" >
 

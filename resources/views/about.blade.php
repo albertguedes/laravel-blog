@@ -1,7 +1,7 @@
-<x-layouts.main-layout-component title="About Us" description="A brief description about the blog" >
+<x-layouts.main title="About Us" description="A brief description about the blog" >
     <section class="row" >
         <header class="col-12">
-            <x-page-title-component title="About Us" />
+            <x-common.page-title title="About Us" />
         </header>
         <article class="col-12" >
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -19,4 +19,4 @@
                 vitae turpis massa.</p>
         </article>
     </section>
-</x-layouts.main-layout-component>
+</x-layouts.main>

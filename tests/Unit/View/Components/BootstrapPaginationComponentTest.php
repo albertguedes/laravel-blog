@@ -6,7 +6,7 @@ namespace Tests\Unit\View\Components;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 
-describe('BootstrapPaginationComponent', function () {
+describe('BootstrapPagination', function () {
     it('renders pagination with proper Bootstrap classes', function () {
         $paginator = new LengthAwarePaginator(
             collect([]),
@@ -16,7 +16,7 @@ describe('BootstrapPaginationComponent', function () {
             ['path' => url('/')]
         );
 
-        $html = view('components.bootstrap-pagination-component', [
+        $html = view('components.common.bootstrap-pagination', [
             'paginator' => $paginator,
             'alignment' => 'center',
         ])->render();
@@ -36,7 +36,7 @@ describe('BootstrapPaginationComponent', function () {
             ['path' => url('/')]
         );
 
-        $html = view('components.bootstrap-pagination-component', [
+        $html = view('components.common.bootstrap-pagination', [
             'paginator' => $paginator,
             'alignment' => 'center',
         ])->render();
@@ -54,7 +54,7 @@ describe('BootstrapPaginationComponent', function () {
             ['path' => url('/')]
         );
 
-        $html = view('components.bootstrap-pagination-component', [
+        $html = view('components.common.bootstrap-pagination', [
             'paginator' => $paginator,
             'alignment' => 'center',
         ])->render();
@@ -72,7 +72,7 @@ describe('BootstrapPaginationComponent', function () {
             ['path' => url('/')]
         );
 
-        $html = view('components.bootstrap-pagination-component', [
+        $html = view('components.common.bootstrap-pagination', [
             'paginator' => $paginator,
             'alignment' => 'center',
         ])->render();
@@ -90,7 +90,7 @@ describe('BootstrapPaginationComponent', function () {
             ['path' => url('/')]
         );
 
-        $html = view('components.bootstrap-pagination-component', [
+        $html = view('components.common.bootstrap-pagination', [
             'paginator' => $paginator,
             'alignment' => 'end',
         ])->render();
@@ -107,7 +107,7 @@ describe('BootstrapPaginationComponent', function () {
             ['path' => url('/')]
         );
 
-        $html = view('components.bootstrap-pagination-component', [
+        $html = view('components.common.bootstrap-pagination', [
             'paginator' => $paginator,
             'alignment' => 'center',
         ])->render();

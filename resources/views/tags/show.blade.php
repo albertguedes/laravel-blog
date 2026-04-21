@@ -1,8 +1,8 @@
-<x-layouts.main-layout-component title="{{ strtoupper($tag->title) }}" description="{{ $tag->description }}" >
+<x-layouts.main title="{{ strtoupper($tag->title) }}" description="{{ $tag->description }}" >
     <section class="row" >
 
         <header class="col-12" >
-            <x-page-title-component :title="$tag->title" icon="tag" />
+            <x-common.page-title :title="$tag->title" icon="tag" />
         </header>
 
         <section class="col-12 mb-5 h6 fst-italic" >
@@ -10,8 +10,8 @@
         </section>
 
         <article class="col-12" >
-            <x-tags.posts-component :tag="$tag" />
+            <x-tag-posts :tag="$tag" />
         </article>
 
     </section>
-</x-layouts.main-layout-component>
+</x-layouts.main>

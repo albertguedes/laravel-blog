@@ -26,7 +26,7 @@
             </header>
             <article class="row h-50 justify-content-center align-items-center" >
                 <div class="col-12 text-center" >
-                    <x-flash-messages-component />
+                    <x-common.flash-messages />
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-4 col-xl-4 col-xxl-4" >
                     @yield('content')

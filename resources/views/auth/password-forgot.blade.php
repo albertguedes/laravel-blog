@@ -1,8 +1,8 @@
-<x-layouts.auth-layout-component title="Forgot Password" description="Page to forgot password" >
+<x-layouts.auth title="Forgot Password" description="Page to forgot password" >
     <article class="row justify-content-center" >
 
         <header class="text-center col-12" >
-            <x-page-title-component title="Forgot Password" />
+            <x-common.page-title title="Forgot Password" />
         </header>
 
         <div class="text-center col-6" >
@@ -27,4 +27,4 @@
         </footer>
 
     </article>
-</x-layouts.auth-layout-component>
+</x-layouts.auth>

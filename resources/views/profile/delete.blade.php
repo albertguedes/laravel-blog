@@ -4,11 +4,11 @@
 <section class="row" >
 
     <header class="col-12" >
-        <x-page-title-component title="Profile - Cancel Account" />
+        <x-common.page-title title="Profile - Cancel Account" />
     </header>
 
     <aside class="col-3" >
-        <x-profile.side-menu-component />
+        <x-side-menu />
     </aside>
 
     <article class="col-9" >

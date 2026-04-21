@@ -1,8 +1,8 @@
-<x-layouts.auth-layout-component title="Register" description="User registration" >
+<x-layouts.auth title="Register" description="User registration" >
     <article class="row justify-content-center" >
 
         <header class="text-center col-12" >
-            <x-page-title-component title="Register" />
+            <x-common.page-title title="Register" />
         </header>
 
         <div class="col-6" >
@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <x-send-button-component />
+                <x-common.send-button />
             </form>
         </div>
 
@@ -71,4 +71,4 @@
             </a>
         </footer>
     </article>
-</x-layouts.auth-layout-component>
+</x-layouts.auth>

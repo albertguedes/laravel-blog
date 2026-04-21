@@ -5,15 +5,15 @@
 <section class="row" >
 
     <header class="col-12" >
-        <x-page-title-component title="Profile - Post - Create" />
+        <x-common.page-title title="Profile - Post - Create" />
     </header>
 
     <aside class="col-3" >
-        <x-profile.side-menu-component />
+        <x-side-menu />
     </aside>
 
     <article class="col-9" >
-        <x-posts.post-form-component action="{{ route('profile.post.store') }}" method="POST" :post=null />
+        <x-post-form action="{{ route('profile.post.store') }}" method="POST" :post=null />
     </article>
 
 </section>

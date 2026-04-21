@@ -1,8 +1,8 @@
-<x-layouts.main-layout-component title="Chat" description="Chat page of {{ config('app.name') }}" >
+<x-layouts.main title="Chat" description="Chat page of {{ config('app.name') }}" >
     <section class="row" >
 
         <header class="col-12">
-            <x-page-title-component title="Chat" icon="chat" />
+            <x-common.page-title title="Chat" icon="chat" />
         </header>
 
         <article class="col-12" >
@@ -54,4 +54,4 @@
         <script type="text/javascript" src="{{ asset('assets/js/pages/chat/ask.js') }}" ></script>
     </x-slot:footer_scripts>
 
-</x-layouts.main-layout-component>
+</x-layouts.main>

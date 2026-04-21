@@ -1,4 +1,4 @@
-<x-layouts.mail-layout-component>
+<x-layouts.mail>
     <div class="content" >
         <p>
             Hello {{ ucwords($name) }}
@@ -31,4 +31,4 @@
             </a>
         </p>
     </div>
-</x-layouts.mail-layout-component>
+</x-layouts.mail>

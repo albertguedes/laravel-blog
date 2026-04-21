@@ -1,7 +1,7 @@
-<x-layouts.main-layout-component title="Search" description="Search posts from terms" >
+<x-layouts.main title="Search" description="Search posts from terms" >
     <section class="row" >
         <header class="col-12">
-            <x-page-title-component title="Search" />
+            <x-common.page-title title="Search" />
         </header>
         <section class="mb-4 col-12" >
             <form class="d-flex w-100" role="search" method="GET" action="{{ route('search') }}" >
@@ -34,9 +34,9 @@
         </article>
 
         <section class="pt-5 col-12 d-flex justify-content-center">
-            <x-bootstrap-pagination :paginator="$results" />
+            <x-common.bootstrap-pagination :paginator="$results" />
         </section>
         @endif
 
     </section>
-</x-layouts.main-layout-component>
+</x-layouts.main>

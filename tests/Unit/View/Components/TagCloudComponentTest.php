@@ -5,31 +5,21 @@ declare(strict_types=1);
 namespace Tests\Unit\View\Components;
 
 use App\Models\Tag;
+use App\View\Components\Common\TagCloud;
+use Illuminate\Support\Collection;
 
-describe('TagCloudComponent', function () {
-    it('renders tag cloud', function () {
-        Tag::factory()->count(3)->create(['is_active' => true]);
-        $component = $this->blade('<x-tags-cloud-component />');
-        $component->assertStatus(200);
+describe('TagCloud', function () {
+    it('can be instantiated with tags', function () {
+        $tag = Tag::factory()->create(['title' => 'Test', 'is_active' => true]);
+        $component = new TagCloud(new Collection([$tag]));
+        expect($component->tags)->toBeArray();
+        expect(count($component->tags))->toBe(1);
     });
 
-    it('shows only active tags', function () {
-        $active = Tag::factory()->create(['title' => 'Active Tag', 'is_active' => true]);
-        $inactive = Tag::factory()->create(['title' => 'Inactive Tag', 'is_active' => false]);
-        $component = $this->blade('<x-tags-cloud-component />');
-        $component->assertStatus(200);
-    });
-
-    it('displays tag titles', function () {
+    it('builds tag data structure with required keys', function () {
         $tag = Tag::factory()->create(['title' => 'Test Tag', 'is_active' => true]);
-        $component = $this->blade('<x-tags-cloud-component />');
-        $component->assertStatus(200);
-    });
-
-    it('orders tags alphabetically', function () {
-        Tag::factory()->create(['title' => 'Zebra', 'is_active' => true]);
-        Tag::factory()->create(['title' => 'Apple', 'is_active' => true]);
-        $component = $this->blade('<x-tags-cloud-component />');
-        $component->assertStatus(200);
+        $component = new TagCloud(new Collection([$tag]));
+        expect($component->tags[0])->toHaveKeys(['id', 'title', 'slug', 'n_posts', 'font_size']);
+        expect($component->tags[0]['title'])->toBe('Test Tag');
     });
 });

@@ -1,8 +1,8 @@
-<x-layouts.auth-layout-component title="Resend Verify Email" description="Page to resend verify email" >
+<x-layouts.auth title="Resend Verify Email" description="Page to resend verify email" >
     <article class="row justify-content-center" >
 
         <header class="text-center col-12" >
-            <x-page-title-component title="Resend Verify Email" />
+            <x-common.page-title title="Resend Verify Email" />
         </header>
 
         <div class="text-center col-4" >
@@ -20,4 +20,4 @@
         </div>
 
     </article>
-</x-layouts.auth-layout-component>
+</x-layouts.auth>

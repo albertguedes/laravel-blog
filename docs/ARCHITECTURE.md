@@ -271,47 +271,58 @@ Routes are loaded in this order to prevent conflicts:
 ### Component Structure
 
 ```
+app/View/Components/
+├── Common/                    # Shared across multiple views
+│   ├── Tree.php
+│   ├── CategoryMenu.php
+│   ├── CategoryPosts.php
+│   ├── CategoryForm.php
+│   ├── TagCloud.php
+│   ├── TagPosts.php
+│   ├── TagsForm.php
+│   ├── AuthorCard.php
+│   ├── ContactForm.php
+│   ├── Archive.php
+│   ├── PostForm.php
+│   ├── SideMenu.php
+│   ├── UserProfile.php
+│   ├── ProfileEditForm.php
+│   ├── PasswordForm.php
+│   ├── PostsList.php
+│   ├── ShowPost.php
+│   └── PostTabs.php
+└── Layouts/                   # Exclusive to specific layouts
+    ├── Main.php
+    ├── Auth.php
+    ├── Error.php
+    └── Mail.php
+
 resources/views/components/
-├── archives/
-│   └── ArchiveTitleComponent.php
-├── authors/
-│   ├── AuthorCardComponent.php
-│   └── LinkComponent.php
-├── categories/
-│   ├── CategoryFormComponent.php
-│   ├── MenuComponent.php
-│   ├── PostsComponent.php
-│   └── TreeComponent.php
-├── layouts/
-│   ├── AuthLayoutComponent.php
-│   ├── ErrorLayoutComponent.php
-│   ├── MailLayoutComponent.php
-│   └── MainLayoutComponent.php
-├── posts/
-│   ├── ArchiveComponent.php
-│   ├── PostFormComponent.php
-│   └── ...
-└── tags/
-    ├── CloudComponent.php
-    ├── PostsComponent.php
-    └── TagsFormComponent.php
+├── common/                    # Blade templates for Common components
+│   ├── tree.blade.php
+│   ├── category-menu.blade.php
+│   └── ... (18 templates)
+└── layouts/                   # Blade templates for Layout components
+    ├── main.blade.php
+    ├── auth.blade.php
+    ├── error.blade.php
+    └── mail.blade.php
 ```
 
 ### Component Naming
 
 Laravel converts kebab-case component names to PascalCase:
-- `author-card` → `AuthorCard`
-- `main-layout` → `MainLayout`
-- `json-ld-schema` → `JsonLdSchema`
+- `tree` → `Tree` (in Common namespace)
+- `main` → `Main` (in Layouts namespace)
 
 ### Usage
 
 ```blade
-<x-author-card :author="$author" />
+<x-common.tree :categories="$categories" />
 
-<x-main-layout title="Page Title">
+<x-layouts.main title="Page Title">
     <p>Content</p>
-</x-main-layout>
+</x-layouts.main>
 ```
 
 ---

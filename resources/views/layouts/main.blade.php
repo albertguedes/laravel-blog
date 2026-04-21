@@ -58,7 +58,7 @@
                         </header>
                         <article id="content" class="row" itemprop="articleBody">
                             <div class="col-12 text-center">
-                                <x-flash-messages-component />
+                                <x-common.flash-messages />
                             </div>
                             <div class="col-12" itemprop="text">
                                 @yield('content')

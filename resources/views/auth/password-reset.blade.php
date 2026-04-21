@@ -1,8 +1,8 @@
-<x-layouts.auth-layout-component title="Password Reset" description="Page to reset password" >
+<x-layouts.auth title="Password Reset" description="Page to reset password" >
     <article class="row justify-content-center" >
 
         <header class="text-center col-12" >
-            <x-page-title-component title="Password Reset" />
+            <x-common.page-title title="Password Reset" />
         </header>
 
         <div class="col-6" >
@@ -28,9 +28,9 @@
                     @enderror
                 </div>
 
-                <x-send-button-component />
+                <x-common.send-button />
             </form>
         </div>
 
     </article>
-</x-layouts.auth-layout-component>
+</x-layouts.auth>

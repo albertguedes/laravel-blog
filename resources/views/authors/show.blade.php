@@ -1,20 +1,20 @@
-<x-layouts.main-layout-component title="{!! ucwords($author->profile->name) !!}'s Blog" description="Posts by {!! $author->profile->name !!}" >
+<x-layouts.main title="{!! ucwords($author->profile->name) !!}'s Blog" description="Posts by {!! $author->profile->name !!}" >
     <section class="row" vocab="https://schema.org/" typeof="CollectionPage">
 
         <header class="col-12" >
-            <x-page-title-component title="{{ $author->profile->name }}'s Blog" />
+            <x-common.page-title title="{{ $author->profile->name }}'s Blog" />
         </header>
 
         @if (count($posts) > 0)
 
             @foreach( $posts as $post )
             <article class="col-12" property="mainEntity" typeof="BlogPosting">
-                <x-post-details-component :post="$post" />
+                <x-posts.post-details :post="$post" />
             </article>
             @endforeach
 
             <div class="col-12 d-flex justify-content-center">
-                <x-bootstrap-pagination :paginator="$posts" />
+                <x-common.bootstrap-pagination :paginator="$posts" />
             </div>
 
         @else
@@ -24,4 +24,4 @@
         @endif
 
     </section>
-</x-layout.main-layout-component>
+</x-layouts.main>

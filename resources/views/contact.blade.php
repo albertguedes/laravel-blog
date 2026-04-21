@@ -1,8 +1,8 @@
-<x-layouts.main-layout-component title="Contact" description="Contact us" >
+<x-layouts.main title="Contact" description="Contact us" >
     <section class="row" itemscope itemtype="http://schema.org/ContactPage">
 
         <header class="col-12">
-            <x-page-title-component title="Contact" />
+            <x-common.page-title title="Contact" />
         </header>
 
         <aside class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
@@ -20,8 +20,8 @@
         </aside>
 
         <article class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8" itemprop="hasPart" itemscope itemtype="http://schema.org/FormObject">
-            <x-contact.contact-form-component />
+            <x-contact-form />
         </article>
 
     </section>
-</x-layouts.main-layout-component>
+</x-layouts.main>

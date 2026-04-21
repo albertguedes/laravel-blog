@@ -1,9 +1,9 @@
-<x-layouts.main-layout-component title="{{ strtoupper($post->title) }}" description="{!! $post->description !!}">
+<x-layouts.main title="{{ strtoupper($post->title) }}" description="{!! $post->description !!}">
     <section class="row" >
 
         <header class="col-12" >
 
-            <x-page-title-component :title="$post->title" />
+            <x-common.page-title :title="$post->title" />
 
             <h6 class="text-black-50" >
                 <i class="fas fa-calendar-alt"></i> {{ $post->created_at->format("Y M d") }}
@@ -41,4 +41,4 @@
         </footer>
 
     </section>
-</x-layouts.main-layout-component>
+</x-layouts.main>

@@ -4,11 +4,11 @@
 <section class="row" >
 
     <header class="col-12" >
-        <x-page-title-component title="Profile - Password" />
+        <x-common.page-title title="Profile - Password" />
     </header>
 
     <aside class="col-3" >
-        <x-profile.side-menu-component />
+        <x-side-menu />
     </aside>
 
     <article class="col-9" >
@@ -19,7 +19,7 @@
             </h2>
         </div>
 
-        <x-profile.password-form-component />
+        <x-password-form />
 
     </article>
 
