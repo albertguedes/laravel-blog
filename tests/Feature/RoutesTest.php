@@ -46,17 +46,17 @@ describe('Routes', function () {
     });
 
     it('login page is accessible', function () {
-        $response = $this->get('/login');
+        $response = $this->get('/auth/login');
         $response->assertStatus(200);
     });
 
     it('register page is accessible', function () {
-        $response = $this->get('/register');
+        $response = $this->get('/auth/register');
         $response->assertStatus(200);
     });
 
     it('password forgot page is accessible', function () {
-        $response = $this->get('/password/forgot');
+        $response = $this->get('/auth/password/forgot');
         $response->assertStatus(200);
     });
 
