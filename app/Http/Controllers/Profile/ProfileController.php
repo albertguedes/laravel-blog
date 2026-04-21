@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Profile;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\PasswordUpdateRequest;
 use App\Http\Requests\Profile\UpdateRequest;
 use Illuminate\Http\RedirectResponse;

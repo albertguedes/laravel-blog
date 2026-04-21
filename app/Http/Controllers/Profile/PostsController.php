@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Profile;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\Posts\StoreRequest;
 use App\Http\Requests\Profile\Posts\UpdateRequest;
 use App\Models\Post;
-use App\Models\posts;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -37,8 +37,6 @@ class PostsController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Contracts\View\View
      */
     public function show(Post $post): View
     {
@@ -59,11 +57,8 @@ class PostsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -88,12 +83,8 @@ class PostsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  posts  $post
-     * @return Response
      */
-    public function update(UpdateRequest $request, Post $post)
+    public function update(UpdateRequest $request, Post $post): RedirectResponse
     {
         if ($post->author_id !== auth()->user()->id) {
             abort(Response::HTTP_NOT_FOUND);
@@ -126,9 +117,6 @@ class PostsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  posts  $post
-     * @return Response
      */
     public function destroy(Post $post): RedirectResponse
     {

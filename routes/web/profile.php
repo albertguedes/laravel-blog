@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\PostsController as Posts;
-use App\Http\Controllers\ProfileController as Profile;
+use App\Http\Controllers\Profile\PostsController as Posts;
+use App\Http\Controllers\Profile\ProfileController as Profile;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
