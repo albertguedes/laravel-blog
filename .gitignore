@@ -16,3 +16,4 @@ yarn-error.log
 /.vscode
 *.md
 !README.md
+!/docs/*.md
