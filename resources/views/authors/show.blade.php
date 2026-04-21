@@ -1,8 +1,8 @@
-<x-layouts.main title="{!! ucwords($author->profile->name) !!}'s Blog" description="Posts by {!! $author->profile->name !!}" >
+<x-layouts.main title="{{ ucwords($author->profile->name ?? 'Author')) }}'s Blog" description="Posts by {{ $author->profile->name ?? 'Author' }}" >
     <section class="row" vocab="https://schema.org/" typeof="CollectionPage">
 
         <header class="col-12" >
-            <x-common.page-title title="{{ $author->profile->name }}'s Blog" />
+            <x-common.page-title title="{{ $author->profile->name ?? 'Author' }}'s Blog" />
         </header>
 
         @if (count($posts) > 0)

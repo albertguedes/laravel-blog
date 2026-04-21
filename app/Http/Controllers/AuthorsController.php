@@ -38,6 +38,8 @@ class AuthorsController extends Controller
      */
     public function show(User $author): View
     {
+        $author->load('profile');
+
         $posts = $author->posts()
             ->where('published', true)
             ->orderBy('updated_at', 'DESC')

@@ -70,6 +70,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Post::class, 'author_id');
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'username';
+    }
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class)
@@ -90,6 +95,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return static::whereHas('profile', function ($query) use ($value) {
             $query->where('username', $value);
-        })->first();
+        })->firstOrFail();
     }
 }
