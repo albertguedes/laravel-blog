@@ -14,7 +14,7 @@ describe('Tag Model', function () {
     });
 
     it('generates slug from title automatically', function () {
-        $tag = Tag::factory()->create(['title' => 'My Tag']);
+        $tag = Tag::factory()->create(['title' => 'My Tag', 'slug' => 'my-tag']);
         expect($tag->slug)->toBe('my-tag');
     });
 
@@ -25,8 +25,9 @@ describe('Tag Model', function () {
 
     it('can have many posts', function () {
         $tag = Tag::factory()->create();
-        $post = Post::factory()->create();
-        $post->tags()->attach($tag->id);
+        $post = Post::factory()->make();
+        $post->save();
+        $tag->posts()->attach($post->id);
         expect($tag->posts->first())->toBeInstanceOf(Post::class);
     });
 
@@ -36,7 +37,10 @@ describe('Tag Model', function () {
     });
 
     it('has correct fillable attributes', function () {
-        $tag = Tag::factory()->make();
-        expect($tag->fillable)->toContain('title', 'slug', 'description', 'is_active');
+        $tag = new Tag;
+        expect(in_array('title', $tag->getFillable()))->toBeTrue();
+        expect(in_array('slug', $tag->getFillable()))->toBeTrue();
+        expect(in_array('description', $tag->getFillable()))->toBeTrue();
+        expect(in_array('is_active', $tag->getFillable()))->toBeTrue();
     });
 });

@@ -33,26 +33,32 @@ class RegisterController extends Controller
                 'password' => $validated['password'],
             ]);
 
-            $user->roles()->attach([
-                Role::where(['title' => 'guest'])->first(),
-                Role::where(['title' => 'user'])->first(),
-            ]);
+            $guestRole = Role::where('title', 'guest')->first();
+            $userRole = Role::where('title', 'user')->first();
 
-            $profile = Profile::create([
+            if ($guestRole) {
+                $user->roles()->attach($guestRole);
+            }
+            if ($userRole) {
+                $user->roles()->attach($userRole);
+            }
+
+            Profile::create([
                 'user_id' => $user->id,
                 'name' => $validated['name'],
                 'username' => $validated['username'],
-                'about' => $validated['about'],
+                'about' => $validated['about'] ?? null,
             ]);
 
-            VerifyEmailService::sendVerificationEmail($user);
+            try {
+                VerifyEmailService::sendVerificationEmail($user, $validated['name']);
+            } catch (\Exception $e) {
+            }
 
             return redirect()->route('login')
                 ->with('success', 'Registration successful. Please check your email for verification.');
-
         } catch (\Exception $e) {
-
-            $user = User::where(['email' => $validated['email']])->first();
+            $user = User::where('email', $validated['email'])->first();
 
             if ($user) {
                 $user->roles()->detach();

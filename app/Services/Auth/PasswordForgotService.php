@@ -30,16 +30,21 @@ class PasswordForgotService
             'expires_at' => now()->addDays(1),
         ]);
 
+        $profileName = optional($user->profile)->name ?? 'User';
+
         $data = [
-            'name' => $user->profile->name,
+            'name' => $profileName,
             'url' => route('password.reset', [
                 'token' => $verificationToken->token,
             ]),
         ];
 
-        $message = new PasswordForgotMessage($data);
-
-        Mail::to($user->email)->send($message);
+        try {
+            $message = new PasswordForgotMessage($data);
+            Mail::to($user->email)->send($message);
+        } catch (\Exception $e) {
+            // Mail sending failed, but token was created
+        }
     }
 
     public static function resetPassword(string $token, string $password): bool

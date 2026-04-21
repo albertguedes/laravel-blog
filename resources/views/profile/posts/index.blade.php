@@ -9,11 +9,11 @@
     </header>
 
     <aside class="col-3" >
-        <x-side-menu />
+        <x-common.side-menu />
     </aside>
 
     <article class="col-9" >
-        <x-posts-list :posts="$posts" />
+        <x-common.posts-list :posts="$posts" />
     </article>
 
 </section>

@@ -9,7 +9,6 @@ use App\Http\Requests\Profile\Posts\StoreRequest;
 use App\Http\Requests\Profile\Posts\UpdateRequest;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;

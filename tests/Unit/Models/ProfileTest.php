@@ -9,7 +9,8 @@ use App\Models\User;
 
 describe('Profile Model', function () {
     it('can be created with factory', function () {
-        $profile = Profile::factory()->create();
+        $user = User::factory()->create();
+        $profile = Profile::factory()->create(['user_id' => $user->id]);
         expect($profile)->toBeInstanceOf(Profile::class);
     });
 
@@ -21,17 +22,22 @@ describe('Profile Model', function () {
     });
 
     it('has correct fillable attributes', function () {
-        $profile = Profile::factory()->make();
-        expect($profile->fillable)->toContain('user_id', 'name', 'username', 'about');
+        $profile = new Profile;
+        expect(in_array('user_id', $profile->getFillable()))->toBeTrue();
+        expect(in_array('name', $profile->getFillable()))->toBeTrue();
+        expect(in_array('username', $profile->getFillable()))->toBeTrue();
+        expect(in_array('about', $profile->getFillable()))->toBeTrue();
     });
 
     it('user_id is cast to integer', function () {
-        $profile = Profile::factory()->create(['user_id' => 1]);
+        $user = User::factory()->create();
+        $profile = Profile::factory()->create(['user_id' => $user->id]);
         expect($profile->user_id)->toBeInt();
     });
 
     it('can have about text', function () {
-        $profile = Profile::factory()->create(['about' => 'This is my bio']);
+        $user = User::factory()->create();
+        $profile = Profile::factory()->create(['user_id' => $user->id, 'about' => 'This is my bio']);
         expect($profile->about)->toBe('This is my bio');
     });
 });

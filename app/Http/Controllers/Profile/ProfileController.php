@@ -47,13 +47,25 @@ class ProfileController extends Controller
      */
     public function update(UpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $validated = $request->validated();
+
+        $user->fill([
+            'email' => $validated['email'],
+        ]);
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
+
+        $user->profile->fill([
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'about' => $validated['about'] ?? null,
+        ])->save();
 
         return redirect()->route('profile.edit')->with('status', 'profile-updated');
     }
@@ -65,9 +77,13 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
+        if (! Hash::check($request->input('password'), $user->password)) {
+            return redirect()->back()->withErrors(['password' => 'The provided password does not match our records.']);
+        }
+
         auth()->logout();
 
-        $user->is_active = false;
+        $user->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

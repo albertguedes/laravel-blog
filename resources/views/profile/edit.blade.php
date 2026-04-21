@@ -6,11 +6,11 @@
         </header>
 
         <aside class="col-3" >
-            <x-side-menu />
+            <x-common.side-menu />
         </aside>
 
         <article class="col-9" >
-            <x-profile-edit-form :user="$user" />
+            <x-common.profile-edit-form :user="$user" />
         </article>
 
     </section>

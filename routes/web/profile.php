@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Profile\PostsController as Posts;
 use App\Http\Controllers\Profile\ProfileController as Profile;
+use App\Http\Middleware\EnsureEmailIsVerified;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', EnsureEmailIsVerified::redirectTo('verify-email.resend')])->group(function () {
     /**
      * User profile management
      */

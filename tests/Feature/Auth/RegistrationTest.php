@@ -5,30 +5,40 @@ declare(strict_types=1);
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 describe('Registration', function () {
+    beforeEach(function () {
+        Mail::fake();
+    });
+
     it('shows registration page', function () {
-        $response = $this->get('/register');
+        $response = $this->get(route('register'));
         $response->assertStatus(200);
     });
 
     it('registers a new user with valid data', function () {
-        $response = $this->post('/register', [
+        $email = 'test_'.uniqid().'@example.com';
+        $username = 'testuser_'.uniqid();
+
+        $response = $this->post(route('register.store'), [
             'name' => 'Test User',
-            'username' => 'testuser',
-            'email' => 'test@example.com',
+            'username' => $username,
+            'email' => $email,
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
-        $this->assertDatabaseHas('users', [
-            'email' => 'test@example.com',
-        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('login'));
+        $this->assertDatabaseHas('users', ['email' => $email]);
+        $this->assertDatabaseHas('profiles', ['username' => $username]);
     });
 
     it('fails registration with invalid email', function () {
-        $response = $this->post('/register', [
+        $response = $this->post(route('register.store'), [
             'name' => 'Test User',
-            'username' => 'testuser',
+            'username' => 'testuser_'.uniqid(),
             'email' => 'invalid-email',
             'password' => 'password',
             'password_confirmation' => 'password',
@@ -37,10 +47,10 @@ describe('Registration', function () {
     });
 
     it('fails registration when password mismatch', function () {
-        $response = $this->post('/register', [
+        $response = $this->post(route('register.store'), [
             'name' => 'Test User',
-            'username' => 'testuser',
-            'email' => 'test@example.com',
+            'username' => 'testuser_'.uniqid(),
+            'email' => 'test_'.uniqid().'@example.com',
             'password' => 'password',
             'password_confirmation' => 'different-password',
         ]);
@@ -48,11 +58,12 @@ describe('Registration', function () {
     });
 
     it('fails registration with duplicate email', function () {
-        User::factory()->create(['email' => 'existing@example.com']);
-        $response = $this->post('/register', [
+        $existingEmail = 'existing_'.uniqid().'@example.com';
+        User::factory()->create(['email' => $existingEmail]);
+        $response = $this->post(route('register.store'), [
             'name' => 'Test User',
-            'username' => 'testuser',
-            'email' => 'existing@example.com',
+            'username' => 'testuser_'.uniqid(),
+            'email' => $existingEmail,
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);

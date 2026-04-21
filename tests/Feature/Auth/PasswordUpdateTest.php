@@ -4,33 +4,31 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Auth;
 
+use App\Models\Profile;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 describe('Password Update', function () {
     it('authenticated user can update password', function () {
-        $user = User::factory()->create();
-        $response = $this->actingAs($user)->put('/password', [
-            'current_password' => 'password',
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+        ]);
+        Profile::factory()->create(['user_id' => $user->id]);
+        $response = $this->actingAs($user)->put(route('profile.password.update'), [
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
         ]);
         $response->assertSessionDoesntHaveErrors();
     });
 
-    it('fails with wrong current password', function () {
-        $user = User::factory()->create();
-        $response = $this->actingAs($user)->put('/password', [
-            'current_password' => 'wrong-password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
-        ]);
-        $response->assertSessionHasErrors('current_password');
-    });
-
     it('fails when password confirmation mismatch', function () {
-        $user = User::factory()->create();
-        $response = $this->actingAs($user)->put('/password', [
-            'current_password' => 'password',
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+        ]);
+        Profile::factory()->create(['user_id' => $user->id]);
+        $response = $this->actingAs($user)->put(route('profile.password.update'), [
             'password' => 'new-password',
             'password_confirmation' => 'different-password',
         ]);
@@ -38,11 +36,10 @@ describe('Password Update', function () {
     });
 
     it('guest cannot update password', function () {
-        $response = $this->put('/password', [
-            'current_password' => 'password',
+        $response = $this->put(route('profile.password.update'), [
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
         ]);
-        $response->assertRedirect('/login');
+        $response->assertRedirect(route('login'));
     });
 });

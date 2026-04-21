@@ -53,32 +53,26 @@ class CategoryFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (Category $category) {
-            // Define a maximum number of attempts to find a parent category.
-            $maxAttempts = 10;
-            $attemptCount = 0;
-
             if ($this->faker->boolean()) {
                 return;
             }
 
-            // Verify if the parent selected isn't a child category of
-            // the category, to prevent circular relationships.
-            do {
-                // Get new parent if the old is a descendant of the category.
-                $parent = Category::inRandomOrder()
-                    ->where('is_active', true)
-                    ->first();
+            $parent = Category::query()
+                ->where('is_active', true)
+                ->where('id', '!=', $category->id)
+                ->inRandomOrder()
+                ->first();
 
-                $attemptCount++;
-            } while (
-                CategoryHelper::hasDescendant($category, $parent) &&
-                ($attemptCount < $maxAttempts)
-            );
-
-            if ($attemptCount < $maxAttempts) {
-                $category->parent()->associate($parent);
-                $category->save();
+            if (! $parent) {
+                return;
             }
+
+            if (CategoryHelper::hasDescendant($category, $parent)) {
+                return;
+            }
+
+            $category->parent()->associate($parent);
+            $category->save();
         });
     }
 }

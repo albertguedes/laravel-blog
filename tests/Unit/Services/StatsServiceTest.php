@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Services;
 
 use App\Models\Post;
+use App\Models\User;
 use App\Services\StatsService;
 
 describe('StatsService', function () {
@@ -13,14 +14,16 @@ describe('StatsService', function () {
     });
 
     it('answers how many posts question', function () {
+        User::factory()->create();
         Post::factory()->count(5)->create();
         $response = $this->service->answer('Quantos posts existem?');
         expect($response)->toContain('5');
     });
 
     it('answers biggest post question', function () {
-        Post::factory()->create(['content' => 'Short content']);
-        $longPost = Post::factory()->create(['content' => str_repeat('a', 1000)]);
+        $user = User::factory()->create();
+        Post::factory()->create(['author_id' => $user->id, 'content' => 'Short content']);
+        $longPost = Post::factory()->create(['author_id' => $user->id, 'content' => str_repeat('a', 1000)]);
         $response = $this->service->answer('Qual é o maior post?');
         expect($response)->toContain($longPost->title);
     });

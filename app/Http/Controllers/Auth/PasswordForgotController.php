@@ -10,6 +10,7 @@ use App\Models\VerificationToken;
 use App\Services\Auth\PasswordForgotService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class PasswordForgotController extends Controller

@@ -31,7 +31,13 @@ class PostFactory extends Factory
 
         $created_at = $this->faker->dateTime();
         $updated_at = $this->faker->dateTimeBetween($created_at, 'now');
-        $author_id = User::inRandomOrder()->first()->id;
+
+        $user = User::query()->inRandomOrder()->first();
+        if (! $user) {
+            $user = User::factory()->create();
+        }
+        $author_id = $user->id;
+
         $title = trim($sentence, '.');
         $slug = Str::slug($title, '-');
         $description = $this->faker->text(140);
@@ -55,19 +61,22 @@ class PostFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Post $post) {
-            // Set some random leaf category to the post (any status - deactivated posts bubble up to active ancestor)
-            $post->category_id = Category::whereDoesntHave('children')
+            $category = Category::whereDoesntHave('children')
                 ->inRandomOrder()
-                ->value('id');
+                ->first();
 
-            // Set random tags to the post
-            $post->tags()->attach(
-                Tag::inRandomOrder()
-                    ->where('is_active', true)
-                    ->limit(rand(1, 5))
-                    ->get()
-                    ->pluck('id')
-            );
+            if ($category) {
+                $post->category_id = $category->id;
+            }
+
+            $tags = Tag::where('is_active', true)
+                ->inRandomOrder()
+                ->limit(rand(1, 5))
+                ->get();
+
+            if ($tags->isNotEmpty()) {
+                $post->tags()->attach($tags->pluck('id'));
+            }
 
             $post->save();
         });

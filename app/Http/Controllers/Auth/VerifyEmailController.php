@@ -56,11 +56,7 @@ class VerifyEmailController extends Controller
      */
     public function edit(Request $request): View
     {
-        if ($request->has('resend')) {
-            return view('auth.resend-verify-email');
-        }
-
-        abort(Response::HTTP_FORBIDDEN);
+        return view('auth.resend-verify-email');
     }
 
     /**

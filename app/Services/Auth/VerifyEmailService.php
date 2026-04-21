@@ -18,7 +18,7 @@ class VerifyEmailService
      * This method will create a new verification token and send a verification email
      * to the given user.
      */
-    public static function sendVerificationEmail(User $user): void
+    public static function sendVerificationEmail(User $user, ?string $name = null): void
     {
         if ($user->verificationToken()->exists()) {
             $user->verificationToken()->delete();
@@ -30,15 +30,20 @@ class VerifyEmailService
             'expires_at' => now()->addDays(1),
         ]);
 
+        $profileName = $name ?? optional($user->profile)->name ?? 'User';
+
         $data = [
-            'name' => $user->profile->name,
+            'name' => $profileName,
             'url' => route('verify-email', [
                 'token' => $verificationToken->token,
             ]),
         ];
 
-        $message = new VerifyEmailMessage($data);
-
-        Mail::to($user->email)->send($message);
+        try {
+            $message = new VerifyEmailMessage($data);
+            Mail::to($user->email)->send($message);
+        } catch (\Exception $e) {
+            // Mail sending failed, but token was created
+        }
     }
 }

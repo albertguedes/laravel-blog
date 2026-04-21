@@ -9,12 +9,12 @@
     </header>
 
     <aside class="col-3" >
-        <x-side-menu />
+        <x-common.side-menu />
     </aside>
 
     <article class="col-9" >
-        <x-post-tabs :post="$post" />
-        <x-post-form action="{{ route('profile.post.update', compact('post')) }}" method="PUT" :post="$post" />
+        <x-common.post-tabs :post="$post" />
+        <x-common.post-form action="{{ route('profile.post.update', compact('post')) }}" method="PUT" :post="$post" />
     </article>
 
 </section>

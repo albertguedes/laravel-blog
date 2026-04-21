@@ -29,16 +29,17 @@ class ProfileFactory extends Factory
      */
     public function definition(): array
     {
-        $user_id = User::inRandomOrder()->first()->id;
-        $name = $this->faker->name();
-        $username = $this->faker->userName();
-        $about = $this->faker->paragraph();
+        $user = User::query()->inRandomOrder()->first();
 
-        return compact(
-            'user_id',
-            'name',
-            'username',
-            'about'
-        );
+        if (! $user) {
+            $user = User::factory()->create();
+        }
+
+        return [
+            'user_id' => $user->id,
+            'name' => $this->faker->name(),
+            'username' => $this->faker->unique()->userName(),
+            'about' => $this->faker->paragraph(),
+        ];
     }
 }

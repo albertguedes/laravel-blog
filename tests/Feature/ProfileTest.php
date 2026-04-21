@@ -4,21 +4,29 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Models\Profile;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 describe('Profile', function () {
-    it('profile page is accessible for authenticated user', function () {
+    it('user can delete account with correct password', function () {
         $user = User::factory()->create([
             'email_verified_at' => now(),
+            'password' => Hash::make('password'),
         ]);
-        $response = $this->actingAs($user)->get('/profile');
-        $response->assertStatus(200);
+        Profile::factory()->create(['user_id' => $user->id]);
+        $response = $this->actingAs($user)->delete('/profile', [
+            'password' => 'password',
+        ]);
+        $response->assertRedirect('/');
+        $this->assertDatabaseMissing('users', ['id' => $user->id]);
     });
 
     it('profile information is displayed', function () {
         $user = User::factory()->create([
             'email_verified_at' => now(),
         ]);
+        Profile::factory()->create(['user_id' => $user->id]);
         $response = $this->actingAs($user)->get('/profile');
         $response->assertViewHas('user');
     });
@@ -27,10 +35,12 @@ describe('Profile', function () {
         $user = User::factory()->create([
             'email_verified_at' => now(),
         ]);
+        Profile::factory()->create(['user_id' => $user->id]);
         $response = $this->actingAs($user)->put('/profile', [
             'name' => 'Updated Name',
             'username' => 'updatedusername',
             'about' => 'Updated bio',
+            'email' => $user->email,
         ]);
         $response->assertSessionDoesntHaveErrors();
         $this->assertDatabaseHas('profiles', [
@@ -43,20 +53,10 @@ describe('Profile', function () {
         $user = User::factory()->create([
             'email_verified_at' => now(),
         ]);
+        Profile::factory()->create(['user_id' => $user->id]);
         $response = $this->actingAs($user)->delete('/profile', [
             'password' => 'wrong-password',
         ]);
         $response->assertSessionHasErrors();
-    });
-
-    it('user can delete account with correct password', function () {
-        $user = User::factory()->create([
-            'email_verified_at' => now(),
-        ]);
-        $response = $this->actingAs($user)->delete('/profile', [
-            'password' => 'password',
-        ]);
-        $response->assertRedirect('/');
-        $this->assertDatabaseMissing('users', ['id' => $user->id]);
     });
 });

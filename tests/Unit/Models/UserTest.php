@@ -8,7 +8,7 @@ use App\Models\Post;
 use App\Models\Profile;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\VerificationToken;
 
 describe('User Model', function () {
     it('can be created with factory', function () {
@@ -36,7 +36,7 @@ describe('User Model', function () {
     });
 
     it('can check if email is verified', function () {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['email_verified_at' => null]);
         expect($user->isEmailVerified())->toBeFalse();
         $user->email_verified_at = now();
         expect($user->isEmailVerified())->toBeTrue();
@@ -44,7 +44,8 @@ describe('User Model', function () {
 
     it('has verification token relationship', function () {
         $user = User::factory()->create();
-        expect($user->verificationToken)->toBeInstanceOf(HasOne::class);
+        VerificationToken::factory()->forUser($user)->create();
+        expect($user->verificationToken)->toBeInstanceOf(VerificationToken::class);
     });
 
     it('hides password and remember_token in array', function () {

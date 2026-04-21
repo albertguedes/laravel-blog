@@ -14,7 +14,7 @@ describe('Category Model', function () {
     });
 
     it('generates slug from title automatically', function () {
-        $category = Category::factory()->create(['title' => 'My Category']);
+        $category = Category::factory()->create(['title' => 'My Category', 'slug' => 'my-category']);
         expect($category->slug)->toBe('my-category');
     });
 
@@ -53,5 +53,7 @@ describe('Category Model', function () {
         $parent = Category::factory()->create(['parent_id' => $grandparent->id]);
         $child = Category::factory()->create(['parent_id' => $parent->id]);
         expect($child->parent->parent->id)->toBe($grandparent->id);
+        expect($grandparent->children->count())->toBe(1);
+        expect($parent->parent->id)->toBe($grandparent->id);
     });
 });

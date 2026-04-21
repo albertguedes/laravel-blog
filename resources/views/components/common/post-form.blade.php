@@ -48,14 +48,14 @@
     <div class="input-group mb-3">
         <label for="post-category" class="input-group-text"><i class="fa fa-sitemap"></i></label>
         @php $current = ($post) ? $post->category : null @endphp
-        <x-category-menu name="category_id" :current="$current" />
+        <x-common.category-menu name="category_id" :current="$current" />
     </div>
 
     <div class="input-group mb-3">
         <label for="post-tags" class="input-group-text">
             <i class="fa fa-tags me-3"></i> Check some tags
         </label>
-        <x-tags-form :post="$post" />
+        <x-common.tags-form :post="$post" />
     </div>
 
     <div class="form-check form-switch mb-3">

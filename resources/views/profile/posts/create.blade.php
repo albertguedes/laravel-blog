@@ -9,11 +9,11 @@
     </header>
 
     <aside class="col-3" >
-        <x-side-menu />
+        <x-common.side-menu />
     </aside>
 
     <article class="col-9" >
-        <x-post-form action="{{ route('profile.post.store') }}" method="POST" :post=null />
+        <x-common.post-form action="{{ route('profile.post.store') }}" method="POST" :post=null />
     </article>
 
 </section>

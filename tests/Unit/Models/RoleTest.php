@@ -21,8 +21,10 @@ describe('Role Model', function () {
     });
 
     it('has correct fillable attributes', function () {
-        $role = Role::factory()->make();
-        expect($role->fillable)->toContain('title', 'description', 'is_active');
+        $role = new Role;
+        expect(in_array('title', $role->getFillable()))->toBeTrue();
+        expect(in_array('description', $role->getFillable()))->toBeTrue();
+        expect(in_array('is_active', $role->getFillable()))->toBeTrue();
     });
 
     it('is_active cast is boolean', function () {

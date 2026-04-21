@@ -8,7 +8,7 @@
     </header>
 
     <aside class="col-3" >
-        <x-side-menu />
+        <x-common.side-menu />
     </aside>
 
     <article class="col-9" >
@@ -19,7 +19,7 @@
             </h2>
         </div>
 
-        <x-password-form />
+        <x-common.password-form />
 
     </article>
 
