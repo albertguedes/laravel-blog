@@ -1,5 +1,9 @@
-/*
- * CSS snippet to keep footer at the bottom of the page
+/**
+ * CSS snippet to keep footer at the bottom of the page.
+ *
+ * @file
+ * @author Albert
+ * @since 1.0.0
  */
 html, body {
     height: 100%;

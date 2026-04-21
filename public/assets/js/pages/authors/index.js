@@ -11,6 +11,14 @@ function verticalCenterSafe(selector) {
     });
 }
 
+/**
+ * Authors page JavaScript functionality.
+ *
+ * @file
+ * @author Albert
+ * @since 1.0.0
+ */
+
 $(function(){
     setUniformHeight('author-name');
     setUniformHeight('author-about');

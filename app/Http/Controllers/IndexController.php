@@ -7,6 +7,13 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\View\View;
 
+/**
+ * Controller for the homepage and basic pages.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class IndexController extends Controller
 {
     /**

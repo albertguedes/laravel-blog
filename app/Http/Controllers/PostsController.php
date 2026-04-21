@@ -14,8 +14,18 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
+/**
+ * Controller for managing user posts in the profile section.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class PostsController extends Controller
 {
+    /**
+     * Display a listing of the user's posts.
+     */
     public function index(): View
     {
         $posts = Post::where('author_id', auth()->user()->id)
@@ -39,6 +49,9 @@ class PostsController extends Controller
         return view('profile.posts.show', compact('post'));
     }
 
+    /**
+     * Show the form for creating a new post.
+     */
     public function create(): View
     {
         return view('profile.posts.create');
@@ -61,6 +74,9 @@ class PostsController extends Controller
             ->with(['success' => 'Post created successfully']);
     }
 
+    /**
+     * Show the form for editing a post.
+     */
     public function edit(Post $post): View
     {
         if ($post->author_id !== auth()->user()->id) {
@@ -96,6 +112,9 @@ class PostsController extends Controller
         ]);
     }
 
+    /**
+     * Show the confirmation page for deleting a post.
+     */
     public function delete(Post $post): View
     {
         if ($post->author_id !== auth()->user()->id) {

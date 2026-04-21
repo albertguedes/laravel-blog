@@ -2,6 +2,8 @@
  * masks.js - Helper functions for input field masking
  *
  * @file
+ * @author Albert
+ * @since 1.0.0
  */
 
 /**

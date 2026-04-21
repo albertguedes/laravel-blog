@@ -1,3 +1,11 @@
+/**
+ * Chat ask functionality - handles chat form submission and message display.
+ *
+ * @file
+ * @author Albert
+ * @since 1.0.0
+ */
+
 $(function () {
     const chatForm = $('#chat-form');
     const questionInput = $('#question');

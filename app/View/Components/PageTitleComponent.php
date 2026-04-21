@@ -8,6 +8,13 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
+/**
+ * Component for rendering a page title with optional icon.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class PageTitleComponent extends Component
 {
     /**

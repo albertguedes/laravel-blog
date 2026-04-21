@@ -10,6 +10,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
+/**
+ * Post model for blog articles.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class Post extends Model
 {
     use HasFactory;

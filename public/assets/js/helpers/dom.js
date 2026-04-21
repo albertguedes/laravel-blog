@@ -2,6 +2,8 @@
  * dom.js - helper functions for DOM manipulation.
  *
  * @file
+ * @author Albert
+ * @since 1.0.0
  */
 
 /**

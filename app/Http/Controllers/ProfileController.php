@@ -12,8 +12,18 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
+/**
+ * Controller for user profile management.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class ProfileController extends Controller
 {
+    /**
+     * Display the user's profile.
+     */
     public function index(): View
     {
         return view('profile.index', [
@@ -64,11 +74,17 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
+    /**
+     * Display the password change form.
+     */
     public function password(): View
     {
         return view('profile.password');
     }
 
+    /**
+     * Update the user's password.
+     */
     public function passwordUpdate(PasswordUpdateRequest $request): RedirectResponse
     {
         $validated = $request->validated();

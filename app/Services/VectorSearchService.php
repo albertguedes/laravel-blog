@@ -10,16 +10,21 @@ use Illuminate\Support\Collection;
 
 class VectorSearchService
 {
+    /**
+     * Create a new vector search service instance.
+     *
+     * @param  Similarity  $similarity  Similarity calculation service
+     */
     public function __construct(
         private Similarity $similarity
     ) {}
 
     /**
-     * Find similar post chunks based on the cosine similarity of the query vector and the post chunk embeddings.
+     * Find similar post chunks based on cosine similarity.
      *
-     * @param  array  $queryVector  The query vector to compare with the post chunk embeddings.
-     * @param  int  $limit  The number of similar post chunks to return.
-     * @return Collection A collection of post chunks with their scores, sorted in descending order of score and limited to the specified limit.
+     * @param  array  $queryVector  The query vector to compare
+     * @param  int  $limit  The number of results to return
+     * @return Collection A collection of post chunks with scores
      */
     public function findSimilar(array $queryVector, int $limit = 5)
     {

@@ -10,6 +10,10 @@ use Illuminate\View\Component;
 
 /**
  * Class responsible for generating a hierarchical tree structure of categories, including children categories.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
  */
 class TreeComponent extends Component
 {

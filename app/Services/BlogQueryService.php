@@ -10,6 +10,13 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
+/**
+ * Blog query service for retrieving posts, authors, categories, and tags.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class BlogQueryService
 {
     public function getPostCount(array $filters = []): int

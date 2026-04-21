@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * Tag model for labeling posts.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class Tag extends Model
 {
     use HasFactory;

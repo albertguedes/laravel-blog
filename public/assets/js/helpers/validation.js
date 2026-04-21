@@ -2,6 +2,8 @@
  * validation.js - Validation helpers.
  *
  * @file
+ * @author Albert
+ * @since 1.0.0
  */
 
 /**

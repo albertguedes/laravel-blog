@@ -10,6 +10,13 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
+/**
+ * Controller for search functionality.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class SearchController extends Controller
 {
     /**

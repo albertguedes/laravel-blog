@@ -6,6 +6,13 @@ namespace App\Helpers;
 
 use App\Models\Category;
 
+/**
+ * Helper class for category-related operations.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class CategoryHelper
 {
     /**

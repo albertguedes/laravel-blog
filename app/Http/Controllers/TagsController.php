@@ -7,6 +7,13 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use Illuminate\View\View;
 
+/**
+ * Controller for tag-related pages.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class TagsController extends Controller
 {
     /**

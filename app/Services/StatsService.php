@@ -7,8 +7,21 @@ namespace App\Services;
 use App\Models\Post;
 use App\Models\User;
 
+/**
+ * Service for answering statistical questions about the blog.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class StatsService
 {
+    /**
+     * Answer a statistical question about the blog.
+     *
+     * @param  string  $question  The question to answer
+     * @return string The answer
+     */
     public function answer(string $question): string
     {
         $q = mb_strtolower($question);

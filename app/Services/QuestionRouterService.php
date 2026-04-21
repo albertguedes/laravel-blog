@@ -4,12 +4,60 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+/**
+ * Question router service for classifying user intent.
+ *
+ * Analyzes user questions and determines whether they should be
+ * routed to SQL-based answers (factual queries) or RAG-based
+ * answers (content/explanation queries).
+ *
+ * @category Services
+ *
+ * @author   Albert R. C. Guedes <albert@teko.net.br>
+ *
+ * @since    1.0.0
+ * @see      ChatService  For the main orchestration service
+ * @see      SqlAgentService  For SQL-based response handling
+ * @see      RAGService      For RAG-based response handling
+ */
 class QuestionRouterService
 {
+    /**
+     * Intent constant for SQL-based questions (factual data queries).
+     *
+     * @var string
+     *
+     * @since  1.0.0
+     */
     public const INTENT_SQL = 'sql';
 
+    /**
+     * Intent constant for RAG-based questions (content/explanation queries).
+     *
+     * @var string
+     *
+     * @since  1.0.0
+     */
     public const INTENT_RAG = 'rag';
 
+    /**
+     * Route a question to the appropriate intent handler.
+     *
+     * Analyzes the question text using regex patterns to determine
+     * if it should be handled by SQL queries or RAG.
+     *
+     * @param  string  $question  The user's question in Portuguese
+     * @return string The intent constant (INTENT_SQL or INTENT_RAG)
+     *
+     * @example
+     *     $intent = $router->route('quantos posts existem?');
+     *     // Returns: QuestionRouterService::INTENT_SQL
+     * @example
+     *     $intent = $router->route('explique como funciona Laravel');
+     *     // Returns: QuestionRouterService::INTENT_RAG
+     *
+     * @since   1.0.0
+     */
     public function route(string $question): string
     {
         if ($this->isSqlQuestion($question)) {
@@ -19,6 +67,17 @@ class QuestionRouterService
         return self::INTENT_RAG;
     }
 
+    /**
+     * Determine if a question should be routed to SQL handler.
+     *
+     * Matches the question against predefined regex patterns for
+     * factual queries about posts, authors, categories, tags, and statistics.
+     *
+     * @param  string  $question  The user's question to analyze
+     * @return bool True if question matches SQL patterns, false otherwise
+     *
+     * @since  1.0.0
+     */
     private function isSqlQuestion(string $question): bool
     {
         $question = mb_strtolower(trim($question));

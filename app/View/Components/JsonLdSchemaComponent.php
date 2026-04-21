@@ -8,6 +8,13 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
+/**
+ * Component for rendering JSON-LD structured data.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class JsonLdSchemaComponent extends Component
 {
     public function __construct(

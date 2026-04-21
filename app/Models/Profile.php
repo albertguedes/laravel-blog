@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * Profile model for user extended information.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class Profile extends Model
 {
     /** @use HasFactory<ProfileFactory> */

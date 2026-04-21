@@ -9,6 +9,13 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
+/**
+ * Bootstrap-styled pagination component.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class BootstrapPagination extends Component
 {
     public function __construct(

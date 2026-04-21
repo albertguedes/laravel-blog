@@ -6,14 +6,34 @@ namespace App\Services;
 
 use Cloudstudio\Ollama\Facades\Ollama;
 
+/**
+ * RAG (Retrieval-Augmented Generation) service for answering blog questions.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class RAGService
 {
+    /**
+     * Create a new RAG service instance.
+     *
+     * @param  BlogContextService  $blogContext  Service for blog metadata context
+     * @param  EmbeddingService  $embeddingService  Service for text embeddings
+     * @param  VectorSearchService  $vectorSearchService  Service for vector similarity search
+     */
     public function __construct(
         private BlogContextService $blogContext,
         private EmbeddingService $embeddingService,
         private VectorSearchService $vectorSearchService
     ) {}
 
+    /**
+     * Answer a question using RAG approach.
+     *
+     * @param  string  $question  The question to answer
+     * @return string The generated answer
+     */
     public function answer(string $question): string
     {
         $blogContext = $this->blogContext->get();

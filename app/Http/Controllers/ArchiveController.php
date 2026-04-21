@@ -7,6 +7,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * Controller for archive browsing functionality.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class ArchiveController extends Controller
 {
     /**

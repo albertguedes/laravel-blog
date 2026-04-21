@@ -2,6 +2,8 @@
  * time.js - Helpers for working with time.
  *
  * @file
+ * @author Albert
+ * @since 1.0.0
  */
 
 /**

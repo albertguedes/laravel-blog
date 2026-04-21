@@ -1,3 +1,11 @@
+/**
+ * Categories page JavaScript functionality.
+ *
+ * @file
+ * @author Albert
+ * @since 1.0.0
+ */
+
 $(function(){
     categoryTreeToogle();
 });

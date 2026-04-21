@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * Role model for user authorization roles.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class Role extends Model
 {
     use HasFactory;

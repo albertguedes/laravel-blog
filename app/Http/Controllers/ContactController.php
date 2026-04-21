@@ -9,13 +9,28 @@ use App\Mail\ContactMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Controller for contact form functionality.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class ContactController extends Controller
 {
+    /**
+     * Display the contact form.
+     *
+     * @return View
+     */
     public function index()
     {
         return view('contact');
     }
 
+    /**
+     * Send the contact message.
+     */
     public function send(MessageRequest $request): RedirectResponse
     {
         try {

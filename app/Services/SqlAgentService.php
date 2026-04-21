@@ -4,15 +4,55 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+/**
+ * SQL Agent service for handling factual questions via database queries.
+ *
+ * Processes user questions that match SQL patterns and returns formatted
+ * answers based on actual database content. Handles questions about
+ * posts, authors, categories, tags, and statistics.
+ *
+ * @category Services
+ *
+ * @author   Albert R. C. Guedes <albert@teko.net.br>
+ *
+ * @since    1.0.0
+ * @see      QuestionRouterService  For question intent classification
+ * @see      BlogQueryService       For database query execution
+ */
 class SqlAgentService
 {
+    /**
+     * The blog query service for executing database queries.
+     *
+     *
+     * @since  1.0.0
+     */
     private BlogQueryService $queryService;
 
+    /**
+     * SqlAgentService constructor.
+     *
+     * @param  BlogQueryService  $queryService  Service for executing blog queries
+     * @return void
+     *
+     * @since  1.0.0
+     */
     public function __construct(BlogQueryService $queryService)
     {
         $this->queryService = $queryService;
     }
 
+    /**
+     * Process a question and return an SQL-based answer.
+     *
+     * Matches the question against various patterns and delegates
+     * to appropriate handler methods.
+     *
+     * @param  string  $question  The user's question in Portuguese
+     * @return string The formatted answer, or empty string if no pattern matched
+     *
+     * @since  1.0.0
+     */
     public function answer(string $question): string
     {
         $question = mb_strtolower(trim($question));
@@ -85,6 +125,14 @@ class SqlAgentService
         return '';
     }
 
+    /**
+     * Handle post count questions.
+     *
+     * @param  string  $question  The question to process
+     * @return string Formatted count response
+     *
+     * @since  1.0.0
+     */
     private function handlePostCount(string $question): string
     {
         $filters = [];
@@ -107,6 +155,14 @@ class SqlAgentService
         return "Este blog possui {$count} posts{$publishedText}.";
     }
 
+    /**
+     * Handle questions about posts by a specific author.
+     *
+     * @param  string  $authorName  The author's name to search for
+     * @return string Formatted list of posts by the author
+     *
+     * @since  1.0.0
+     */
     private function handlePostsByAuthor(string $authorName): string
     {
         $authorName = trim($authorName);
@@ -138,6 +194,14 @@ class SqlAgentService
         return $output;
     }
 
+    /**
+     * Handle questions about posts in a specific category.
+     *
+     * @param  string  $categoryName  The category name to search for
+     * @return string Formatted list of posts in the category
+     *
+     * @since  1.0.0
+     */
     private function handlePostsByCategory(string $categoryName): string
     {
         $categoryName = trim($categoryName);
@@ -168,6 +232,14 @@ class SqlAgentService
         return $output;
     }
 
+    /**
+     * Handle questions about posts with a specific tag.
+     *
+     * @param  string  $tagName  The tag name to search for
+     * @return string Formatted list of posts with the tag
+     *
+     * @since  1.0.0
+     */
     private function handlePostsByTag(string $tagName): string
     {
         $tagName = trim($tagName);
@@ -198,6 +270,14 @@ class SqlAgentService
         return $output;
     }
 
+    /**
+     * Handle questions about recent posts.
+     *
+     * @param  string  $question  The question to process
+     * @return string Formatted list of recent posts
+     *
+     * @since  1.0.0
+     */
     private function handleRecentPosts(string $question): string
     {
         $limit = 5;
@@ -227,6 +307,15 @@ class SqlAgentService
         return $output;
     }
 
+    /**
+     * Handle "últimos posts" questions with optional limit.
+     *
+     * @param  string  $question  The question to process
+     * @param  array  $matches  Regex matches containing optional limit
+     * @return string Formatted list of last posts
+     *
+     * @since  1.0.0
+     */
     private function handleLastPosts(string $question, array $matches): string
     {
         $limit = isset($matches[1]) ? (int) $matches[1] : 5;
@@ -253,6 +342,14 @@ class SqlAgentService
         return $output;
     }
 
+    /**
+     * Handle questions about listing all authors.
+     *
+     * @param  string  $question  The question to process
+     * @return string Formatted list of authors
+     *
+     * @since  1.0.0
+     */
     private function handleListAuthors(string $question): string
     {
         $limit = 20;
@@ -279,6 +376,14 @@ class SqlAgentService
         return $output;
     }
 
+    /**
+     * Handle questions about author active/inactive status.
+     *
+     * @param  string  $question  The question to process
+     * @return string Formatted list of active or inactive authors
+     *
+     * @since  1.0.0
+     */
     private function handleAuthorStatus(string $question): string
     {
         $isActive = ! preg_match('/inativ/i', $question);
@@ -306,6 +411,14 @@ class SqlAgentService
         return $output;
     }
 
+    /**
+     * Handle questions about authors ordered by post count.
+     *
+     * @param  string  $question  The question to process
+     * @return string Formatted list of authors ordered by posts
+     *
+     * @since  1.0.0
+     */
     private function handleAuthorsOrderedByPosts(string $question): string
     {
         $limit = str_contains($question, 'menos') || str_contains($question, 'poucos')
@@ -332,6 +445,14 @@ class SqlAgentService
         return $output;
     }
 
+    /**
+     * Handle questions about categories ordered by post count.
+     *
+     * @param  string  $question  The question to process
+     * @return string Formatted list of categories ordered by posts
+     *
+     * @since  1.0.0
+     */
     private function handleCategoriesOrderedByPosts(string $question): string
     {
         $limit = str_contains($question, 'menos') || str_contains($question, 'poucos')
@@ -357,6 +478,14 @@ class SqlAgentService
         return $output;
     }
 
+    /**
+     * Handle questions about listing posts.
+     *
+     * @param  string  $question  The question to process
+     * @return string Formatted list of posts
+     *
+     * @since  1.0.0
+     */
     private function handleListPosts(string $question): string
     {
         $limit = 10;

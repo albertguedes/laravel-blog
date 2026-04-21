@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Category model for organizing posts.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class Category extends Model
 {
     use HasFactory;

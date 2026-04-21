@@ -9,6 +9,13 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
+/**
+ * Component for displaying post details.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class PostDetailsComponent extends Component
 {
     /**

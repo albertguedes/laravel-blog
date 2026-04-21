@@ -6,6 +6,13 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
+/**
+ * Component for a send/submit button.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class SendButtonComponent extends Component
 {
     /**

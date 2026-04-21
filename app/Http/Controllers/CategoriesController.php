@@ -8,6 +8,13 @@ use App\Models\Category;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Response;
 
+/**
+ * Controller for category-related pages.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class CategoriesController extends Controller
 {
     /**

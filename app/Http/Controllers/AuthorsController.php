@@ -7,10 +7,20 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\View\View;
 
+/**
+ * Controller for author-related pages.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class AuthorsController extends Controller
 {
     protected const PER_PAGE = 9;
 
+    /**
+     * Display a listing of authors.
+     */
     public function index(): View
     {
         $authors = User::whereHas('posts', function ($q) {

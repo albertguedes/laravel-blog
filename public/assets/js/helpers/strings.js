@@ -1,7 +1,11 @@
 /**
  * Asynchronously computes the SHA-256 hash of a given string.
  *
- * @param {string} string - The input string to be hashed.
+ * @file
+ * @author Albert
+ * @since 1.0.0
+ *
+ * @param {string} string_data - The input string to be hashed.
  * @returns {Promise<string>} A promise that resolves to the hexadecimal
  * representation of the SHA-256 hash.
  * @throws Will throw an error if the input is not a string.

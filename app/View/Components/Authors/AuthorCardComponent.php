@@ -9,6 +9,13 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
+/**
+ * Component for displaying an author card with post count.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class AuthorCardComponent extends Component
 {
     public int $posts_count;

@@ -8,6 +8,13 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
+/**
+ * Component for displaying flash messages.
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ */
 class FlashMessagesComponent extends Component
 {
     /**

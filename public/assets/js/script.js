@@ -1,3 +1,11 @@
+/**
+ * Main JavaScript file for general page functionality.
+ *
+ * @file
+ * @author Albert
+ * @since 1.0.0
+ */
+
 $(function() {
     //footerAtBottom('#footer');
 });
