@@ -238,6 +238,32 @@ return [
 | created_at | timestamp | Creation time |
 | updated_at | timestamp | Last update time |
 
+### Verification_Tokens Table
+| Column | Type | Description |
+|--------|------|-------------|
+| id | integer | Primary key |
+| email | string | User email (links to users) |
+| token | string | Unique verification token |
+| expires_at | timestamp | Token expiration time |
+| created_at | timestamp | Creation time |
+| updated_at | timestamp | Last update time |
+
+### Roles Table
+| Column | Type | Description |
+|--------|------|-------------|
+| id | integer | Primary key |
+| title | string | Role title (unique) |
+| description | text | Role description |
+| created_at | timestamp | Creation time |
+| updated_at | timestamp | Last update time |
+
+### Role_User Table (Pivot)
+| Column | Type | Description |
+|--------|------|-------------|
+| user_id | integer | Foreign key to users |
+| role_id | integer | Foreign key to roles |
+| created_at | timestamp | Association time |
+
 ---
 
 ## Models

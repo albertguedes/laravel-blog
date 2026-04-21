@@ -4,10 +4,56 @@
  * @file
  * @author Albert
  * @since 1.0.0
+ *
+ * @description
+ * This stylesheet defines CSS classes for Nunito font variants.
+ * Nunito is a rounded sans-serif typeface loaded from Google Fonts.
+ *
+ * Font Weights:
+ * - 200: Thin
+ * - 400: Normal
+ * - 700: Bold
+ * - 800: Bolder (extra bold)
+ *
+ * Usage:
+ * Apply classes to elements to use specific Nunito variants.
+ * Example: <p class="nunito-bold">Bold text</p>
+ *
+ * @requires Google Fonts CDN connection
+ * @see https://fonts.google.com/specimen/Nunito
  */
 
-/* Nunito Normal */
+/* ==========================================================================
+   Font Imports
+   ========================================================================== */
+/**
+ * Each font variant is imported separately to enable
+ * selective loading and improve performance.
+ */
+
+/* Nunito Normal (weight 400) */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400&display=swap');
+
+/* Nunito Italic (weight 400, style italic) */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,400&display=swap');
+
+/* Nunito Bold (weight 700) */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+
+/* Nunito Thin (weight 200) */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+
+/* Nunito Bolder (weight 800) */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap');
+
+/* ==========================================================================
+   Font Classes
+   ========================================================================== */
+
+/**
+ * Nunito Normal - Regular weight (400)
+ * Use for body text and general content
+ */
 
 .nunito-normal {
   font-family: 'Nunito', sans-serif;
@@ -15,8 +61,10 @@
   font-style: normal;
 }
 
-/* Nunito Itálico */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,400&display=swap');
+/**
+ * Nunito Italic - Regular weight, italic style (400)
+ * Use for emphasis or stylistic text
+ */
 
 .nunito-italic {
   font-family: 'Nunito', sans-serif;
@@ -24,8 +72,10 @@
   font-style: italic;
 }
 
-/* Nunito Negrito */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+/**
+ * Nunito Bold - Bold weight (700)
+ * Use for headings and emphasis
+ */
 
 .nunito-bold {
   font-family: 'Nunito', sans-serif;
@@ -33,8 +83,10 @@
   font-style: normal;
 }
 
-/* Nunito Fino */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+/**
+ * Nunito Thin - Light weight (200)
+ * Use for subtle or secondary text
+ */
 
 .nunito-thin {
   font-family: 'Nunito', sans-serif;
@@ -42,8 +94,10 @@
   font-style: normal;
 }
 
-/* Nunito Mais Negrito */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap');
+/**
+ * Nunito Bolder - Extra bold weight (800)
+ * Use for strong emphasis and large headings
+ */
 
 .nunito-bolder {
   font-family: 'Nunito', sans-serif;

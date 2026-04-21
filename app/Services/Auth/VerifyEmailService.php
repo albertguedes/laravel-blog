@@ -10,13 +10,33 @@ use App\Models\VerificationToken;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+/**
+ * Service for handling email verification operations.
+ *
+ * @file
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ * @see VerificationToken
+ * @see VerifyEmailMessage
+ */
 class VerifyEmailService
 {
     /**
      * Send a verification email to the given user.
      *
-     * This method will create a new verification token and send a verification email
-     * to the given user.
+     * Creates a new verification token for the user and sends
+     * a verification email with a link containing the token.
+     *
+     * @param  User  $user  The user to send verification email to
+     * @param  string|null  $name  Optional name override for the email
+     *
+     * @since 1.0.0
+     *
+     * @example
+     * VerifyEmailService::sendVerificationEmail($user);
+     * VerifyEmailService::sendVerificationEmail($user, 'John Doe');
      */
     public static function sendVerificationEmail(User $user, ?string $name = null): void
     {
@@ -43,7 +63,6 @@ class VerifyEmailService
             $message = new VerifyEmailMessage($data);
             Mail::to($user->email)->send($message);
         } catch (\Exception $e) {
-            // Mail sending failed, but token was created
         }
     }
 }

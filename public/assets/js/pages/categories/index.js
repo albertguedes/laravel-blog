@@ -4,17 +4,26 @@
  * @file
  * @author Albert
  * @since 1.0.0
+ *
+ * @description
+ * Handles categories page UI interactions including
+ * category tree toggle functionality.
+ *
+ * @requires jQuery
  */
 
-$(function(){
-    categoryTreeToogle();
-});
-
+/**
+ * Toggles category tree expand/collapse icons.
+ * Alternates between folder-plus and folder-open icons
+ * when collapse links are clicked.
+ *
+ * @returns {void}
+ *
+ * @example
+ * // Automatically bound to .collapse-link click events
+ * categoryTreeToogle();
+ */
 function categoryTreeToogle() {
-
-    /*
-    * Alternate '+' and '-' symbols on item on categories list page.
-    */
     $('.collapse-link').click(function() {
         let icon = $(this).find('.collapse-icon');
 
@@ -26,3 +35,7 @@ function categoryTreeToogle() {
         }
     });
 }
+
+$(function(){
+    categoryTreeToogle();
+});

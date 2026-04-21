@@ -4,6 +4,44 @@
  * @file
  * @author Albert
  * @since 1.0.0
+ *
+ * ==========================================================================
+ * Color Palette
+ * ==========================================================================
+ *
+ * Primary:       #F9322C (Red - links, buttons, accents)
+ * Dark:          #232323 (Headings, dark text)
+ * Neutral:       #565454 (Body text)
+ * Background:    #f2f4f4 (Page background)
+ * Border:        #dee2e6 (Borders, dividers)
+ * Muted:        #6c757d (Secondary text)
+ * Disabled:     #adb5bd (Placeholder, disabled states)
+ *
+ * ==========================================================================
+ * Typography
+ * ==========================================================================
+ *
+ * Font Family: Nunito (sans-serif)
+ * Base Font Size: 1.5rem (24px)
+ * Line Height: 1.5 (approx)
+ *
+ * ==========================================================================
+ * Responsive Breakpoints
+ * ==========================================================================
+ *
+ * Mobile:  < 576px
+ * Tablet:  576px - 992px
+ * Desktop: > 992px
+ *
+ * ==========================================================================
+ * Layout
+ * ==========================================================================
+ *
+ * Main container: Bootstrap container class
+ * Sidebar: Fixed left sidebar with #sidebar selector
+ * Content: Flexible content area
+ *
+ * ==========================================================================
  */
 
 /* ==========================================================================
@@ -35,6 +73,10 @@ h1 {
 /* ==========================================================================
    Site Header
    ========================================================================== */
+/**
+ * Site name/title styling
+ * @requires #sitename element in header
+ */
 
 #sitename {
   width: 100%;
@@ -48,11 +90,21 @@ h1 {
 /* ==========================================================================
    Sidebar
    ========================================================================== */
+/**
+ * Main sidebar container
+ * Full height sidebar with navigation
+ */
 
 #sidebar {
   height: 100%;
   min-height: 100%;
 }
+
+/**
+ * Button text colors
+ * Primary buttons: white text
+ * Light variant buttons: black text
+ */
 
 a.btn {
     color: #ffffff;
@@ -65,6 +117,10 @@ a.btn.btn-light {
 /* ==========================================================================
    Navigation
    ========================================================================== */
+/**
+ * Main navigation styles
+ * Horizontal nav with item and link styling
+ */
 
 .nav .nav-item .nav-link:link, .nav .nav-item .nav-link:visited {
   color: #565454;
@@ -74,6 +130,10 @@ a.btn.btn-light {
 /* ==========================================================================
    Sidebar Navigation
    ========================================================================== */
+/**
+ * Sidebar-specific navigation
+ * Dark background with white text, red hover/active states
+ */
 
 #sidebar-nav .sidebar-icon {
     width: 32px;
@@ -88,10 +148,19 @@ a.btn.btn-light {
     color: #F9322C;
 }
 
+/**
+ * Hidden character for icon alignment
+ * Uses background color to hide overflow
+ */
+
 .hidden-char {
     color: #f2f4f4;
     margin-right: -13px;
 }
+
+/**
+ * Unstyled lists - removes list markers
+ */
 
 .list-unstyled li {
     list-style-type: none;
@@ -100,6 +169,10 @@ a.btn.btn-light {
 /* ==========================================================================
    Pagination
    ========================================================================== */
+/**
+ * Active page indicator
+ * Red background matching brand color
+ */
 
 .page-item.active .page-link {
     background-color: #F9322C;
@@ -110,12 +183,26 @@ a.btn.btn-light {
     color: #232323;
 }
 
+/**
+ * Admin panel background
+ */
+
 .admin-body-bg { background-color: #f2f4f4; }
+
+/**
+ * Checkbox and radio checked state
+ * Red brand color for checked inputs
+ */
 
 .form-check-input:checked {
     background-color: #F9322C;
     border-color: #F9322C;
 }
+
+/**
+ * List group active item
+ * Full red background with white text
+ */
 
 .list-group-item.active {
     background-color: #F9322C!important;
@@ -125,10 +212,19 @@ a.btn.btn-light {
 /* ==========================================================================
    Archive
    ========================================================================== */
+/**
+ * Archive folder icon
+ * Large folder emoji/character display
+ */
 
 .archive-folder-icon {
     font-size: 5rem;
 }
+
+/**
+ * Archive title link hover
+ * Red color on hover for archive titles
+ */
 
 .archive-title-link:hover {
     color: #F9322C!important;
@@ -137,6 +233,10 @@ a.btn.btn-light {
 /* ==========================================================================
    Author
    ========================================================================== */
+/**
+ * Inactive author styling
+ * Reduced opacity with grayscale filter
+ */
 
 .author-inactive {
     opacity: 0.5;
@@ -146,6 +246,14 @@ a.btn.btn-light {
 /* ==========================================================================
    Chat Interface
    ========================================================================== */
+/**
+ * Main chat container
+ * Flexbox column layout with fixed height
+ * Responsive design with min-height for mobile
+ *
+ * @requires .chat-container HTML structure
+ * @see chat-header, chat-messages, chat-input-area
+ */
 
 .chat-container {
     display: flex;
@@ -157,6 +265,11 @@ a.btn.btn-light {
     overflow: hidden;
     background: #fff;
 }
+
+/**
+ * Chat header area
+ * Contains title and controls
+ */
 
 .chat-header {
     display: flex;
@@ -170,6 +283,10 @@ a.btn.btn-light {
 /* ==========================================================================
    Chat Header
    ========================================================================== */
+/**
+ * Chat header title
+ * Dark text with semibold weight
+ */
 
 .chat-header h3 {
     color: #232323;
@@ -179,6 +296,10 @@ a.btn.btn-light {
 /* ==========================================================================
    Chat Messages
    ========================================================================== */
+/**
+ * Messages container
+ * Scrollable flexbox column with gap between messages
+ */
 
 .chat-messages {
     flex: 1;
@@ -189,6 +310,11 @@ a.btn.btn-light {
     gap: 0.75rem;
     background: #f2f4f4;
 }
+
+/**
+ * Empty state message
+ * Centered text with muted colors
+ */
 
 .chat-empty {
     text-align: center;
@@ -204,6 +330,10 @@ a.btn.btn-light {
 /* ==========================================================================
    Chat Message Bubbles
    ========================================================================== */
+/**
+ * Base message styling
+ * Max 75% width, rounded corners, word wrap
+ */
 
 .message {
     max-width: 75%;
@@ -213,6 +343,11 @@ a.btn.btn-light {
     line-height: 1.5;
     word-wrap: break-word;
 }
+
+/**
+ * User message bubble
+ * Red background, white text, right-aligned
+ */
 
 .message-user {
     align-self: flex-end;
@@ -229,6 +364,12 @@ a.btn.btn-light {
     color: rgba(255, 255, 255, 0.8);
 }
 
+/**
+ * Assistant message bubble
+ * White background, dark text, left-aligned
+ * Subtle border for visual separation
+ */
+
 .message-assistant {
     align-self: flex-start;
     background: #fff;
@@ -237,12 +378,22 @@ a.btn.btn-light {
     border-bottom-left-radius: 4px;
 }
 
+/**
+ * Message timestamp
+ * Small, muted, right-aligned below content
+ */
+
 .message-time {
     font-size: 0.7rem;
     opacity: 0.7;
     margin-top: 0.35rem;
     text-align: right;
 }
+
+/**
+ * Message content text
+ * Pre-wrap for preserving line breaks
+ */
 
 .message-content {
     white-space: pre-wrap;
@@ -251,6 +402,11 @@ a.btn.btn-light {
 /* ==========================================================================
    Chat Thinking Indicator
    ========================================================================== */
+/**
+ * Thinking/loading indicator
+ * Hidden by default, shown during processing
+ * Contains animated dots for visual feedback
+ */
 
 .chat-thinking {
     display: none;
@@ -260,6 +416,12 @@ a.btn.btn-light {
     color: #6c757d;
     font-size: 0.9rem;
 }
+
+/**
+ * Animated thinking dots
+ * Three dots with staggered bounce animation
+ * @keyframes thinking-bounce
+ */
 
 .thinking-dots {
     display: inline-flex;
@@ -275,17 +437,9 @@ a.btn.btn-light {
     animation: thinking-bounce 1.4s infinite ease-in-out;
 }
 
-.thinking-dots span:nth-child(1) {
-    animation-delay: 0s;
-}
-
-.thinking-dots span:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.thinking-dots span:nth-child(3) {
-    animation-delay: 0.4s;
-}
+.thinking-dots span:nth-child(1) { animation-delay: 0s; }
+.thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
 
 @keyframes thinking-bounce {
     0%, 80%, 100% {
@@ -301,6 +455,10 @@ a.btn.btn-light {
 /* ==========================================================================
    Chat Input Area
    ========================================================================== */
+/**
+ * Chat input container
+ * Flexbox layout with textarea and send button
+ */
 
 .chat-input-area {
     display: flex;
@@ -309,6 +467,12 @@ a.btn.btn-light {
     border-top: 1px solid #dee2e6;
     background: #fafafa;
 }
+
+/**
+ * Chat textarea
+ * Auto-resize up to 120px height
+ * Circular border for modern appearance
+ */
 
 .chat-input-area textarea {
     flex: 1;
@@ -327,6 +491,12 @@ a.btn.btn-light {
     border-color: #F9322C;
     box-shadow: 0 0 0 3px rgba(249, 50, 44, 0.1);
 }
+
+/**
+ * Chat send button
+ * Circular 48px button with icon
+ * Hover scale effect, active scale down effect
+ */
 
 .chat-input-area .btn {
     width: 48px;

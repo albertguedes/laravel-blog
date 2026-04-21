@@ -13,12 +13,25 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 
+/**
+ * Controller handling password reset requests.
+ *
+ * @file
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ * @see PasswordForgotService
+ * @see VerificationToken
+ */
 class PasswordForgotController extends Controller
 {
     /**
-     * Show the form for requesting a password reset link via email.
+     * Display the password reset request form.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View The password forgot view
+     *
+     * @since 1.0.0
      */
     public function index(): View
     {
@@ -26,7 +39,16 @@ class PasswordForgotController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a password reset request.
+     *
+     * Validates the email, finds the user, and sends a password reset email
+     * with a verification token.
+     *
+     * @param  Request  $request  The HTTP request containing email field
+     * @return RedirectResponse Redirects to login with success or danger message
+     *
+     * @since 1.0.0
+     * @see PasswordForgotService::sendPasswordForgotEmail()
      */
     public function store(Request $request): RedirectResponse
     {
@@ -49,9 +71,12 @@ class PasswordForgotController extends Controller
     }
 
     /**
-     * Display the password reset form for the given token.
+     * Display the password reset form with the given token.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @param  string  $token  The verification token from the URL
+     * @return View|Response The password reset view or abort with 403
+     *
+     * @since 1.0.0
      */
     public function edit(string $token): View
     {
@@ -63,9 +88,15 @@ class PasswordForgotController extends Controller
     }
 
     /**
-     * Reset the given user's password.
+     * Reset the user's password.
      *
-     * @param  string  $token
+     * Validates the password and token, updates the user's password,
+     * and deletes the verification token.
+     *
+     * @param  Request  $request  The HTTP request containing password, password_confirmation, and token
+     * @return RedirectResponse Redirects to login with success message or aborts
+     *
+     * @since 1.0.0
      */
     public function update(Request $request): RedirectResponse
     {

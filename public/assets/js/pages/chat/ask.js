@@ -4,6 +4,13 @@
  * @file
  * @author Albert
  * @since 1.0.0
+ *
+ * @description
+ * Manages the chat interface including form submission, message rendering,
+ * loading states, and chat history clearing.
+ *
+ * @requires jQuery
+ * @requires CSRF token meta tag
  */
 
 $(function () {
@@ -13,6 +20,10 @@ $(function () {
     const chatThinking = $('#chat-thinking');
     const clearChatBtn = $('#clear-chat');
 
+    /**
+     * Configure jQuery AJAX to include CSRF token in all requests.
+     * @inner
+     */
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -21,9 +32,13 @@ $(function () {
 
     chatForm.on('submit', handleSubmit);
     clearChatBtn.on('click', handleClear);
-
     questionInput.on('keydown', handleKeyDown);
 
+    /**
+     * Handles form submission - sends question to server and displays response.
+     * @param {Event} e - Submit event
+     * @returns {void}
+     */
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -44,6 +59,10 @@ $(function () {
             question: question
         };
 
+        /**
+         * Send chat question to server.
+         * @inner
+         */
         $.post('/chat', data)
             .done(function (response) {
                 hideThinking();
@@ -59,6 +78,12 @@ $(function () {
             });
     }
 
+    /**
+     * Handles Enter key in question input.
+     * Submits form if Enter is pressed without Shift key.
+     * @param {Event} e - Keydown event
+     * @returns {void}
+     */
     function handleKeyDown(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -66,6 +91,10 @@ $(function () {
         }
     }
 
+    /**
+     * Clears chat history via server and resets UI.
+     * @returns {void}
+     */
     function handleClear() {
         $.post('/chat/clear')
             .done(function () {
@@ -78,6 +107,16 @@ $(function () {
             });
     }
 
+    /**
+     * Adds a message to the chat interface.
+     * @param {string} role - Message role ('user' or 'assistant')
+     * @param {string} content - Message content text
+     * @returns {void}
+     *
+     * @example
+     * addMessage('user', 'Hello, world!');
+     * addMessage('assistant', 'How can I help you?');
+     */
     function addMessage(role, content) {
         const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
         const escapedContent = content.replace(/\n/g, '<br>');
@@ -93,19 +132,35 @@ $(function () {
         scrollToBottom();
     }
 
+    /**
+     * Shows the thinking/loading indicator.
+     * @returns {void}
+     */
     function showThinking() {
         chatThinking.fadeIn(150);
         scrollToBottom();
     }
 
+    /**
+     * Hides the thinking/loading indicator.
+     * @returns {void}
+     */
     function hideThinking() {
         chatThinking.fadeOut(150);
     }
 
+    /**
+     * Scrolls chat messages to the bottom.
+     * @returns {void}
+     */
     function scrollToBottom() {
         chatMessages.animate({ scrollTop: chatMessages[0].scrollHeight }, 300);
     }
 
+    /**
+     * Returns the empty state HTML for initial chat display.
+     * @returns {string} HTML string for empty state message
+     */
     function getEmptyState() {
         return `
             <div class="chat-empty">

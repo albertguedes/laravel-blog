@@ -1,13 +1,48 @@
 /**
- * CSS snippet to keep footer at the bottom of the page.
+ * Footer positioning - Sticky footer CSS pattern.
  *
  * @file
  * @author Albert
  * @since 1.0.0
+ *
+ * @description
+ * This stylesheet implements the "sticky footer" pattern using CSS Flexbox.
+ * It ensures the footer stays at the bottom of the page even when content
+ * is shorter than the viewport height.
+ *
+ * Layout Structure:
+ * - html, body: Full height container
+ * - body: Flex container with column direction
+ * - main: Flexible content area (grows to fill space)
+ * - footer: Non-flexible, fixed at bottom
+ *
+ * Usage:
+ * Include this stylesheet after the main stylesheet.
+ * The HTML structure should have:
+ *   <body>
+ *     <header>...</header>
+ *     <main>...</main>
+ *     <footer>...</footer>
+ *   </body>
+ *
+ * @requires CSS Flexbox support
+ * @see https://css-tricks.com/sticky-footers/
  */
+
+/**
+ * Base html and body - full height setup
+ * Sets up the document root as a height-based container
+ */
+
 html, body {
     height: 100%;
 }
+
+/**
+ * Body - flex column container
+ * Enables flexbox layout for sticky footer pattern
+ * min-height: 100vh ensures full viewport coverage
+ */
 
 body {
     min-height: 100vh;
@@ -15,9 +50,21 @@ body {
     flex-direction: column;
 }
 
+/**
+ * Main content - flexible grow area
+ * flex: 1 0 auto allows main to grow and fill available space
+ * while maintaining automatic height calculation
+ */
+
 main {
     flex: 1 0 auto;
 }
+
+/**
+ * Footer - non-shrinking fixed element
+ * flex-shrink: 0 prevents footer from being compressed
+ * Footer maintains its natural height regardless of content
+ */
 
 footer {
     flex-shrink: 0;

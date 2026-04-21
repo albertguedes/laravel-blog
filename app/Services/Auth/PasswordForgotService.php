@@ -10,13 +10,31 @@ use App\Models\VerificationToken;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+/**
+ * Service for handling password reset operations.
+ *
+ * @file
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ * @see VerificationToken
+ * @see PasswordForgotMessage
+ */
 class PasswordForgotService
 {
     /**
-     * Send a verification email to the given user.
+     * Send a password reset email to the given user.
      *
-     * This method will create a new verification token and send a verification email
-     * to the given user.
+     * Creates a new verification token for the user and sends
+     * a password reset email with a link containing the token.
+     *
+     * @param  User  $user  The user to send password reset email to
+     *
+     * @since 1.0.0
+     *
+     * @example
+     * PasswordForgotService::sendPasswordForgotEmail($user);
      */
     public static function sendPasswordForgotEmail(User $user): void
     {
@@ -43,10 +61,18 @@ class PasswordForgotService
             $message = new PasswordForgotMessage($data);
             Mail::to($user->email)->send($message);
         } catch (\Exception $e) {
-            // Mail sending failed, but token was created
         }
     }
 
+    /**
+     * Reset user password using verification token.
+     *
+     * @param  string  $token  The verification token
+     * @param  string  $password  The new password
+     * @return bool True on success, false on failure
+     *
+     * @since 1.0.0
+     */
     public static function resetPassword(string $token, string $password): bool
     {
         try {

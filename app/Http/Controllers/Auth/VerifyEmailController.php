@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\VerificationToken;
 use App\Services\Auth\VerifyEmailService;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -12,37 +13,51 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * Controller handling email verification operations.
+ *
+ * @file
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ * @see VerifyEmailService
+ * @see VerificationToken
+ */
 class VerifyEmailController extends Controller
 {
     /**
      * Verify user email using token.
      *
+     * Validates the verification token and marks the user's email as verified.
+     * If token is invalid or expired, redirects back with error message.
      *
-     * @throws AuthorizationException
+     * @param  string  $token  The verification token from the URL
+     * @return RedirectResponse Redirects to login on success, or back with error
+     *
+     * @throws AuthorizationException Never thrown (legacy docblock)
+     *
+     * @since 1.0.0
      */
     public function index(string $token): RedirectResponse
     {
         $verificationToken = VerificationToken::where('token', $token)->first();
 
-        // Redirect to login page if token is not found
         if (is_null($verificationToken)) {
             return redirect()->route('register.verify-email.resend', ['resend' => true])
                 ->with('danger', 'Invalid Token. Please try again.');
         }
 
-        // Redirect to resend verification email page if token is expired.
         if ($verificationToken->isExpired()) {
             return redirect()->route('register.verify-email.resend', ['resend' => true])
                 ->with('danger', 'Token Expired. Please try again.');
         }
 
-        // If token is valid and not expired, mark the user as verified
         $user = $verificationToken->user;
         $user->email_verified_at = now();
         $user->is_active = true;
         $user->save();
 
-        // Delete the verification token, as its not needed anymore.
         $verificationToken->delete();
 
         return redirect()->route('login')
@@ -50,9 +65,12 @@ class VerifyEmailController extends Controller
     }
 
     /**
-     * Render the resend verification email view.
+     * Display the resend verification email form.
      *
-     * @param  string  $email
+     * @param  Request  $request  The HTTP request
+     * @return View The resend verification email view
+     *
+     * @since 1.0.0
      */
     public function edit(Request $request): View
     {
@@ -62,8 +80,13 @@ class VerifyEmailController extends Controller
     /**
      * Resend verification email to the given email address.
      *
-     * This method will update the verification token and send a new verification email
-     * to the given email address.
+     * Validates the email, finds the user, and sends a new verification email
+     * with a fresh verification token.
+     *
+     * @param  Request  $request  The HTTP request containing email field
+     *
+     * @since 1.0.0
+     * @see VerifyEmailService::sendVerificationEmail()
      */
     public function update(Request $request): void
     {

@@ -130,6 +130,8 @@ The Laravel Blog follows a layered architecture:
 | `VectorSearchService` | `app/Services/VectorSearchService.php` | Searches by vector similarity |
 | `BlogContextService` | `app/Services/BlogContextService.php` | Provides blog metadata |
 | `StatsService` | `app/Services/StatsService.php` | Blog statistics (deprecated) |
+| `VerifyEmailService` | `app/Services/Auth/VerifyEmailService.php` | Email verification handling |
+| `PasswordForgotService` | `app/Services/Auth/PasswordForgotService.php` | Password reset handling |
 
 ### Service Dependencies
 
@@ -185,13 +187,14 @@ ChatService
 
 | Model | Relationships |
 |-------|--------------|
-| `User` | hasOne Profile, hasMany Posts, belongsToMany Roles |
+| `User` | hasOne Profile, hasMany Posts, belongsToMany Roles, hasOne VerificationToken |
 | `Profile` | belongsTo User |
 | `Post` | belongsTo User (author), belongsTo Category, belongsToMany Tags |
 | `Category` | belongsTo Parent, hasMany Children, hasMany Posts |
 | `Tag` | belongsToMany Posts |
 | `Role` | belongsToMany Users |
 | `PostChunk` | belongsTo Post (for RAG) |
+| `VerificationToken` | belongsTo User (via email), expires_at for token validity |
 
 ---
 
@@ -216,6 +219,7 @@ SubstituteBindings::class,
 | `CheckAdmin` | `app/Http/Middleware/CheckAdmin.php` | Checks for admin role |
 | `RedirectIfAuthenticated` | `app/Http/Middleware/RedirectIfAuthenticated.php` | Redirects authenticated users |
 | `TrustProxies` | `app/Http/Middleware/TrustProxies.php` | Trust proxy headers |
+| `EnsureEmailIsVerified` | `app/Http/Middleware/EnsureEmailIsVerified.php` | Redirects unverified users to verification page |
 
 ### Middleware Aliases
 
@@ -294,7 +298,7 @@ app/View/Components/
 └── Layouts/                   # Exclusive to specific layouts
     ├── Main.php
     ├── Auth.php
-    ├── Error.php
+    ├── Error.php               # Error page layout (404, 500, 503)
     └── Mail.php
 
 resources/views/components/

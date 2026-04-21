@@ -14,13 +14,45 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
+/**
+ * Controller handling user registration.
+ *
+ * @file
+ *
+ * @author Albert
+ *
+ * @since 1.0.0
+ * @see RegisterRequest
+ * @see User
+ * @see Profile
+ */
 class RegisterController extends Controller
 {
+    /**
+     * Display the registration form.
+     *
+     * @return View The registration view
+     *
+     * @since 1.0.0
+     */
     public function create(): View
     {
         return view('auth.register');
     }
 
+    /**
+     * Handle a new user registration.
+     *
+     * Validates the request, creates a new user with profile,
+     * assigns default roles, and sends a verification email.
+     *
+     * @param  RegisterRequest  $request  The validated registration request
+     * @return RedirectResponse Redirects to login on success, or back with error
+     *
+     * @since 1.0.0
+     * @see RegisterRequest for validation rules
+     * @see VerifyEmailService::sendVerificationEmail()
+     */
     public function store(RegisterRequest $request): RedirectResponse
     {
         $validated = $request->validated();

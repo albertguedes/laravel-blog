@@ -168,6 +168,15 @@ function toISOAndCutMs(dateObject) {
                     .split('.')[0];
 }
 
+/**
+ * Creates an interval object from two date strings.
+ *
+ * @param {string} begin - Start date string
+ * @param {string} end - End date string
+ * @returns {object} Object with begin and end ISO strings
+ *
+ * @requires isString() from validation.js
+ */
 function createIntervalFromStrings(begin, end) {
   isString(begin);
   isString(end);
@@ -304,10 +313,25 @@ function isPeriodInInterval(periodName, intervalName) {
     return periodIndex <= intervalIndex;
 }
 
+/**
+ * Checks if an interval has conflicts (begin > end or same values).
+ *
+ * @param {object} interval - Object with begin and end properties
+ * @returns {boolean} True if conflicts exist, false otherwise
+ */
 function hasIntervalConflicts(interval) {
     return (interval.begin > interval.end) || (interval.end === interval.begin);
 }
 
+/**
+ * Displays an interval error message with fade animation.
+ * Error auto-hides after 5 seconds.
+ *
+ * @param {object} errorDisplay - jQuery selector for error display element
+ * @returns {void}
+ *
+ * @requires isObject() from validation.js
+ */
 function showIntervalError(errorDisplay) {
 
     isObject(errorDisplay);
