@@ -1,4 +1,4 @@
-<x-layouts.main title="{{ ucwords($author->profile->name ?? 'Author')) }}'s Blog" description="Posts by {{ $author->profile->name ?? 'Author' }}" >
+<x-layouts.main title="{{ ucwords($author->profile->name ?? 'Author') }}'s Blog" description="Posts by {{ $author->profile->name ?? 'Author' }}" >
     <section class="row" vocab="https://schema.org/" typeof="CollectionPage">
 
         <header class="col-12" >

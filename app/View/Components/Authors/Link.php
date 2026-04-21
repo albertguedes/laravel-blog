@@ -32,7 +32,7 @@ class Link extends Component
             throw new \Exception('author not found');
         }
 
-        $this->route = route('author', $author);
+        $this->route = route('author', ['author' => $author->profile->username]);
         $this->name = $author->profile->name;
         $this->is_active = $author->is_active;
     }
