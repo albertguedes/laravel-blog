@@ -11,8 +11,17 @@ use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 
+/**
+ * Controller for admin category management.
+ *
+ * Handles CRUD operations for categories with adjacency list
+ * hierarchy support and soft delete functionality.
+ */
 class CategoriesController extends ApiController
 {
+    /**
+     * Display a paginated listing of categories.
+     */
     public function index(): JsonResponse
     {
         $categories = Category::orderBy('title', 'asc')
@@ -21,6 +30,11 @@ class CategoriesController extends ApiController
         return $this->paginated($categories);
     }
 
+    /**
+     * Store a newly created category.
+     *
+     * Auto-generates slug from title if not provided.
+     */
     public function store(StoreCategoryRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -34,6 +48,9 @@ class CategoriesController extends ApiController
         return $this->created($category);
     }
 
+    /**
+     * Display the specified category with parent, children, and posts.
+     */
     public function show(Category $category): JsonResponse
     {
         $category->load('parent', 'children', 'posts');
@@ -41,6 +58,11 @@ class CategoriesController extends ApiController
         return $this->success($category);
     }
 
+    /**
+     * Update the specified category.
+     *
+     * Auto-regenerates slug from title if slug is empty.
+     */
     public function update(UpdateCategoryRequest $request, Category $category): JsonResponse
     {
         $validated = $request->validated();
@@ -55,6 +77,9 @@ class CategoriesController extends ApiController
         return $this->updated($category);
     }
 
+    /**
+     * Soft delete the specified category.
+     */
     public function destroy(Category $category): JsonResponse
     {
         $category->delete();

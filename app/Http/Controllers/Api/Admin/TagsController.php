@@ -11,8 +11,16 @@ use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 
+/**
+ * Controller for admin tag management.
+ *
+ * Handles CRUD operations for tags with soft delete functionality.
+ */
 class TagsController extends ApiController
 {
+    /**
+     * Display a paginated listing of tags.
+     */
     public function index(): JsonResponse
     {
         $tags = Tag::orderBy('title', 'asc')
@@ -21,6 +29,11 @@ class TagsController extends ApiController
         return $this->paginated($tags);
     }
 
+    /**
+     * Store a newly created tag.
+     *
+     * Auto-generates slug from title if not provided.
+     */
     public function store(StoreTagRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -34,6 +47,9 @@ class TagsController extends ApiController
         return $this->created($tag);
     }
 
+    /**
+     * Display the specified tag with its posts.
+     */
     public function show(Tag $tag): JsonResponse
     {
         $tag->load('posts');
@@ -41,6 +57,11 @@ class TagsController extends ApiController
         return $this->success($tag);
     }
 
+    /**
+     * Update the specified tag.
+     *
+     * Auto-regenerates slug from title if slug is empty.
+     */
     public function update(UpdateTagRequest $request, Tag $tag): JsonResponse
     {
         $validated = $request->validated();
@@ -55,6 +76,9 @@ class TagsController extends ApiController
         return $this->updated($tag);
     }
 
+    /**
+     * Soft delete the specified tag.
+     */
     public function destroy(Tag $tag): JsonResponse
     {
         $tag->delete();

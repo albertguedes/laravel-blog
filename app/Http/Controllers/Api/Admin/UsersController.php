@@ -13,8 +13,17 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Controller for admin user management.
+ *
+ * Handles CRUD operations for users including profile creation
+ * and soft delete functionality.
+ */
 class UsersController extends ApiController
 {
+    /**
+     * Display a paginated listing of users.
+     */
     public function index(): JsonResponse
     {
         $users = User::with('profile', 'roles')
@@ -24,6 +33,9 @@ class UsersController extends ApiController
         return $this->paginated($users);
     }
 
+    /**
+     * Store a newly created user.
+     */
     public function store(StoreUserRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -51,6 +63,9 @@ class UsersController extends ApiController
         return $this->created($user);
     }
 
+    /**
+     * Display the specified user.
+     */
     public function show(User $user): JsonResponse
     {
         $user->load('profile', 'roles');
@@ -58,6 +73,9 @@ class UsersController extends ApiController
         return $this->success($user);
     }
 
+    /**
+     * Update the specified user.
+     */
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
         $validated = $request->validated();
@@ -95,6 +113,9 @@ class UsersController extends ApiController
         return $this->updated($user);
     }
 
+    /**
+     * Soft delete the specified user.
+     */
     public function destroy(User $user): JsonResponse
     {
         $user->delete();

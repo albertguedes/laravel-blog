@@ -10,8 +10,16 @@ use App\Http\Requests\Admin\Roles\UpdateRoleRequest;
 use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Controller for admin role management.
+ *
+ * Handles CRUD operations for roles with soft delete functionality.
+ */
 class RolesController extends ApiController
 {
+    /**
+     * Display a paginated listing of roles.
+     */
     public function index(): JsonResponse
     {
         $roles = Role::orderBy('title', 'asc')
@@ -20,6 +28,9 @@ class RolesController extends ApiController
         return $this->paginated($roles);
     }
 
+    /**
+     * Store a newly created role.
+     */
     public function store(StoreRoleRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -33,6 +44,9 @@ class RolesController extends ApiController
         return $this->created($role);
     }
 
+    /**
+     * Display the specified role with its users.
+     */
     public function show(Role $role): JsonResponse
     {
         $role->load('users');
@@ -40,6 +54,9 @@ class RolesController extends ApiController
         return $this->success($role);
     }
 
+    /**
+     * Update the specified role.
+     */
     public function update(UpdateRoleRequest $request, Role $role): JsonResponse
     {
         $validated = $request->validated();
@@ -50,6 +67,9 @@ class RolesController extends ApiController
         return $this->updated($role);
     }
 
+    /**
+     * Soft delete the specified role.
+     */
     public function destroy(Role $role): JsonResponse
     {
         $role->delete();
