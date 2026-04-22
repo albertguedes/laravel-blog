@@ -123,6 +123,7 @@ The Laravel Blog follows a layered architecture:
 |---------|------|---------------|
 | `ChatService` | `app/Services/ChatService.php` | Main chatbot orchestration |
 | `QuestionRouterService` | `app/Services/QuestionRouterService.php` | Routes questions to SQL or RAG |
+| `QuestionClassifierService` | `app/Services/QuestionClassifierService.php` | Classifies question type for routing |
 | `SqlAgentService` | `app/Services/SqlAgentService.php` | Handles SQL-based questions |
 | `RAGService` | `app/Services/RAGService.php` | Handles RAG-based questions |
 | `BlogQueryService` | `app/Services/BlogQueryService.php` | Reusable database queries |
@@ -183,6 +184,19 @@ ChatService
                             └─────────────┘
 ```
 
+### Models (8 total)
+
+| Model | File | Purpose |
+|-------|------|---------|
+| `User` | User.php | User accounts with authentication |
+| `Profile` | Profile.php | Extended user information |
+| `Post` | Post.php | Blog post content |
+| `Category` | Category.php | Hierarchical categories |
+| `Tag` | Tag.php | Post tags |
+| `Role` | Role.php | User roles |
+| `PostChunk` | PostChunk.php | Chunked posts for RAG embeddings |
+| `VerificationToken` | VerificationToken.php | Email verification tokens |
+
 ### Relationship Summary
 
 | Model | Relationships |
@@ -190,11 +204,13 @@ ChatService
 | `User` | hasOne Profile, hasMany Posts, belongsToMany Roles, hasOne VerificationToken, resolveRouteBinding by profile.username |
 | `Profile` | belongsTo User |
 | `Post` | belongsTo User (author), belongsTo Category, belongsToMany Tags |
-| `Category` | belongsTo Parent, hasMany Children, hasMany Posts |
+| `Category` | belongsTo Parent (self-referencing), hasMany Children, hasMany Posts |
 | `Tag` | belongsToMany Posts |
 | `Role` | belongsToMany Users |
 | `PostChunk` | belongsTo Post (for RAG) |
 | `VerificationToken` | belongsTo User (via email), expires_at for token validity |
+| `PostTag` | Pivot model for Post-Tag many-to-many |
+| `RoleUser` | Pivot model for Role-User many-to-many |
 
 ---
 
@@ -247,7 +263,7 @@ SubstituteBindings::class,
 | File | Routes |
 |------|--------|
 | `routes/web.php` | Main loader, includes all subfiles |
-| `routes/web/auth.php` | Login, register, password reset |
+| `routes/web/auth.php` | Login, register, password reset, email verification |
 | `routes/web/authors.php` | Authors index and show |
 | `routes/web/categories.php` | Categories index and show |
 | `routes/web/profile.php` | User profile management |
@@ -268,6 +284,116 @@ Routes are loaded in this order to prevent conflicts:
 
 **Important**: `pages.php` is loaded last because it contains the catch-all post route (`/{post}`) which would match everything if loaded first.
 
+### Complete Route Tables
+
+#### routes/web/auth.php (21 routes)
+
+| Method | URI | Name | Controller@Method |
+|--------|-----|------|-------------------|
+| GET | auth/login | login | LoginController@create |
+| POST | auth/login | login.store | LoginController@store |
+| GET | auth/register | register | RegisterController@create |
+| POST | auth/register | register.store | RegisterController@store |
+| GET | auth/password/forgot | password | PasswordForgotController@index |
+| POST | auth/password/forgot | password.store | PasswordForgotController@store |
+| GET | auth/password/reset/{token} | password.reset | PasswordForgotController@edit |
+| POST | auth/password/reset | password.reset.update | PasswordForgotController@update |
+| POST | auth/logout | logout | LoginController@destroy |
+| GET | auth/verify-email/resend | verify-email.resend | VerifyEmailController@edit |
+| POST | auth/verify-email/resend | verify-email.resend.update | VerifyEmailController@update |
+| GET | auth/verify-email/{token} | verify-email | VerifyEmailController@index |
+
+#### routes/web/profile.php (15 routes)
+
+| Method | URI | Name | Controller@Method |
+|--------|-----|------|-------------------|
+| GET | /profile | profile | ProfileController@index |
+| GET | /profile/edit | profile.edit | ProfileController@edit |
+| PUT | /profile | profile.update | ProfileController@update |
+| GET | /profile/delete | profile.delete | ProfileController@delete |
+| DELETE | /profile | profile.destroy | ProfileController@destroy |
+| GET | /profile/password | profile.password | ProfileController@password |
+| PUT | /profile/password | profile.password.update | ProfileController@passwordUpdate |
+| GET | /profile/posts | profile.posts | PostsController@index |
+| GET | /profile/post/create | profile.post.create | PostsController@create |
+| POST | /profile/post | profile.post.store | PostsController@store |
+| GET | /profile/post/{post} | profile.post | PostsController@show |
+| GET | /profile/post/{post}/edit | profile.post.edit | PostsController@edit |
+| PUT | /profile/post/{post} | profile.post.update | PostsController@update |
+| GET | /profile/post/{post}/delete | profile.post.delete | PostsController@delete |
+| DELETE | /profile/post/{post} | profile.post.destroy | PostsController@destroy |
+
+#### routes/web/pages.php (12 routes)
+
+| Method | URI | Name | Controller@Method |
+|--------|-----|------|-------------------|
+| GET | / | home | IndexController@index |
+| GET | /about | about | IndexController@about |
+| GET | /contact | contact | ContactController@index |
+| POST | /contact | contact.send | ContactController@send |
+| GET | /archive | archive | ArchiveController |
+| GET | /chat | chat | ChatController@index |
+| POST | /chat | chat.ask | ChatController@ask |
+| POST | /chat/clear | chat.clear | ChatController@clearHistory |
+| GET | /search | search | SearchController |
+| GET | /rss.xml | rss | FeedController |
+| GET | /sitemap.xml | sitemap | SitemapController |
+| GET | /{post} | post | IndexController@post |
+
+#### routes/web/tags.php (2 routes)
+
+| Method | URI | Name | Controller@Method |
+|--------|-----|------|-------------------|
+| GET | /tags | tags | TagsController@index |
+| GET | /tags/{tag} | tag | TagsController@show |
+
+#### routes/web/categories.php (2 routes)
+
+| Method | URI | Name | Controller@Method |
+|--------|-----|------|-------------------|
+| GET | /categories | categories | CategoriesController@index |
+| GET | /category/{category} | category | CategoriesController@show |
+
+#### routes/web/authors.php (2 routes)
+
+| Method | URI | Name | Controller@Method |
+|--------|-----|------|-------------------|
+| GET | /authors | authors | AuthorsController@index |
+| GET | /author/{author} | author | AuthorsController@show |
+
+### Controllers
+
+#### Main Controllers (app/Http/Controllers/)
+
+| Controller | File | Purpose |
+|------------|------|---------|
+| `IndexController` | IndexController.php | Home page, about, single post display |
+| `ArchiveController` | ArchiveController.php | Archive page listing |
+| `ChatController` | ChatController.php | AI chatbot interface (index, ask, clearHistory) |
+| `ContactController` | ContactController.php | Contact form (index, send) |
+| `SearchController` | SearchController.php | Search functionality |
+| `TagsController` | TagsController.php | Tag listing and display |
+| `CategoriesController` | CategoriesController.php | Category listing and display |
+| `AuthorsController` | AuthorsController.php | Author listing and display |
+| `SitemapController` | SitemapController.php | XML sitemap generation |
+| `FeedController` | FeedController.php | RSS feed generation |
+
+#### Auth Controllers (app/Http/Controllers/Auth/)
+
+| Controller | File | Purpose |
+|------------|------|---------|
+| `LoginController` | LoginController.php | Login (create, store), logout (destroy) |
+| `RegisterController` | RegisterController.php | Registration (create, store) |
+| `VerifyEmailController` | VerifyEmailController.php | Email verification (index, edit, update) |
+| `PasswordForgotController` | PasswordForgotController.php | Password reset (index, store, edit, update) |
+
+#### Profile Controllers (app/Http/Controllers/Profile/)
+
+| Controller | File | Purpose |
+|------------|------|---------|
+| `ProfileController` | ProfileController.php | Profile management (index, edit, update, delete, destroy, password, passwordUpdate) |
+| `PostsController` | PostsController.php | Post management (index, create, store, show, edit, update, delete, destroy) |
+
 ---
 
 ## View Components
@@ -277,59 +403,87 @@ Routes are loaded in this order to prevent conflicts:
 ```
 app/View/Components/
 ├── Archive/                   # Archive-specific components
+│   ├── Archive.php
 │   └── ArchiveTitle.php
 ├── Authors/                   # Author-specific components
+│   ├── AuthorCard.php
 │   └── Link.php
 ├── Common/                    # Shared across multiple views
-│   ├── Tree.php
+│   ├── BootstrapPagination.php
+│   ├── CategoryForm.php
 │   ├── CategoryMenu.php
 │   ├── CategoryPosts.php
-│   ├── CategoryForm.php
+│   ├── ContactForm.php
+│   ├── FlashMessages.php
+│   ├── JsonLdSchema.php
+│   ├── PageTitle.php
+│   ├── PasswordForm.php
+│   ├── PostForm.php
+│   ├── PostsList.php
+│   ├── ProfileEditForm.php
+│   ├── SendButton.php
+│   ├── ShowPost.php
+│   ├── SideMenu.php
 │   ├── TagCloud.php
 │   ├── TagPosts.php
 │   ├── TagsForm.php
-│   ├── AuthorCard.php
-│   ├── ContactForm.php
-│   ├── Archive.php
-│   ├── PostForm.php
-│   ├── SideMenu.php
-│   ├── UserProfile.php
-│   ├── ProfileEditForm.php
-│   ├── PasswordForm.php
-│   ├── PostsList.php
-│   ├── ShowPost.php
-│   ├── PostTabs.php
-│   ├── JsonLdSchema.php
-│   ├── BootstrapPagination.php
-│   ├── FlashMessages.php
-│   ├── PageTitle.php
-│   └── SendButton.php
+│   ├── Tree.php
+│   └── UserProfile.php
+├── Layouts/                  # Exclusive to specific layouts
+│   ├── Auth.php
+│   ├── Error.php              # Error page layout (404, 500, 503)
+│   ├── Main.php
+│   ├── Main/Footer.php
+│   ├── Mail.php
+│   └── Profile.php
+│   └── Profile/Navbar.php
 ├── Posts/                     # Post-specific components
 │   └── PostDetails.php
-└── Layouts/                  # Exclusive to specific layouts
-    ├── Main.php
-    ├── Main/Footer.php
-    ├── Auth.php
-    ├── Error.php              # Error page layout (404, 500, 503)
-    └── Mail.php
+└── Profile/Posts/             # Profile post management
+    ├── PostForm.php
+    ├── PostTabs.php
+    └── PostsList.php
 
 resources/views/components/
+├── archive/                   # Blade templates for Archive components
+│   ├── archive.blade.php
+│   └── archive-title.blade.php
 ├── authors/                   # Blade templates for Authors components
+│   ├── author-card.blade.php
 │   └── link.blade.php
 ├── common/                    # Blade templates for Common components
-│   ├── tree.blade.php
+│   ├── bootstrap-pagination.blade.php
+│   ├── category-form.blade.php
 │   ├── category-menu.blade.php
-│   ├── author-card.blade.php
+│   ├── category-posts.blade.php
+│   ├── contact-form.blade.php
+│   ├── flash-messages.blade.php
+│   ├── json-ld-schema.blade.php
+│   ├── page-title.blade.php
+│   ├── password-form.blade.php
+│   ├── post-form.blade.php
+│   ├── posts-list.blade.php
+│   ├── profile-edit-form.blade.php
+│   ├── send-button.blade.php
+│   ├── show-post.blade.php
+│   ├── side-menu.blade.php
 │   ├── tag-cloud.blade.php
 │   ├── tag-posts.blade.php
-│   └── ... (20 templates)
+│   ├── tags-form.blade.php
+│   ├── tree.blade.php
+│   └── user-profile.blade.php
 ├── layouts/                   # Blade templates for Layout components
+│   ├── auth.blade.php
+│   ├── error.blade.php
 │   ├── main.blade.php
 │   ├── mail.blade.php
-│   ├── auth.blade.php
-│   └── error.blade.php
-└── posts/                    # Blade templates for Posts components
-    └── post-details.blade.php
+│   └── profile.blade.php
+├── posts/                    # Blade templates for Posts components
+│   └── post-details.blade.php
+└── profile/posts/            # Blade templates for Profile Posts
+    ├── post-form.blade.php
+    ├── post-tabs.blade.php
+    └── posts-list.blade.php
 ```
 
 ### Component Naming

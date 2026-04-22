@@ -17,14 +17,22 @@ class TagCloud extends Component
     public function __construct(Collection $tags)
     {
         foreach ($tags as $tag) {
+
+            $nPosts = $tag->posts()->where('published', true)->count();
+
             $this->tags[] = [
                 'id' => $tag->id,
                 'title' => $tag->title,
                 'slug' => $tag->slug,
                 'n_posts' => $tag->posts()->where('published', true)->count(),
-                'font_size' => 'style=font-size:'.(self::MIN_FONT_SIZE + 2 * $tag->posts->count()).'px;',
+                'font_size' => 'style=font-size:'.self::calculateFontSize($nPosts).'px;',
             ];
         }
+    }
+
+    private static function calculateFontSize(int $nPosts): int
+    {
+        return (int) (self::MIN_FONT_SIZE * (1 + 2 * $nPosts / 100));
     }
 
     public function render(): View|\Closure|string
