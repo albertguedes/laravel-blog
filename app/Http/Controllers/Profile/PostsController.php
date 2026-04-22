@@ -35,7 +35,7 @@ class PostsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified post.
      */
     public function show(Post $post): View
     {
@@ -55,7 +55,9 @@ class PostsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created post.
+     *
+     * @param  StoreRequest  $request  Validated store request
      */
     public function store(StoreRequest $request): RedirectResponse
     {
@@ -81,7 +83,9 @@ class PostsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified post.
+     *
+     * @param  UpdateRequest  $request  Validated update request
      */
     public function update(UpdateRequest $request, Post $post): RedirectResponse
     {
@@ -115,7 +119,7 @@ class PostsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified post from storage.
      */
     public function destroy(Post $post): RedirectResponse
     {

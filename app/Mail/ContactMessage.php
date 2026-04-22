@@ -10,16 +10,25 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Contact form email mailable.
+ *
+ * Sends an email notification when a visitor submits the contact form.
+ * Includes the sender's name, email, subject, and message body.
+ *
+ * @property-read array $mail Mail data (name, email, subject, message)
+ */
 class ContactMessage extends Mailable
 {
     use Queueable, SerializesModels;
 
+    /** @var array Mail data including name, email, subject, and message */
     protected array $mail;
 
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param  array  $mail  Mail data array with name, email, subject, message keys
      */
     public function __construct(array $mail)
     {

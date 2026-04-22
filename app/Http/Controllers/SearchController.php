@@ -31,7 +31,8 @@ class SearchController extends Controller
             $key = 'search:'.md5($query);
 
             $ids = Cache::remember($key, 600, function () use ($query) {
-                return Post::where('title', 'like', "%{$query}%")
+                return Post::where('published', true)
+                    ->where('title', 'like', "%{$query}%")
                     ->orWhere('content', 'like', "%{$query}%")
                     ->orderByDesc('created_at')
                     ->pluck('id')

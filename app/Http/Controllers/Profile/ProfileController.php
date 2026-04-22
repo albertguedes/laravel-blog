@@ -33,7 +33,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Display the user's profile form.
+     * Display the user's profile edit form.
      */
     public function edit(Request $request): View
     {
@@ -44,6 +44,8 @@ class ProfileController extends Controller
 
     /**
      * Update the user's profile information.
+     *
+     * @param  UpdateRequest  $request  Validated profile update request
      */
     public function update(UpdateRequest $request): RedirectResponse
     {
@@ -71,7 +73,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * Display the account deletion confirmation page.
      */
     public function delete(): View
     {
@@ -80,6 +82,8 @@ class ProfileController extends Controller
 
     /**
      * Delete the user's account.
+     *
+     * Requires password confirmation before deletion.
      */
     public function destroy(Request $request): RedirectResponse
     {
@@ -109,6 +113,8 @@ class ProfileController extends Controller
 
     /**
      * Update the user's password.
+     *
+     * @param  PasswordUpdateRequest  $request  Validated password update request
      */
     public function passwordUpdate(PasswordUpdateRequest $request): RedirectResponse
     {

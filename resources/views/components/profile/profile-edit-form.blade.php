@@ -1,4 +1,4 @@
-<form action="{{ route('profile.update', $user) }}" method="POST">
+<form class="mt-3"  action="{{ route('profile.update', $user) }}" method="POST">
 
     @csrf
 

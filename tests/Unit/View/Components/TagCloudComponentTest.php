@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\View\Components;
 
 use App\Models\Tag;
-use App\View\Components\Common\TagCloud;
+use App\View\Components\Tags\TagCloud;
 use Illuminate\Support\Collection;
 
 describe('TagCloud', function () {

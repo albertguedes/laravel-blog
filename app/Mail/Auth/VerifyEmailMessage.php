@@ -10,6 +10,14 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Email verification mailable.
+ *
+ * Sends an email to new users with a verification link to confirm
+ * their email address and activate their account.
+ *
+ * @property-read array $data Verification data (name, url)
+ */
 class VerifyEmailMessage extends Mailable
 {
     use Queueable, SerializesModels;
@@ -17,7 +25,7 @@ class VerifyEmailMessage extends Mailable
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param  array  $data  Verification data with name and url keys
      */
     public function __construct(protected array $data) {}
 

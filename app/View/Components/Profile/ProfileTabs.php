@@ -1,30 +1,26 @@
 <?php
 
-declare(strict_types=1);
-
-namespace App\View\Components\Layouts\Profile;
+namespace App\View\Components\Profile;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 /**
- * Profile section sidebar menu component.
+ * Profile navigation tabs component.
  *
- * Renders a navigation menu for the profile section with links to
- * Profile, Edit, Change Password, Cancel Account, and Posts pages.
+ * Renders horizontal navigation tabs for profile section pages.
  * Automatically highlights the current active route.
  */
-class SideMenu extends Component
+class ProfileTabs extends Component
 {
-    /** @var array<string, array{route: string, label: string, icon: string, active: bool}> */
+    /** @var array<string, array{route: string, label: string, icon: string, active: bool}> Tab items */
     public array $items;
 
     /**
      * Create a new component instance.
      *
-     * Builds the sidebar menu items array, determining the active state
-     * based on the current route name.
+     * Builds the tabs array, determining active state based on current route.
      */
     public function __construct()
     {
@@ -58,21 +54,14 @@ class SideMenu extends Component
                 'icon' => 'fa fa-user-times',
                 'active' => $current_route == 'profile.delete',
             ],
-
-            'posts' => [
-                'route' => 'profile.posts',
-                'label' => 'Posts',
-                'icon' => 'fa fa-newspaper',
-                'active' => $current_route == 'profile.posts',
-            ],
         ];
     }
 
     /**
-     * Get the view / view contents that represent the component.
+     * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('components.layouts.profile.side-menu');
+        return view('components.profile.profile-tabs');
     }
 }

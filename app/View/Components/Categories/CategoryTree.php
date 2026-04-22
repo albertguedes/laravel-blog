@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\View\Components\Categories;
 
@@ -25,9 +27,6 @@ class CategoryTree extends Component
 
     /**
      * Get the view / contents that represent the component.
-     *
-     * @return View
-     *
      */
     public function render(): View
     {
@@ -36,8 +35,6 @@ class CategoryTree extends Component
 
     /**
      * Get category tree
-     *
-     * @return array
      */
     public static function getCategoryTree($categories = null, int $level = 0): array
     {
@@ -88,11 +85,6 @@ class CategoryTree extends Component
 
     /**
      * Convert category to array
-     *
-     * @param  Category|null  $category
-     * @param  int  $level
-     *
-     * @return array
      */
     public static function categoryToArray(?Category $category = null, int $level = 0): array
     {
@@ -107,10 +99,6 @@ class CategoryTree extends Component
 
     /**
      * Count posts in category and its children
-     *
-     * @param  Category  $category
-     *
-     * @return int
      */
     public static function countPosts(Category $category): int
     {

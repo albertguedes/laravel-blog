@@ -9,10 +9,22 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
+/**
+ * Post management tabs component.
+ *
+ * Renders navigation tabs for post management pages (list, show, edit, delete).
+ * Automatically highlights the current active route.
+ */
 class PostTabs extends Component
 {
+    /** @var array<string, array{label: string, icon: string, route: string, active: bool}> Tab items */
     public array $tabs;
 
+    /**
+     * Create a new component instance.
+     *
+     * @param  Post|null  $post  Post to operate on (used for show/edit/delete routes)
+     */
     public function __construct(?Post $post)
     {
         $this->tabs = [
@@ -47,6 +59,9 @@ class PostTabs extends Component
         ];
     }
 
+    /**
+     * Get the view / view contents that represent the component.
+     */
     public function render(): View|Closure|string
     {
         return view('components.profile.posts.post-tabs');

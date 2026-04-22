@@ -19,6 +19,11 @@ use Illuminate\Support\Collection;
  */
 class BlogQueryService
 {
+    /**
+     * Get post count with optional filters.
+     *
+     * @param  array  $filters  Optional filters: published, author_id, category_id, tag_id
+     */
     public function getPostCount(array $filters = []): int
     {
         $query = Post::query();
@@ -44,6 +49,9 @@ class BlogQueryService
         return $query->count();
     }
 
+    /**
+     * Get published posts by author.
+     */
     public function getPostsByAuthor(int $authorId, int $limit = 10): Collection
     {
         return Post::where('author_id', $authorId)
@@ -53,6 +61,9 @@ class BlogQueryService
             ->get();
     }
 
+    /**
+     * Get published posts by category.
+     */
     public function getPostsByCategory(int $categoryId, int $limit = 10): Collection
     {
         return Post::where('category_id', $categoryId)
@@ -62,6 +73,9 @@ class BlogQueryService
             ->get();
     }
 
+    /**
+     * Get published posts by tag.
+     */
     public function getPostsByTag(int $tagId, int $limit = 10): Collection
     {
         return Post::whereHas('tags', function ($q) use ($tagId) {
@@ -73,6 +87,9 @@ class BlogQueryService
             ->get();
     }
 
+    /**
+     * Get recent published posts.
+     */
     public function getRecentPosts(int $limit = 5): Collection
     {
         return Post::where('published', true)
@@ -81,6 +98,9 @@ class BlogQueryService
             ->get();
     }
 
+    /**
+     * Search posts by title.
+     */
     public function getPostsByTitle(string $searchQuery, int $limit = 10): Collection
     {
         return Post::where('title', 'like', "%{$searchQuery}%")
@@ -90,6 +110,9 @@ class BlogQueryService
             ->get();
     }
 
+    /**
+     * Get active authors (has published posts and is_active).
+     */
     public function getActiveAuthors(int $limit = 10): Collection
     {
         return User::whereHas('posts', function ($q) {
@@ -102,6 +125,9 @@ class BlogQueryService
             ->get();
     }
 
+    /**
+     * Get inactive authors (has published posts but is_active=false).
+     */
     public function getInactiveAuthors(int $limit = 10): Collection
     {
         return User::whereHas('posts', function ($q) {
@@ -114,6 +140,11 @@ class BlogQueryService
             ->get();
     }
 
+    /**
+     * Get statistics for an author.
+     *
+     * @return array{author: ?User, post_count: int, category_count: int, recent_posts: Collection}
+     */
     public function getAuthorStats(int $authorId): array
     {
         $author = User::with('profile')->find($authorId);
@@ -151,6 +182,9 @@ class BlogQueryService
         ];
     }
 
+    /**
+     * Get active categories with post counts.
+     */
     public function getCategoriesWithPostCount(): Collection
     {
         return Category::where('is_active', true)
@@ -162,6 +196,9 @@ class BlogQueryService
             ->get();
     }
 
+    /**
+     * Get active tags with post counts.
+     */
     public function getTagsWithPostCount(): Collection
     {
         return Tag::where('is_active', true)
@@ -173,6 +210,11 @@ class BlogQueryService
             ->get();
     }
 
+    /**
+     * Get statistics for a category.
+     *
+     * @return array{category: ?Category, post_count: int, recent_posts: Collection}
+     */
     public function getCategoryStats(int $categoryId): array
     {
         $category = Category::find($categoryId);
@@ -198,6 +240,9 @@ class BlogQueryService
         ];
     }
 
+    /**
+     * Find an author by name (partial match).
+     */
     public function findAuthorByName(string $name): ?User
     {
         return User::whereHas('profile', function ($q) use ($name) {
@@ -205,6 +250,9 @@ class BlogQueryService
         })->first();
     }
 
+    /**
+     * Find a category by title (partial match).
+     */
     public function findCategoryByName(string $name): ?Category
     {
         return Category::where('title', 'like', "%{$name}%")
@@ -212,6 +260,9 @@ class BlogQueryService
             ->first();
     }
 
+    /**
+     * Find a tag by title (partial match).
+     */
     public function findTagByName(string $name): ?Tag
     {
         return Tag::where('title', 'like', "%{$name}%")
@@ -219,6 +270,9 @@ class BlogQueryService
             ->first();
     }
 
+    /**
+     * Get active authors ordered by post count.
+     */
     public function getAuthorsOrderedByPostCount(int $limit = 10): Collection
     {
         return User::whereHas('posts', function ($q) {
@@ -234,6 +288,9 @@ class BlogQueryService
             ->get();
     }
 
+    /**
+     * Get active categories ordered by post count.
+     */
     public function getCategoriesOrderedByPostCount(int $limit = 10): Collection
     {
         return Category::where('is_active', true)
@@ -245,6 +302,9 @@ class BlogQueryService
             ->get();
     }
 
+    /**
+     * Get all authors with post counts.
+     */
     public function getAllAuthors(int $limit = 20): Collection
     {
         return User::with('profile')

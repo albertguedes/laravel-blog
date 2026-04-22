@@ -9,12 +9,23 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Carbon;
 use Illuminate\View\Component;
 
+/**
+ * Archive navigation title component.
+ *
+ * Renders breadcrumb-style navigation for archive pages showing
+ * year, month, and day links when filtering by date.
+ */
 class ArchiveTitle extends Component
 {
+    /** @var array<string, array{route: string|null, label: string, icon: string|null, active: bool}> Navigation items */
     public array $items;
 
     /**
      * Create a new component instance.
+     *
+     * @param  int  $year  Year to display
+     * @param  int  $month  Month to display (0 for none)
+     * @param  int  $day  Day to display (0 for none)
      */
     public function __construct(int $year, int $month = 0, int $day = 0)
     {

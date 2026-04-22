@@ -11,12 +11,22 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Password reset email mailable.
+ *
+ * Sends an email to users who requested a password reset with
+ * a link to set a new password.
+ *
+ * @property-read array $data Reset data (name, url)
+ */
 class PasswordForgotMessage extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
+     *
+     * @param  array  $data  Reset data with name and url keys
      */
     public function __construct(protected array $data) {}
 

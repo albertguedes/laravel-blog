@@ -9,18 +9,36 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
+/**
+ * Archive browser component.
+ *
+ * Renders an archive view showing posts organized by date (year/month/day).
+ * Supports hierarchical date-based browsing of blog posts.
+ */
 class Archive extends Component
 {
+    /** @var array<int, array<int, array<int, int>>> Archive structure [year][month][day] */
     public array $archive = [];
 
+    /** @var LengthAwarePaginator Paginated posts for specific day view */
     public LengthAwarePaginator $paginate;
 
+    /** @var int Currently selected year (0 for all) */
     public int $current_year = 0;
 
+    /** @var int Currently selected month (0 for all) */
     public int $current_month = 0;
 
+    /** @var int Currently selected day (0 for all) */
     public int $current_day = 0;
 
+    /**
+     * Create a new component instance.
+     *
+     * @param  int  $year  Year to filter by (0 for all years)
+     * @param  int  $month  Month to filter by (0 for all months)
+     * @param  int  $day  Day to filter by (0 for all days)
+     */
     public function __construct(int $year = 0, int $month = 0, int $day = 0)
     {
         $this->current_year = $year;
@@ -52,6 +70,9 @@ class Archive extends Component
         }
     }
 
+    /**
+     * Get the view / view contents that represent the component.
+     */
     public function render(): View
     {
         return view('components.archive.archive');
