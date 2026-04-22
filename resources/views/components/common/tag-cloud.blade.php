@@ -4,7 +4,7 @@
             @if($tag['n_posts'] > 0)
                 <a class="pe-4 text-lowercase" {{ $tag['font_size'] }} href="{{ route('tag', ['tag' => $tag['slug']]) }}">
                     <span style="white-space: nowrap;">
-                        {{ $tag['title'] }}<span class="hidden-char">_</span>({{ $tag['n_posts'] }})
+                        {{ $tag['title'] }}<span class="hidden-char">__</span>({{ $tag['n_posts'] }})
                     </span>
                 </a>
             @endif

@@ -60,7 +60,7 @@
 
     @else
     <div class="col-12" >
-        <p>No posts. <a href="{{ route('profile.post.create') }}" >Create one.</a></p>
+        <p>No posts. <a href="{{ route('posts.create') }}" >Create one.</a></p>
     </div>
     @endif
 

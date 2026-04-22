@@ -18,43 +18,41 @@
     </head>
     <body class="d-flex flex-column h-100" itemscope itemtype="http://schema.org/WebSite">
 
-        @auth
-        <div class="container" >
-            <div class="row justify-content-center" >
-                <div class="px-0 col-11 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-8" itemprop="text">
-                    <x-common.layouts.navbar />
-                </div>
-            </div>
-        </div>
-        @endauth
+        <x-common.layouts.navbar />
 
         <main id="main" class="flex-shrink-0" itemprop="mainContentOfPage">
             <div class="container" >
-                <div class="row justify-content-center" >
-                    <div class="px-0 col-11 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-8" itemprop="text">
-                        <header id="header" class="row" itemprop="header">
-                            <div class="py-5 col-12" >
-                                <x-common.layouts.logo />
-                            </div>
-                        </header>
-                        <article id="content" class="row" itemprop="articleBody">
+                <div class="row" >
+                    <header id="header" class="col-12" itemprop="header">
+                        <x-common.layouts.logo />
+                    </header>
+                    <article id="content" class="col-12" itemprop="articleBody">
+                        <div class="row" >
+                            <header class="col-12" >
+                                <x-common.page-title title="{{ isset($title) ? $title : '' }}" />
+                            </header>
+
                             <div class="text-center col-12">
                                 <x-common.flash-messages />
                             </div>
-                            <div class="col-12" itemprop="text">
+
+                            <aside class="col-2" >
+                                <x-common.side-menu />
+                            </aside>
+
+                            <div class="col-10" >
                                 {{ $slot }}
                             </div>
-                        </article>
-                    </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </main>
-        <footer id="footer" class="container pt-5 mt-5 border-top" itemprop="footer">
-            <div class="row justify-content-center align-items-center">
-                <div class="px-0 col-11 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-8" itemprop="text">
-                    <x-layouts.main.footer />
-                </div>
-            </div>
+        <footer id="footer" class="container py-5 mt-5 border-top" itemprop="footer">
+            <p class="p-0 m-0 text-center h6" >
+                <strong>{{ config('app.name') }}</strong> &copy; {{ date('Y') }}
+                <em class="ms-4" ><i class="fas fa-code"></i> Free & Open Source</em>
+            </p>
         </footer>
         <script type="text/javascript" src="{{ asset('assets/vendor/Jquery/jquery-3.7.1.min.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('assets/vendor/Bootstrap/bootstrap.bundle.min.js') }}" ></script>

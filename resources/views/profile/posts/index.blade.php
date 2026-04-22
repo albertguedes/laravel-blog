@@ -1,20 +1,10 @@
-@extends('layouts.main')
-@section('title', 'Profile - Posts')
-@section('description','A list of posts of user')
-@section('content')
-<section class="row" >
+<x-layouts.profile title="Posts" description="List of your posts" >
 
-    <header class="col-12" >
-        <x-common.page-title title="Profile - Posts" />
-    </header>
+    <p class="text-end" >
+        <a href="{{ route('profile.post.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Create Post
+        </a>
+    </p>
 
-    <aside class="col-3" >
-        <x-common.side-menu />
-    </aside>
-
-    <article class="col-9" >
-        <x-common.posts-list :posts="$posts" />
-    </article>
-
-</section>
-@endsection
+    <x-profile.posts.posts-list :posts="$posts" />
+</x-layouts.profile>

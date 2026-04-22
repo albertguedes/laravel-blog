@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Authors;
 
 use App\Models\User;
 use Closure;
@@ -20,7 +20,7 @@ class AuthorCard extends Component
 
     public function render(): View|Closure|string
     {
-        return view('components.common.author-card', [
+        return view('components.authors.author-card', [
             'isActive' => $this->author->is_active,
         ]);
     }

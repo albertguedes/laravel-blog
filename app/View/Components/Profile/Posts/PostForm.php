@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Profile\Posts;
 
 use App\Models\Post;
 use Illuminate\View\Component;
@@ -25,6 +25,6 @@ class PostForm extends Component
 
     public function render(): View
     {
-        return view('components.common.post-form');
+        return view('components.profile.posts.post-form');
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Archive;
 
 use App\Models\Post;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -54,6 +54,6 @@ class Archive extends Component
 
     public function render(): View
     {
-        return view('components.common.archive');
+        return view('components.archive.archive');
     }
 }

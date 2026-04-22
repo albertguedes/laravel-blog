@@ -43,14 +43,6 @@ class SideMenu extends Component
                 'label' => 'Posts',
                 'icon' => 'fa fa-newspaper',
                 'active' => $current_route == 'profile.posts',
-                'subitems' => [
-                    'create' => [
-                        'route' => 'profile.post.create',
-                        'label' => 'Create Post',
-                        'icon' => 'fa fa-plus',
-                        'active' => $current_route == 'profile.post.create',
-                    ],
-                ],
             ],
         ];
     }

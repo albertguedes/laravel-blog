@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Profile\Posts;
 
 use App\Models\Post;
 use Closure;
@@ -49,6 +49,6 @@ class PostTabs extends Component
 
     public function render(): View|Closure|string
     {
-        return view('components.common.post-tabs');
+        return view('components.profile.posts.post-tabs');
     }
 }

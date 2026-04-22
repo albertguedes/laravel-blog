@@ -73,6 +73,14 @@ class ProfileController extends Controller
     /**
      * Delete the user's account.
      */
+    public function delete(): View
+    {
+        return view('profile.delete');
+    }
+
+    /**
+     * Delete the user's account.
+     */
     public function destroy(Request $request): RedirectResponse
     {
         $user = $request->user();

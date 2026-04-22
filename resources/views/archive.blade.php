@@ -6,7 +6,7 @@
         </header>
 
         <article class="col-12" >
-            <x-common.archive :year="$year" :month="$month" :day="$day" />
+            <x-archive.archive :year="$year" :month="$month" :day="$day" />
         </article>
 
     </section>

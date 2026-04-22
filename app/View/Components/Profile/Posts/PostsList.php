@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Profile\Posts;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -15,6 +15,6 @@ class PostsList extends Component
 
     public function render(): View|Closure|string
     {
-        return view('components.common.posts-list');
+        return view('components.profile.posts.posts-list');
     }
 }

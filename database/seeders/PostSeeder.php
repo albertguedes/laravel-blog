@@ -17,7 +17,8 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
-        Category::whereDoesntHave('children')->get()->each(function ($category) {
+        Category::whereDoesntHave('children')->whereHas('parent')->
+        where('is_active', true)->each(function ($category) {
             Post::factory()->count(rand(1, 5))->create([
                 'category_id' => $category->id,
             ]);

@@ -10,12 +10,12 @@
             <div class="row" >
                 @foreach ($authors as $author)
                 <div class="col-4 d-flex" >
-                    <x-common.author-card :author="$author" />
+                    <x-authors.author-card :author="$author" />
                 </div>
                 @endforeach
             </div>
         </article>
-        <footer class="col-12 d-flex justify-content-center pt-5">
+        <footer class="pt-5 col-12 d-flex justify-content-center">
             <x-common.bootstrap-pagination :paginator="$authors" />
         </footer>
         @else

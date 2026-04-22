@@ -1,20 +1,3 @@
-@extends('layouts.main')
-@section('title', 'Profile - Post - Create')
-@section('description','Form to create a post')
-@section('content')
-<section class="row" >
-
-    <header class="col-12" >
-        <x-common.page-title title="Profile - Post - Create" />
-    </header>
-
-    <aside class="col-3" >
-        <x-common.side-menu />
-    </aside>
-
-    <article class="col-9" >
-        <x-common.post-form action="{{ route('profile.post.store') }}" method="POST" :post=null />
-    </article>
-
-</section>
-@endsection
+<x-layouts.profile title="Create Post" description="Form to create a post" >
+    <x-profile.posts.post-form action="{{ route('profile.post.store') }}" method="POST" :post=null />
+</x-layouts.profile>
