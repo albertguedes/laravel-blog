@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Form request for password update validation during password reset flow.
+ */
 class PasswordUpdateRequest extends FormRequest
 {
     /**

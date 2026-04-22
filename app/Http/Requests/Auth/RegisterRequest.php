@@ -7,6 +7,9 @@ namespace App\Http\Requests\Auth;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Form request for user registration validation.
+ */
 class RegisterRequest extends FormRequest
 {
     /**

@@ -60,38 +60,62 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
+    /**
+     * Get the user's profile.
+     */
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
     }
 
+    /**
+     * Get the user's posts.
+     */
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class, 'author_id');
     }
 
+    /**
+     * Get the route key name for URL resolution.
+     */
     public function getRouteKeyName(): string
     {
         return 'username';
     }
 
+    /**
+     * Get the user's roles.
+     */
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class)
             ->withPivot('created_at');
     }
 
-    public function isEmailVerified()
+    /**
+     * Check if the user's email is verified.
+     */
+    public function isEmailVerified(): bool
     {
         return $this->email_verified_at !== null;
     }
 
-    public function verificationToken()
+    /**
+     * Get the user's verification token.
+     */
+    public function verificationToken(): HasOne
     {
         return $this->hasOne(VerificationToken::class, 'email', 'email');
     }
 
-    public function resolveRouteBinding($value, $field = null)
+    /**
+     * Resolve route binding using username.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     */
+    public function resolveRouteBinding($value, $field = null): User
     {
         return static::whereHas('profile', function ($query) use ($value) {
             $query->where('username', $value);

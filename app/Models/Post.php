@@ -64,21 +64,33 @@ class Post extends Model
         });
     }
 
+    /**
+     * Get the route key name for URL resolution.
+     */
     public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
+    /**
+     * Get the post author.
+     */
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the post category.
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * Get the post tags.
+     */
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class)

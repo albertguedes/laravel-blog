@@ -9,6 +9,9 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
 
+/**
+ * Form request for user login validation.
+ */
 class LoginRequest extends FormRequest
 {
     /**
@@ -34,10 +37,10 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Adds a custom validation rule to check if the user is active.
+     * Configure the validator.
      *
-     * If the user is not active, an error message will be added to the
-     * validator's errors bag.
+     * Adds a custom validation rule to check if the user is active.
+     * If the user is not active, an error message will be added.
      *
      * @param  Validator  $validator
      */

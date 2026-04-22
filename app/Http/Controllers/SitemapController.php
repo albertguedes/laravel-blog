@@ -5,15 +5,20 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+/**
+ * Sitemap XML generator controller.
+ *
+ * Generates an XML sitemap of all published posts for search engine indexing.
+ * Returns the 50 most recently created posts in XML format.
+ */
 class SitemapController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Generate sitemap XML.
      *
-     * @param  Request  $request
+     * @return Response XML response with Content-Type text/xml
      */
     public function __invoke(): Response
     {

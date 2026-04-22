@@ -32,10 +32,8 @@ class TagsController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return View
      */
-    public function show(Tag $tag)
+    public function show(Tag $tag): View
     {
         if (! $tag || ! $tag->is_active) {
             abort(Response::HTTP_NOT_FOUND);

@@ -7,14 +7,15 @@ namespace App\Http\Requests\Profile;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
+/**
+ * Form request for profile update validation.
+ */
 class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the profile is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,9 +23,9 @@ class UpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
-    public function rules(Request $request)
+    public function rules(Request $request): array
     {
         return [
             'email' => 'required|string|min:5|max:255|email:rfc|unique:users,email,'.$request->user()->id,

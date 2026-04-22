@@ -7,6 +7,9 @@ namespace App\Http\Requests\Contact;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Form request for contact message validation.
+ */
 class MessageRequest extends FormRequest
 {
     /**

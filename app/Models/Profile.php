@@ -35,6 +35,9 @@ class Profile extends Model
         'about' => 'string',
     ];
 
+    /**
+     * Get the profile's user.
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -33,11 +33,17 @@ class Tag extends Model
         'is_active' => 'boolean',
     ];
 
+    /**
+     * Get the route key name for URL resolution.
+     */
     public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
+    /**
+     * Get the posts with this tag.
+     */
     public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class)

@@ -7,6 +7,9 @@ namespace App\Http\Requests\Profile;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Form request for password update validation.
+ */
 class PasswordUpdateRequest extends FormRequest
 {
     /**
@@ -36,9 +39,9 @@ class PasswordUpdateRequest extends FormRequest
     /**
      * Get the error messages for the defined rules.
      *
-     * @return array
+     * @return array<string, string>
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'password.required_with' => 'The :attribute is required when :other is present.',

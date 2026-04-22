@@ -31,6 +31,9 @@ class Role extends Model
         'is_active' => 'boolean',
     ];
 
+    /**
+     * Get the users with this role.
+     */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)

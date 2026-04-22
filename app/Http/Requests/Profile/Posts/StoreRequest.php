@@ -7,6 +7,9 @@ namespace App\Http\Requests\Profile\Posts;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Form request for post creation validation.
+ */
 class StoreRequest extends FormRequest
 {
     /**
@@ -37,12 +40,15 @@ class StoreRequest extends FormRequest
             ],
             'description' => 'required|string|min:4',
             'content' => 'required|string|min:4',
-            'published' => ['nullable', 'boolean'], // 'boolean',
+            'published' => ['nullable', 'boolean'],
             'tags' => ['array'],
             'tags.*' => ['integer', 'exists:tags,id'],
         ];
     }
 
+    /**
+     * Prepare the data for validation.
+     */
     public function prepareForValidation(): void
     {
         $this->merge([

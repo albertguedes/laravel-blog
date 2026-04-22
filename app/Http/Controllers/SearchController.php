@@ -24,7 +24,7 @@ class SearchController extends Controller
      */
     public function __invoke(Request $request): View
     {
-        $query = $request->get('q', '');
+        $query = $request->input('q', '');
 
         $results = new LengthAwarePaginator([], 1, 1);
         if (! empty($query)) {

@@ -50,7 +50,7 @@ class Category extends Model
     }
 
     /**
-     * Get the parent category of the current category.
+     * Get the parent category.
      */
     public function parent(): BelongsTo
     {
@@ -58,7 +58,7 @@ class Category extends Model
     }
 
     /**
-     * Get the children categories of the current category.
+     * Get the child categories.
      */
     public function children(): HasMany
     {
@@ -66,9 +66,7 @@ class Category extends Model
     }
 
     /**
-     * Get the posts of the current category.
-     *
-     * @param  bool  $published
+     * Get the posts in this category.
      */
     public function posts(): HasMany
     {

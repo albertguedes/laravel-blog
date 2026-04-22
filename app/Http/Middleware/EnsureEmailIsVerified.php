@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified as BaseEnsureEmailIsVerified;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -36,14 +35,9 @@ class EnsureEmailIsVerified extends BaseEnsureEmailIsVerified
      * Checks if the user has verified their email address.
      * If not verified, redirects to the email verification resend page.
      *
-     * @param  Request  $request  The incoming request
-     * @param  Closure  $next  The next middleware in the pipeline
-     * @param  string|null  $redirectToRoute  Optional route name to redirect to
+     * @param  Request  $request
+     * @param  string|null  $redirectToRoute
      * @return Response|RedirectResponse
-     *
-     * @throws AuthorizationException If user is unverified and expects JSON
-     *
-     * @since 1.0.0
      */
     public function handle($request, Closure $next, $redirectToRoute = null)
     {

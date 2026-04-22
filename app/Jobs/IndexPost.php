@@ -11,19 +11,31 @@ use App\Support\TextChunker;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
+/**
+ * Job to index post content for RAG search.
+ *
+ * Processes a post's content into chunks, generates embeddings for each chunk
+ * using Ollama, and stores them in the database for vector similarity search.
+ */
 class IndexPost implements ShouldQueue
 {
     use Queueable;
 
     /**
      * Create a new job instance.
+     *
+     * @param  Post  $post  The post to index
      */
     public function __construct(private Post $post) {}
 
     /**
      * Execute the job.
+     *
+     * Deletes existing chunks for this post and creates new ones with embeddings.
+     *
+     * @param  EmbeddingService  $embed  Service for generating embeddings
      */
-    public function handle(EmbeddingService $embed)
+    public function handle(EmbeddingService $embed): void
     {
         PostChunk::where('post_id', $this->post->id)->delete();
 
