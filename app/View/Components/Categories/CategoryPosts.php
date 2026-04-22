@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Categories;
 
 use App\Models\Category;
 use App\Models\Post;
@@ -28,7 +28,7 @@ class CategoryPosts extends Component
 
     public function render(): View
     {
-        return view('components.common.category-posts');
+        return view('components.categories.category-posts');
     }
 
     public function postsFromCategoryTree(Category $category)

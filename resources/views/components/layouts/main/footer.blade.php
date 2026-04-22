@@ -47,7 +47,7 @@
             <li class="nav-item" >
                 <form method="POST" action="{{ route('logout') }}" class="d-inline">
                     @csrf
-                    <button class="text-white nav-link btn btn-danger" type="submit">
+                    <button class="text-white btn btn-danger btn-md ms-2" type="submit">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
                 </form>

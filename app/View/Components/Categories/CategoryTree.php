@@ -1,27 +1,44 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
-
-namespace App\View\Components\Common;
+namespace App\View\Components\Categories;
 
 use App\Models\Category;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Tree extends Component
+/**
+ * Class CategoryTree
+ */
+class CategoryTree extends Component
 {
     public array $tree;
 
+    /**
+     * Create a new component instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->tree = self::getCategoryTree();
     }
 
-    public function render(): View|\Closure|string
+    /**
+     * Get the view / contents that represent the component.
+     *
+     * @return View
+     *
+     */
+    public function render(): View
     {
-        return view('components.common.tree');
+        return view('components.categories.category-tree');
     }
 
+    /**
+     * Get category tree
+     *
+     * @return array
+     */
     public static function getCategoryTree($categories = null, int $level = 0): array
     {
         if ($categories === null) {
@@ -35,7 +52,7 @@ class Tree extends Component
 
         $tree = [];
         foreach ($categories as $category) {
-            $item = self::categoryItem($category, $level);
+            $item = self::categoryToArray($category, $level);
             $hasPosts = $item['count_posts'] > 0;
 
             if ($category->is_active) {
@@ -69,7 +86,15 @@ class Tree extends Component
         return $tree;
     }
 
-    public static function categoryItem(?Category $category = null, int $level = 0): array
+    /**
+     * Convert category to array
+     *
+     * @param  Category|null  $category
+     * @param  int  $level
+     *
+     * @return array
+     */
+    public static function categoryToArray(?Category $category = null, int $level = 0): array
     {
         return $category === null ? [] : [
             'id' => $category->id,
@@ -80,6 +105,13 @@ class Tree extends Component
         ];
     }
 
+    /**
+     * Count posts in category and its children
+     *
+     * @param  Category  $category
+     *
+     * @return int
+     */
     public static function countPosts(Category $category): int
     {
         $count = $category->posts()

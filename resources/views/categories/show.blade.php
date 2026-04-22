@@ -10,7 +10,7 @@
         </section>
 
         <article class="col-12" property="mainEntityOfPage">
-            <x-common.category-posts :category="$category" />
+            <x-categories.category-posts :category="$category" />
         </article>
 
     </section>

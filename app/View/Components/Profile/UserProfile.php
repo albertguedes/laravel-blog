@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Profile;
 
 use App\Models\User;
 use Closure;
@@ -20,6 +20,6 @@ class UserProfile extends Component
 
     public function render(): View|Closure|string
     {
-        return view('components.common.user-profile');
+        return view('components.profile.user-profile');
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\View\Components\Layouts\Profile;
+namespace App\View\Components\Common\Layouts;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Navbar extends Component
+class Logo extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class Navbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components..layouts.profile.navbar');
+        return view('components.layouts.common.logo');
     }
 }

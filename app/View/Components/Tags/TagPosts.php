@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Tags;
 
 use App\Models\Tag;
 use Illuminate\View\Component;
@@ -25,6 +25,6 @@ class TagPosts extends Component
 
     public function render(): View
     {
-        return view('components.common.tag-posts');
+        return view('components.tags.tag-posts');
     }
 }

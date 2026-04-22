@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Tags;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -37,6 +37,6 @@ class TagCloud extends Component
 
     public function render(): View|\Closure|string
     {
-        return view('components.common.tag-cloud');
+        return view('components.tags.tag-cloud');
     }
 }

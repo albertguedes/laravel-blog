@@ -6,7 +6,7 @@
             </h2>
         </div>
         <div class="col-12" >
-            <x-common.password-form />
+            <x-profile.password-form />
         </div>
     </div>
 </x-layouts.profile>

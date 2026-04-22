@@ -6,7 +6,7 @@
         <meta name="description" content="{{ isset($description) ? $description : '' }}" >
         <meta name="csrf-token" content="{{ csrf_token() }}" >
         <title>{{ isset($title) ? $title . ' | ' : '' }}{{ config('app.name') }}</title>
-        <x-common.json-ld-schema type="WebSite" />
+        <x-layouts.common.json-ld-schema type="WebSite" />
         <script type="text/javascript" src="{{ asset('assets/vendor/FontAwesome/f761473b22.js') }}" ></script>
         <link type="text/css" href="{{ asset('assets/vendor/Bootstrap/bootstrap.min.css') }}" rel="stylesheet" >
         <link type="text/css" href="{{ asset('assets/css/fonts.css') }}" rel="stylesheet" >
@@ -22,7 +22,7 @@
         <div class="container" >
             <div class="row justify-content-center" >
                 <div class="px-0 col-11 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-8" itemprop="text">
-                    <x-common.layouts.navbar />
+                    <x-layouts.common.navbar />
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
                     <div class="px-0 col-11 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-8" itemprop="text">
                         <header id="header" class="row" itemprop="header">
                             <div class="py-5 col-12" >
-                                <x-common.layouts.logo />
+                                <x-layouts.common.logo />
                             </div>
                         </header>
                         <article id="content" class="row" itemprop="articleBody">

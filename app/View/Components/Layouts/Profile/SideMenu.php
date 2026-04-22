@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Layouts\Profile;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -49,6 +49,6 @@ class SideMenu extends Component
 
     public function render(): View|Closure|string
     {
-        return view('components.common.side-menu');
+        return view('components.layouts.profile.side-menu');
     }
 }

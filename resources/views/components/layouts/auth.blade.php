@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" >
         <meta name="description" content="{{ $description }}" >
         <title>{{ isset($title) ? $title . " | " : "" }}{{ config('app.name') }}</title>
-        <x-common.json-ld-schema type="WebSite" />
+        <x-layouts.common.json-ld-schema type="WebSite" />
         <script type="text/javascript" src="{{ asset('assets/vendor/FontAwesome/f761473b22.js') }}" ></script>
         <link type="text/css" href="{{ asset('assets/vendor/Bootstrap/bootstrap.min.css') }}" rel="stylesheet" >
         <link type="text/css" href="{{ asset('assets/css/fonts.css') }}" rel="stylesheet" >

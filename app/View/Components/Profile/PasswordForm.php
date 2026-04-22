@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Profile;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -15,6 +15,6 @@ class PasswordForm extends Component
 
     public function render(): View|Closure|string
     {
-        return view('components.common.password-form');
+        return view('components.profile.password-form');
     }
 }

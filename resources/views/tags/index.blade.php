@@ -6,7 +6,7 @@
         </header>
 
         <article class="col-12" property="mainEntity" typeof="ItemList">
-            <x-common.tag-cloud :tags="$tags" />
+            <x-tags.tag-cloud :tags="$tags" />
         </article>
 
     </section>

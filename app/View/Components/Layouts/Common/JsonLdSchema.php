@@ -24,6 +24,6 @@ class JsonLdSchema extends Component
 
     public function render(): View|Closure|string
     {
-        return view('components.common.json-ld-schema');
+        return view('components.layouts.common.json-ld-schema');
     }
 }

@@ -10,7 +10,7 @@
         </section>
 
         <article class="col-12" >
-            <x-common.tag-posts :tag="$tag" />
+            <x-tags.tag-posts :tag="$tag" />
         </article>
 
     </section>
