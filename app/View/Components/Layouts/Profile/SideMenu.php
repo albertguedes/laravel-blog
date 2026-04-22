@@ -12,8 +12,7 @@ use Illuminate\View\Component;
  * Profile section sidebar menu component.
  *
  * Renders a navigation menu for the profile section with links to
- * Profile, Edit, Change Password, Cancel Account, and Posts pages.
- * Automatically highlights the current active route.
+ * Profile and Posts pages. Automatically highlights the current active route.
  */
 class SideMenu extends Component
 {
@@ -36,27 +35,6 @@ class SideMenu extends Component
                 'label' => 'Profile',
                 'icon' => 'fa fa-user-circle',
                 'active' => $current_route == 'profile',
-            ],
-
-            'edit' => [
-                'route' => 'profile.edit',
-                'label' => 'Edit',
-                'icon' => 'fa fa-user-edit',
-                'active' => $current_route == 'profile.edit',
-            ],
-
-            'password' => [
-                'route' => 'profile.password',
-                'label' => 'Change Password',
-                'icon' => 'fa fa-key',
-                'active' => $current_route == 'profile.password',
-            ],
-
-            'cancel' => [
-                'route' => 'profile.delete',
-                'label' => 'Cancel Account',
-                'icon' => 'fa fa-user-times',
-                'active' => $current_route == 'profile.delete',
             ],
 
             'posts' => [
