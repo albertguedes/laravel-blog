@@ -19,7 +19,7 @@ describe('Profile', function () {
             'password' => 'password',
         ]);
         $response->assertRedirect('/');
-        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+        $this->assertSoftDeleted('users', ['id' => $user->id]);
     });
 
     it('profile information is displayed', function () {
